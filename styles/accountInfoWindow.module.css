@@ -1,0 +1,275 @@
+#accountInfoWindow {
+  border: 1px solid grey;
+  background-color: white;
+  border-radius: 15px;
+  position: absolute;
+  z-index: 10;
+  top: 30px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 400px;
+  height: 470px;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+#titleAndClose {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+#closeAccountInfo {
+  cursor: pointer;
+}
+
+.link div {
+  color: #1c64a7;
+  font-weight: 600;
+}
+
+.link svg {
+  fill: #1c64a7;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: #1c64a7;
+}
+
+#accountNumberTitle {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #505050;
+}
+
+#account {
+  width: 340px;
+  background-color: #d3d3d4;
+  padding: 10px 20px 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#addressActions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-bottom: 20px;
+}
+
+#oraclesActions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+#viewOnExplorer, #copyAddress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: grey;
+  cursor: pointer;
+}
+
+#viewOnExplorer svg, #copyAddress svg {
+  margin: 0 10px 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+}
+
+#copyAddress {
+  margin-left: 20px;
+}
+
+#accountIdTitle {
+  font-weight: 600;
+  color: #505050;
+}
+
+#accountIdInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+#accountId {
+  width: 340px;
+  background-color: #d3d3d4;
+  padding: 10px 20px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+#copyAccount {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+#copyAccount svg {
+  margin: 0 10px 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+}
+
+#signUpReceiver {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+#signUpReceiver svg {
+  margin: 0 10px 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+}
+
+#oracleIdTitle {
+  margin-top: 20px;
+  font-weight: 600;
+  color: #505050;
+}
+
+#oracleIdInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+#oracleId {
+  width: 340px;
+  background-color: #d3d3d4;
+  padding: 10px 20px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+#copyOracle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+#copyOracle svg {
+  margin: 0 10px 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+}
+
+#alterOracleDisponibility {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 5px;
+  cursor: pointer;
+  margin-left: 30px;
+}
+
+#alterOracleDisponibility svg {
+  margin: 0 10px 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+}
+/*# sourceMappingURL=accountInfoWindow.module.css.map */

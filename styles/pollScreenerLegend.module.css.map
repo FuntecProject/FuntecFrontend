@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,mBAAmB,CAAC;EAChB,aAAa,EAAE,GAAG;EAClB,KAAK,EAAE,KAAK;EACZ,YAAY,EAAE,IAAI;EAClB,aAAa,EAAE,IAAI;EACnB,WAAW,EAAE,IAAI;EACjB,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,cAAc;CAIxC;;AAXD,AAQI,mBARe,CAQf,GAAG,CAAC;EACA,UAAU,EAAE,MAChB;CAAC",
+    "sources": [
+        "pollScreenerLegend.module.scss"
+    ],
+    "names": [],
+    "file": "pollScreenerLegend.module.css"
+}

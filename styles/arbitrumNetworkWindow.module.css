@@ -1,0 +1,117 @@
+#body {
+  background-color: white;
+  opacity: 1;
+  width: 400px;
+  height: 350px;
+  border: 1px solid grey;
+  border-radius: 25px;
+  position: absolute;
+  margin-top: 30px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 10;
+}
+
+#title {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#titleInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#arbitrumIcon {
+  width: 36px;
+  height: 36px;
+}
+
+#titleText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 10px;
+}
+
+#closeArbitrumIframe {
+  cursor: pointer;
+}
+
+#message {
+  width: 80%;
+  margin: auto;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+#buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 20px;
+}
+
+.button {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.button:hover {
+  background: radial-gradient(285% 8200% at 30% 50%, rgba(40, 160, 240, 0.1) 0%, rgba(219, 255, 0, 0) 100%), radial-gradient(circle at left top, rgba(159, 196, 223, 0.01), rgba(31, 114, 229, 0.12)), rgba(255, 255, 255, 0.1);
+}
+
+#arbitrumBridgeLink {
+  text-decoration: none;
+  color: black;
+}
+
+#depositFunds {
+  margin-left: 20px;
+}
+
+#depositFundsArrow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+#learnMore {
+  text-align: center;
+  padding-top: 20px;
+}
+
+#learnMoreLink:hover {
+  text-decoration: underline;
+}
+/*# sourceMappingURL=arbitrumNetworkWindow.module.css.map */

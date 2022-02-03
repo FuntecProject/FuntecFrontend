@@ -1,0 +1,220 @@
+.pollElement {
+    position:relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    // height: 50px;
+    width: 95%;
+    margin-left: 2.5%;
+    border-radius: 3px;
+    border: 1px solid #d3d3d4;
+    transition: 0.75s;
+    overflow: hidden;
+}
+
+.pollElementFirstRow {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    div:not(.pollExpandContainer) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.pollElementFirstRowMobile {
+    position: relative;
+    width: 100%;
+    // padding-left: 50px;
+    // padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+.pollElementIdMobile {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.centerCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.receiverAndOracleIdsRowMobile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.pollElementRowMobile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-bottom: 1px dotted grey;
+    padding-left: 50px;
+    padding-right: 10px;
+}
+
+.pollExpandContainer {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.pollExpand {
+    cursor: pointer;
+    fill: #999999;
+    transition: 0.75s;
+    overflow: hidden;
+}
+
+.pollElementSecondRow {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 100px 0;
+    border-top: 1px dashed #d3d3d4;
+}
+
+.pollThirdRow {
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    border-top: 1px dashed #d3d3d4;
+
+    padding: 0 100px 0;
+}
+
+.activePollThirdRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    border-top: 1px dashed #d3d3d4;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    
+    div:not(.pollExpandContainer) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+#morePollElementMobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        margin-bottom: 20px;
+        fill: grey;
+    }
+}
+
+.leftSide {
+    border-right: 1px dashed #d3d3d4;
+}
+
+#contributeAmountSelect {
+    height: 30px;
+    text-align: center;
+    border: 1px solid #d3d3d4;
+    border-radius: 3px;
+}
+
+#contributeAmountSelect::-webkit-inner-spin-button {
+    height: 30px;
+    opacity: 1
+}
+
+.contributeButton {
+    height: 31px;
+    margin-left: 10px;
+    padding: 0 10px 0;
+    background-color: rgb(94, 180, 94);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.contributeButtonDisabled {
+    height: 31px;
+    margin-left: 10px;
+    padding: 0 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+.contributeButton:active, 
+.contributeButtonDisabled:active, 
+.activePollButton:active, 
+.activePollButtonDisabled:active {
+    transform: translateY(2px)
+}
+
+.activePollSelect {
+    border-radius: 3px;
+    background-color: white;
+    height: 31px;
+    width: 75px;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    margin-right: 20px;
+}
+
+.activePollButton {
+    height: 31px;
+    width: fit-content;
+    padding: 0 10px 0;
+    background-color: rgb(105, 143, 226);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.activePollButtonDisabled {
+    height: 31px;
+    width: fit-content;
+    padding: 0 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+.pollElementSplitedRow {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    div:not(.pollExpandContainer) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+

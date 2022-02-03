@@ -1,0 +1,57 @@
+.noElementFound {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 95%;
+  margin-left: 2.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.oracleElementLoading {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 95%;
+  margin-left: 2.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.oracleTitle {
+  margin-left: 2.5%;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+#oraclesLegend {
+  margin-top: 40px;
+  margin-bottom: 5px;
+  width: 85.5%;
+  font-weight: bold;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+}
+
+#oraclesLegend div {
+  text-align: center;
+}
+/*# sourceMappingURL=oraclesList.module.css.map */

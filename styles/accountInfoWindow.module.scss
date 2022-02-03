@@ -1,0 +1,197 @@
+$linkColor: rgb(28, 100, 167);
+
+#accountInfoWindow {
+    border: 1px solid grey;
+    background-color: white;
+    border-radius: 15px;
+    position: absolute;
+    z-index: 10;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    max-width: 90%;
+    height: 470px;
+    // padding-left: 30px;
+    // padding-right: 30px;
+
+
+    // display: flex;
+    // flex-direction: column;
+    // // align-items: flex-start;
+    // margin: auto;
+}
+
+#form {
+    width: 90%;
+    margin: auto;
+}
+
+#titleAndClose {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#closeAccountInfo {
+    cursor: pointer;
+}
+
+.link {
+    div {
+        color: $linkColor;
+        font-weight: 600;
+    }
+
+    svg {
+        fill: $linkColor;
+    }
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: $linkColor;  
+}
+
+#accountNumberTitle {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: rgb(80, 80, 80);
+}
+
+#account {
+    width: 100%;
+    background-color: #d3d3d4;
+    padding: 10px 20px 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addressActions {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+#oraclesActions {
+    display: flex;
+    flex-direction: row;
+}
+
+#viewOnExplorer, #copyAddress {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: grey;
+    cursor: pointer;
+
+    svg {
+        margin: 0 10px 0;
+        transform: scale(0.75);
+    }
+}
+
+#copyAddress {
+    margin-left: 20px;
+}
+
+#accountIdTitle {
+    font-weight: 600;
+    color: rgb(80, 80, 80);
+}
+
+#accountIdInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#accountId {
+    background-color: #d3d3d4;
+    padding: 10px 20px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    // margin-left: 20px;
+}
+
+#copyAccount {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    cursor: pointer;
+
+    svg {
+        margin: 0 10px 0;
+        transform: scale(0.75);
+    }
+}
+
+#signUpReceiver {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    cursor: pointer;
+
+    svg {
+        margin: 0 10px 0;
+        transform: scale(0.75);
+    }
+}
+
+#oracleIdTitle {
+    margin-top: 20px;
+    font-weight: 600;
+    color: rgb(80, 80, 80);
+}
+
+#oracleIdInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#oracleId {
+    background-color: #d3d3d4;
+    padding: 10px 20px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    // margin-left: 20px;
+}
+
+#copyOracle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    cursor: pointer;
+
+    svg {
+        margin: 0 10px 0;
+        transform: scale(0.75);
+    }
+}
+
+#alterOracleDisponibility {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    cursor: pointer;
+    margin-left: 30px;
+
+    svg {
+        margin: 0 10px 0;
+        transform: scale(0.75);
+    }
+}

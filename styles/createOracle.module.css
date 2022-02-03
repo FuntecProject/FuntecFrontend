@@ -1,0 +1,130 @@
+#createOracleIframe {
+  border: 1px solid grey;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  margin-top: 30px;
+  left: 50%;
+  width: 400px;
+  height: 420px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  font-family: 'Quicksand', sans-serif;
+}
+
+#createOracleTitleAndSvg {
+  width: 90%;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#closeCreateOracle {
+  cursor: pointer;
+}
+
+#createOracle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#form {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: auto;
+}
+
+#form label {
+  margin-top: 15px;
+}
+
+#form input {
+  margin-top: 5px;
+  padding-left: 10px;
+  height: 40px;
+  border: 1px solid grey;
+  outline: none;
+  border-radius: 8px;
+}
+
+#form input[type=number]::-webkit-inner-spin-button {
+  height: 33px;
+  opacity: 1;
+}
+
+#form input:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  border-radius: 8px;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.25rem #ecdf94;
+          box-shadow: 0 0 0 0.25rem #ecdf94;
+}
+
+#buttons {
+  position: absolute;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  right: 5%;
+}
+
+#buttons div {
+  border: 1px solid grey;
+  border-radius: 30px;
+  width: 130px;
+  height: 50px;
+  margin-left: 10px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#buttons div:hover {
+  -webkit-box-shadow: 0 0 7px 2px #cccccc;
+          box-shadow: 0 0 7px 2px #cccccc;
+}
+
+#cancel:active {
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+}
+
+#create:active {
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+}
+/*# sourceMappingURL=createOracle.module.css.map */

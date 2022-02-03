@@ -1,0 +1,96 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: url('/textFonts/Quicksand-VariableFont_wght.ttf') format("truetype");
+    font-display: auto;
+}
+
+#body {
+    position: relative;
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-flow: column;
+    background-color: rgba(229,229,229, 1);
+    font-family: 'Quicksand', sans-serif;
+    overflow-x: hidden;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+#menuPanel {
+    position: absolute;
+    right: 5px;
+    z-index: 1;
+    top: 65px;
+    width: 300px;
+    height: 450px;
+    background-color: white;
+    border: 1px solid #d3d3d4;
+    border-radius: 3px;
+    transition: 0.75s;
+    transform: translateX(350px);
+    padding: 20px 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#menuPanelSeparateBar {
+    width: 100%;
+    height: 0px;
+    border-top: 1px solid #d3d3d4;
+}
+
+.menuElement {
+    border: 1px solid #d3d3d4;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    width: 90%;
+    min-height: 50px;
+    transition: 0.75s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 15px;
+}
+
+#pageElementsMobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.pageElement {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#menuElementAccountButton {
+    height: 50px;
+    border: 1px solid #d3d3d4;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.menuElement:hover {
+    background-color: #e7e7e7;
+}
+
+#backgroundShadowed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

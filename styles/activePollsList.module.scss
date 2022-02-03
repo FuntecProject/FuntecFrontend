@@ -1,0 +1,48 @@
+#pollType {
+    display: flex;
+    border-radius: 15px;
+    width: fit-content;
+    padding: 5px;
+    margin: 20px 0 20px;
+    background-color: white;
+}
+
+.pollTypeElement {
+    border-radius: 15px;
+    padding: 10px;
+    margin: 0 5px 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.pollTypeElement:hover {
+    background-color: #ecebeb;
+}
+
+.activePoll {
+    background-color: #e5e5e5;
+}
+
+.activePollsElementLoading {
+    position:relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+    width: 95%;
+    margin-left: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.noElementFound {
+    position:relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+    width: 95%;
+    margin-left: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

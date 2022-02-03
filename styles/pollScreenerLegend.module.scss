@@ -1,0 +1,12 @@
+#pollScreenerLegend {
+    margin-bottom: 5px;
+    width: 85.5%;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    div {
+        text-align: center
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAC;EACX,QAAQ,EAAC,QAAQ;EACjB,UAAU,EAAE,IAAI;EAChB,aAAa,EAAE,IAAI;EACnB,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,GAAG;EACV,WAAW,EAAE,IAAI;EACjB,aAAa,EAAE,GAAG;EAClB,MAAM,EAAE,iBAAiB;EACzB,UAAU,EAAE,KAAK;EACjB,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,cAAc;CAOxC;;AAlBD,AAaI,cAbU,CAaV,GAAG,CAAC;EACA,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;CAC1B",
+    "sources": [
+        "oraclesListElement.module.scss"
+    ],
+    "names": [],
+    "file": "oraclesListElement.module.css"
+}

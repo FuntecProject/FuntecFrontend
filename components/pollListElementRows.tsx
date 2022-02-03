@@ -1,0 +1,330 @@
+import React from 'react'
+import { 
+    contribute, 
+    claimReceiverReward, 
+    generateDispute, 
+    claimContributorReward,
+    claimOracleReward, 
+    solvePoll
+} from '../library/web3methods'
+
+import { 
+    checkIfContributorCanContribute,
+    checkIfPollCanBeDisputed,
+    checkIfContributorCanClaim,
+    checkIfOracleCanClaim,
+    checkIfOracleCanResolve,
+    checkIfReceiverCanClaim
+} from '../library/web3Checks'
+import styles from "../styles/pollsListElement.module.scss"
+import { RootContext, IRootContextType } from './screenerLayoutWrapper'
+import { IPoll } from '../library/graphqlQuerys'
+import { errorMessageWithoutClick } from '../library/alertWindows'
+import { toWei } from 'web3-utils'
+
+interface IPollListElementRowProps {
+    pollData: IPoll
+}
+
+interface IOracleRowState {
+    canClaim: boolean,
+    canResolve: boolean,
+    oracleDecissionResult: boolean
+}
+
+const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
+    const rootContext: IRootContextType = React.useContext(RootContext)
+    
+    const [state, setState] = React.useState<IOracleRowState>({
+        canClaim: false,
+        canResolve: false,
+        oracleDecissionResult: true
+    })
+
+    React.useEffect(() => {
+        const callback = async() => {
+            let oracleCanClaim = await checkIfOracleCanClaim(rootContext, props.pollData)
+            let oracleCanResolve = await checkIfOracleCanResolve(props.pollData)
+
+            setState(prevState => ({
+                ...prevState,
+                canClaim: oracleCanClaim,
+                canResolve: oracleCanResolve
+            }))
+        }
+
+        if (rootContext.state.pollRewardsInstance && rootContext.state.account) {
+            callback()
+        }
+    }, [rootContext.state.pollRewardsInstance, rootContext.state.account])
+
+
+    return (
+        <div className={styles.activePollThirdRow}>
+            <div className={styles.leftSide}>
+                <input 
+                    className={state.canClaim ? styles.activePollButton : styles.activePollButtonDisabled} 
+                    type={"button"} 
+                    value={"Claim oracle reward"}
+                    onClick={(): void => {
+                        if(state.canClaim) {
+                            claimOracleReward(rootContext, props.pollData.id)
+                        }
+
+                        else {
+                            errorMessageWithoutClick(rootContext.state.MySwal, <>Oracle reward can't be claimed</>)
+                        }
+                    }}
+                ></input>
+            </div>
+            
+            <div>
+                <div style={{'marginRight': '20px'}}>Did the creator fullfill the requirement?</div>
+                <select 
+                    className={styles.activePollSelect}
+                    onChange={(ev): void => {
+                        setState(prevState => ({
+                            ...prevState,
+                            oracleDecissionResult: Boolean(Number(ev.target.value))
+                        }))
+                    }}
+                >
+                    <option value="1">True</option>
+                    <option value="0">False</option>
+                </select>
+
+                <input 
+                    // className={state.canResolve ? styles.activePollButton : styles.activePollButtonDisabled} 
+                    className={styles.activePollButton}
+                    type={"button"} 
+                    value={"Resolve poll"}
+                    onClick={(): void => {
+                        if (state.canResolve) {
+                            solvePoll(rootContext, state.oracleDecissionResult, props.pollData.id)
+                        }
+
+                        else {
+                            errorMessageWithoutClick(rootContext.state.MySwal, <>Poll can't be resolved</>)
+                        }
+                    }}
+                ></input>
+            </div>
+        </div>
+    )
+}
+
+interface IReceiverAndContributorRowState {
+    canClaim: boolean
+    canDispute: boolean
+}
+
+const ReceiverRow = (props: IPollListElementRowProps): React.ReactElement => {
+    const rootContext: IRootContextType = React.useContext(RootContext)
+
+    const [state, setState] = React.useState<IReceiverAndContributorRowState>({
+        canClaim: false,
+        canDispute: false
+    })
+
+    React.useEffect(() => {
+        const canClaim = checkIfReceiverCanClaim(props.pollData)
+        const canDispute = checkIfPollCanBeDisputed(props.pollData)
+
+        setState(prevState => ({
+            ...prevState,
+            canClaim: canClaim,
+            canDispute: canDispute
+        }))
+    }, [])
+
+    return (
+        <div className={`${styles.activePollThirdRow} ${styles.poll}`}>
+            <div className={styles.leftSide}>
+                <input 
+                    className={state.canClaim ? styles.activePollButton : styles.activePollButtonDisabled} 
+                    type={"button"} 
+                    value={"Claim receiver reward"}
+                    onClick={(): void => {
+                        if (state.canClaim) {
+                            claimReceiverReward(rootContext, props.pollData.id)
+                        }
+
+                        else {
+                            errorMessageWithoutClick(rootContext.state.MySwal, <>Receiver reward can't be claimed</>)
+                        }
+                    }}
+                ></input>
+            </div>
+
+            <div>
+                <div style={{'marginRight': '20px'}}>Don't you agree with the result?</div>
+                <input 
+                    className={state.canDispute ? styles.activePollButton : styles.activePollButtonDisabled} 
+                    type={"button"} 
+                    value={"Open dispute"}
+                    onClick={(): void => {
+                        if (state.canDispute) {
+                            generateDispute(rootContext, props.pollData.id)
+                        }
+
+                        else {
+                            errorMessageWithoutClick(rootContext.state.MySwal, <>Poll can't be disputed</>)
+                        }
+                    }}
+                ></input>
+            </div>
+        </div>
+    )
+}
+
+const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => {
+    const rootContext: IRootContextType = React.useContext(RootContext)
+
+    const [state, setState] = React.useState<IReceiverAndContributorRowState>({
+        canClaim: false,
+        canDispute: false
+    })
+
+    React.useEffect(() => {
+        const callback = async () => {
+            const canDispute = checkIfPollCanBeDisputed(props.pollData)
+
+            setState(prevState => ({
+                ...prevState,
+                canDispute: canDispute
+            }))
+        }
+
+        callback()
+    }, [])
+
+    React.useEffect(() => {
+        const callback = async () => {
+            const canClaim = await checkIfContributorCanClaim(rootContext, props.pollData)
+
+            setState(prevState => ({
+                ...prevState,
+                canClaim: canClaim
+            }))
+        }
+
+        callback()
+    }, [rootContext.state.pollRewardsInstance, rootContext.state.account])
+
+    return (
+        <div className={styles.activePollThirdRow}>
+            <div className={styles.leftSide}>
+                <input 
+                    className={state.canClaim ? styles.activePollButton : styles.activePollButtonDisabled} 
+                    type={"button"} 
+                    value={"Claim contribution"}
+                    onClick={(): void => {
+                        if (state.canClaim) {
+                            claimContributorReward(rootContext, props.pollData.id)
+                        }
+
+                        else {
+                            errorMessageWithoutClick(rootContext.state.MySwal, <>Contribution can't be claimed</>)
+                        }
+                    }}
+                ></input>
+            </div>
+            <div>
+                <div style={{'marginRight': '20px'}}>Don't you agree with the result?<table></table></div>
+                <input 
+                    className={state.canDispute ? styles.activePollButton : styles.activePollButtonDisabled} 
+                    type={"button"} 
+                    value={"Open dispute"}
+                    onClick={(): void => {
+                        if (state.canDispute) {
+                            generateDispute(rootContext, props.pollData.id)
+                        }
+
+                        else {
+                            errorMessageWithoutClick(rootContext.state.MySwal, <>Poll can't be disputed</>)
+                        }
+                    }}
+                ></input>
+            </div>
+        </div>
+    )
+}
+
+interface IContributeRowState {
+    contribution: string | null
+    canContribute: boolean
+}
+
+const ContributeRow = (props: IPollListElementRowProps): React.ReactElement => {
+    const [state, setState] = React.useState<IContributeRowState>({
+        contribution: null,
+        canContribute: false
+    })
+
+    const rootContext: IRootContextType = React.useContext(RootContext)
+
+    React.useEffect((): void => {
+        const callback = async(): Promise<void> => {
+            let canContribute = await checkIfContributorCanContribute(props.pollData)
+
+            setState(prevState => ({
+                ...prevState,
+                canContribute: canContribute
+            }))
+        }
+
+        callback()
+    }, [props.pollData])
+
+    return (
+        <div className={styles.pollThirdRow}>
+            <input 
+                type="number"
+                id={styles.contributeAmountSelect} 
+                min="0.0001"
+                max="10000.1111"
+                step="0.0001"
+                onChange={ev => {
+                    setState(prevState => ({
+                        ...prevState,
+                        contribution: ev.target.value
+                    }))
+                }}
+            ></input>
+
+            <input  
+                type={"button"} 
+                onClick={async (): Promise<void> => {
+                    if (state.canContribute) {
+                        if (state.contribution != null) {
+                            if (rootContext.state.account) {
+                                await contribute(rootContext, props.pollData.id, toWei(state.contribution))
+                            }
+
+                            else { 
+                                errorMessageWithoutClick(rootContext.state.MySwal, <>Connect with your wallet first to contribute</>)                      
+                            }
+                        }
+
+                        else {
+                            errorMessageWithoutClick(rootContext.state.MySwal, <>Contribution can't be empty</>)
+                        }
+                    } 
+
+                    else {
+                        errorMessageWithoutClick(rootContext.state.MySwal, <>Contribution period is over</>)
+                    }
+                }} 
+                value={"Contribute"}
+                className={state.canContribute ? styles.contributeButton : styles.contributeButtonDisabled}
+            ></input>
+        </div>
+    )
+}
+
+export {
+    OracleRow,
+    ReceiverRow,
+    ContributorRow,
+    ContributeRow
+}

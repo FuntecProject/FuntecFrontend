@@ -1,0 +1,29 @@
+.oracleElement {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 95%;
+  margin-left: 2.5%;
+  border-radius: 3px;
+  border: 1px solid #d3d3d4;
+  -webkit-transition: 0.75s;
+  transition: 0.75s;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+}
+
+.oracleElement div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+/*# sourceMappingURL=oraclesListElement.module.css.map */

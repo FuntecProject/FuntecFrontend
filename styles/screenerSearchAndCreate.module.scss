@@ -1,0 +1,101 @@
+#searchAndCreate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+#searchAndCreateMobile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#searchContainer {
+    position: relative;
+    height: 55px;
+
+    svg {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+#crossIcon {
+    cursor: pointer;
+    right: 15px;
+    fill: rgb(90, 90, 90);
+}
+
+#magnifier {
+    left: 15px;
+    fill: grey;
+}
+
+#searchBar {
+    width: 600px;    
+    height: 100%;
+    padding-left: 54px;
+    border-radius: 15px;
+    border: 2px solid #d3d3d4;
+    outline: none;
+    font-size: 17px;
+}
+
+#searchBarMobile {
+    height: 100%;
+    padding-left: 54px;
+    border-radius: 15px;
+    border: 2px solid #d3d3d4;
+    outline: none;
+    font-size: 17px;
+}
+
+#searchBar:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    border-radius: 15px;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+    // box-shadow: 0 0 0 0.25rem rgb(236, 223, 148);
+}
+
+#searchBar::placeholder {
+    font-family: 'Quicksand', sans-serif;
+    color: grey;
+    font-weight: 600;
+}
+
+#createButton {
+    position: absolute;
+    right: 5%;
+    height: 50px;
+    width: 125px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #d3d3d4;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#createButtonMobile {
+    margin-bottom: 10px;
+}
+
+#createButton:hover {
+    box-shadow: 0 0 3px 1px rgb(179, 179, 179);
+}
+
+#createButton:active {
+    transform: translateY(2px);
+}
+

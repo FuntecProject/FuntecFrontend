@@ -1,0 +1,16 @@
+#pollScreenerLegend {
+  margin-bottom: 5px;
+  width: 85.5%;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-weight: bold;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+}
+
+#pollScreenerLegend div {
+  text-align: center;
+}
+/*# sourceMappingURL=pollScreenerLegend.module.css.map */

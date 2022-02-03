@@ -1,0 +1,180 @@
+#activePollsListLegend {
+  margin-top: 40px;
+  margin-bottom: 5px;
+  width: 85.5%;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-weight: bold;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+}
+
+#activePollsListLegend div {
+  text-align: center;
+}
+
+#activePollsList {
+  border: 1px solid #e5e7eb;
+  background-color: white;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  width: 90%;
+}
+
+.activePollsElement {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 95%;
+  margin-left: 2.5%;
+  border-radius: 3px;
+  border: 1px solid #d3d3d4;
+  background-color: white;
+  -webkit-transition: 0.75s;
+  transition: 0.75s;
+  overflow: hidden;
+}
+
+.pollDescriptionRow {
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 100px 0;
+  border-top: 1px dashed #d3d3d4;
+}
+
+.activePollsElementFirstRow {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: -ms-grid;
+  display: grid;
+  padding: 0 50px 0;
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+}
+
+.activePollsElementFirstRow div {
+  text-transform: capitalize;
+}
+
+.activePollsElementFirstRow div:not(.expandButton) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.expandButtonContainer {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.expandButton {
+  cursor: pointer;
+  fill: #999999;
+  -webkit-transition: 0.75s;
+  transition: 0.75s;
+  overflow: hidden;
+}
+
+.actionsBox {
+  border-top: 1px dashed #d3d3d4;
+  padding: 10px 100px 10px;
+}
+
+.actionsRow {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 100px 0;
+}
+
+.actionsRow div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.actionsRow div button {
+  margin-left: 10px;
+}
+
+.actionsRow div, .actionsRow button {
+  -ms-grid-column-align: center;
+      justify-self: center;
+  cursor: pointer;
+}
+
+.actionsRow select {
+  border-radius: 3px;
+  background-color: white;
+  width: 75px;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.actionsRow button {
+  height: 31px;
+  padding: 0 10px 0;
+  background-color: #698fe2;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.actionsRow .buttonDisabled {
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.pollElementLoading {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 95%;
+  margin-left: 2.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pollElementLoading img {
+  width: 20px;
+}
+/*# sourceMappingURL=activePolls.module.css.map */

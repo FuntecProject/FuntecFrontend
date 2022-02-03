@@ -1,0 +1,66 @@
+#pollType {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 15px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 5px;
+  margin: 20px 0 20px;
+  background-color: white;
+}
+
+.pollTypeElement {
+  border-radius: 15px;
+  padding: 10px;
+  margin: 0 5px 0;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.pollTypeElement:hover {
+  background-color: #ecebeb;
+}
+
+.activePoll {
+  background-color: #e5e5e5;
+}
+
+.activePollsElementLoading {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 95%;
+  margin-left: 2.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.noElementFound {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 95%;
+  margin-left: 2.5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+/*# sourceMappingURL=activePollsList.module.css.map */

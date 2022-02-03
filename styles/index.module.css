@@ -1,0 +1,193 @@
+@font-face {
+  font-family: 'Oxygen';
+  src: url("/textFonts/Oxygen-Regular.ttf") format("truetype");
+  font-display: auto;
+}
+
+#main {
+  font-family: 'Oxygen', sans-serif;
+}
+
+#body {
+  background-image: url("/images/welcomeBackground.svg");
+  background-size: cover;
+}
+
+.boldText {
+  font-weight: 600;
+}
+
+#navElements {
+  position: absolute;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  height: 60px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navElement {
+  position: relative;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10px 0;
+  margin: 0 20px 0;
+  cursor: pointer;
+  color: #b6adfa;
+}
+
+.navElement:hover {
+  color: white;
+}
+
+.navElementSurline {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  height: 3px;
+  width: 0%;
+  opacity: 0;
+  background-color: grey;
+  border-radius: 5px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.active {
+  width: 80%;
+  opacity: 1;
+  background-color: #ffd000;
+}
+
+.navElement:hover .navElementSurline {
+  width: 80%;
+  opacity: 1;
+}
+
+.navElement:hover .active {
+  width: 90%;
+}
+
+#navLeftSide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+#firstView {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+}
+
+#leftView {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+#leftViewHeader {
+  width: 600px;
+}
+
+#title {
+  margin-bottom: 30px;
+  font-size: 44px;
+  color: white;
+}
+
+#subTitle {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #eeedfa;
+}
+
+#firstViewButtons input[type=button] {
+  font-size: 1rem;
+  margin-right: 15px;
+  cursor: pointer;
+  padding: 10px;
+  width: 150px;
+  height: 45px;
+  background-color: transparent;
+  border: 2px solid #d1ccfa;
+  color: white;
+  border-radius: 5px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+#firstViewButtons input[type=button]:hover {
+  -webkit-box-shadow: 0 0 3px 2px gold;
+          box-shadow: 0 0 3px 2px gold;
+}
+
+#firstViewSvg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#firstViewSvg img {
+  width: 95%;
+}
+
+#firstViewButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=index.module.css.map */

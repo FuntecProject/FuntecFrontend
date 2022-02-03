@@ -1,0 +1,95 @@
+#walletsIframeWindow {
+  border: 1px solid grey;
+  background-color: white;
+  border-radius: 25px;
+  position: absolute;
+  margin-top: 30px;
+  width: 600px;
+  height: 400px;
+  left: 50%;
+  opacity: 1;
+  z-index: 10;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+#closeWalletsIframe {
+  cursor: pointer;
+}
+
+#walletsIframeTitleAndSvg {
+  width: 90%;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#wallets {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.walletElement {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border: 1px solid #afafaf;
+  background-color: #edeef2;
+  padding: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.walletElement:hover {
+  background-color: white;
+}
+
+.walletName {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#learnMore:hover {
+  text-decoration: underline;
+}
+/*# sourceMappingURL=selectWalletWindow.module.css.map */

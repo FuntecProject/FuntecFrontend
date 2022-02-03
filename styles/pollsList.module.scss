@@ -1,0 +1,43 @@
+#pollsListLegend {
+    margin-bottom: 5px;
+    width: 85.5%;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    div {
+        text-align: center;
+    }
+}
+
+.pollTitle {
+    margin-left: 2.5%;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.pollElementLoading {
+    position:relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+    width: 95%;
+    margin-left: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.noElementFound {
+    position:relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+    width: 95%;
+    margin-left: 2.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

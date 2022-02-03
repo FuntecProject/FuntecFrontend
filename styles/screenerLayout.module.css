@@ -1,0 +1,99 @@
+@font-face {
+  font-family: 'Quicksand';
+  src: url("/textFonts/Quicksand-VariableFont_wght.ttf") format("truetype");
+  font-display: auto;
+}
+
+#body {
+  position: relative;
+  height: 100vh;
+  max-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  background-color: #e5e5e5;
+  font-family: 'Quicksand', sans-serif;
+  overflow-x: hidden;
+}
+
+#main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+#menuPanel {
+  position: absolute;
+  right: 5px;
+  z-index: 1;
+  top: 65px;
+  width: 300px;
+  height: 450px;
+  background-color: white;
+  border: 1px solid #d3d3d4;
+  border-radius: 3px;
+  -webkit-transition: 0.75s;
+  transition: 0.75s;
+  -webkit-transform: translateX(350px);
+          transform: translateX(350px);
+  padding: 30px 0 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#menuPanel div {
+  border: 1px solid #d3d3d4;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  width: 90%;
+  min-height: 50px;
+  -webkit-transition: 0.75s;
+  transition: 0.75s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 15px;
+}
+
+#menuPanel div:hover {
+  background-color: #e7e7e7;
+}
+
+#backgroundShadowed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+/*# sourceMappingURL=screenerLayout.module.css.map */
