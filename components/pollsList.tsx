@@ -22,7 +22,7 @@ export default function PollsList(props: IPollsListProps): React.ReactElement {
     const [getPoll, poll] = useLazyQuery<{poll: IPoll}>(getPollQuery)
     const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
 
-    React.useEffect((): void => {
+    React.useEffect(() => {
         if (props.parentState.idSearched != '') {
             getPoll({variables: {id: props.parentState.idSearched}})
         }

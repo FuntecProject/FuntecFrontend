@@ -10,9 +10,9 @@ import { RootContext, IRootContextType } from './screenerLayoutWrapper'
 import { errorMessageWithoutClick } from "../library/alertWindows"
 
 interface ICreateOracleWindowState {
-    display: 'none' | 'initial',
-    responseDays: number,
-    responseHours: number,
+    display: 'none' | 'initial'
+    responseDays: number
+    responseHours: number
     oracleFee: number
 } 
 
@@ -80,7 +80,10 @@ export default function CreateOracle(): React.ReactElement {
     }
 
     return (
-        <div id={styles.createOracleIframe} style={{'display': state.display}}>
+        <div 
+            id={styles.createOracleIframe} 
+            style={{'display': state.display}}
+        >
             <div id={styles.createOracle}>
                 <div id={styles.createOracleTitleAndSvg}>                
                     <h2 id={styles.createOracleTitle}>Create oracle:</h2>

@@ -2,5 +2,6 @@
     "docsUrl": "https://docs.funtec.xyz/",
     "subgraphUrl": "https://api.thegraph.com/subgraphs/name/pabloturnes/thehard6",
     "infuraIPFSGateway": "https://ipfs.infura.io/ipfs",
-    "githubUrl": "https://github.com/FuntecProject"
+    "githubUrl": "https://github.com/FuntecProject",
+    "ipfsPiningServiceUrl": "https://funtec.azurewebsites.net"
 }

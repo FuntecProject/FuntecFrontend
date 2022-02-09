@@ -5,15 +5,14 @@ import polls from "../pages/polls"
 import oracles from "../pages/oracles"
 import activePolls from "../pages/activepolls"
 import welcome from "../pages/index"
+import { getComponentName } from '../library/utils'
+import { AppProps } from 'next/dist/shared/lib/router/router'
 
-interface IMyAppProps {
-	Component: React.FunctionComponent
-}
 
-export default function MyApp({ Component }: IMyAppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
 	if (Component == welcome) {
 		return (
-			<Component />
+			<Component {...pageProps} />
 		)
 	}
 
@@ -26,7 +25,9 @@ export default function MyApp({ Component }: IMyAppProps) {
 	{
 		return (
 			<>
-				<ScreenerLayoutWrapper wrappedComponent={Component}></ScreenerLayoutWrapper>
+				<ScreenerLayoutWrapper title={getComponentName(Component)}>
+					<Component {...pageProps} />
+				</ScreenerLayoutWrapper>
 			</>
 		)
 	}	

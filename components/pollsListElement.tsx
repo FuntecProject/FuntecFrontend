@@ -17,6 +17,8 @@ import {
 import { getDescriptionFromHash } from '../library/ipfsQuerys'
 import { useMediaQuery } from 'react-responsive'
 import { fromWei } from 'web3-utils'
+import { PollAditionalInfoMobile } from './pollAdditionalInfoMobile'
+import { IRootContextType, RootContext } from './screenerLayoutWrapper'
 
 enum PollParticipantTypes {
     Contribute,
@@ -44,16 +46,16 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
         description: null
     })
 
+    const rootContext: IRootContextType = React.useContext(RootContext)
     const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
 
-    React.useEffect((): void => {
+    React.useEffect(() => {
         let pollStatus = getPollStatus(props.pollData)      
-        
+            
         setState(prevState => ({
             ...prevState,
             pollStatus: pollStatus
-        }))     
-
+        }))             
         getDescriptionFromHash(props.pollData.hash)
             .then(description => {
                 setState(prevState => ({
@@ -115,6 +117,18 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
     }
 
     const MobileVersion = (): React.ReactElement => {
+        const [_state, _setState] = React.useState<{displayed: boolean}>({
+            displayed: false
+        })
+
+        const AditionalInfo = () => {
+            if (_state.displayed) {
+                return <PollAditionalInfoMobile pollData={props.pollData} />
+            }
+
+            return null
+        }
+
         return (
             <div className={styles.pollElement}>
                 <div className={styles.pollElementIdMobile}>
@@ -125,30 +139,43 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
                     <div className={styles.pollElementRowMobile}>
                         <div>State:</div>
                         <div>{state.pollStatus != null ? state.pollStatus[0] : "-"}</div>
-                    </div>              
+                    </div>          
+
                     <div className={styles.pollElementRowMobile}>
                         <div>Result:</div>
                         <div>{state.pollStatus != null ? state.pollStatus[1] : "-"}</div>
-                    </div>              
+                    </div>   
+
                     <div className={styles.pollElementRowMobile}>
                         <div>Total contributed:</div>
                         <div>{fromWei(props.pollData.totalAmountContributed)} ETH</div>
-                    </div>              
+                    </div> 
+
                     <div className={styles.pollElementRowMobile}>
                         <div>Date limit:</div>
                         <div>{getReadableDate(props.pollData.dateLimit)}</div>
-                    </div>              
+                    </div>        
+
                     <div style={{marginTop: '15px'}} className={`${styles.receiverAndOracleIdsRowMobile}`}>
                         <div className={styles.centerCell}>Receiver Id</div>
                         <div className={styles.centerCell}>Oracle Id</div>
-                    </div>              
+                    </div>  
+
                     <div style={{marginBottom: '15px'}} className={`${styles.receiverAndOracleIdsRowMobile}`}>
                         <div className={styles.centerCell}>#{props.pollData.receiverId}</div>
                         <div className={styles.centerCell}>#{props.pollData.oracleId}</div>
-                    </div>              
-                    <div id={styles.morePollElementMobile}>
-                        <PlusIcon />
                     </div>
+
+                    <div id={styles.morePollElementMobile}>
+                        <PlusIcon onClick={() => {
+                            _setState(prevState => ({
+                                ...prevState,
+                                displayed: true
+                            }))
+                        }}/>
+                    </div>
+                    
+                    <AditionalInfo />
                 </div>
             </div>
         )

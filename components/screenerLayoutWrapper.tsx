@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import Web3 from "web3"
 import contractsMetaData from '../public/etc/contractsMetadata.json'
 import Head from "next/head"
@@ -25,6 +25,11 @@ interface IRootContextType {
     methods: RootMethodsType
 }
 
+interface IScreenerLayoutWrapperProps {
+    title: string
+    children: React.ReactElement
+}
+
 interface IScreenerLayoutWrapperState {
     providerNotInstalled: boolean
     wrongNetwork: boolean
@@ -45,6 +50,7 @@ interface IScreenerLayoutWrapperState {
 }
 
 interface RootMethodsType {
+    setBackgroundShadowed: () => void
     setAccountInfoDisplayed: () => void
     setMenuDisplayed: () => void
     setArbitrumNetworkWindowDisplayed: () => void
@@ -60,9 +66,8 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 })
 
-export default function ScreenerLayoutWrapper(props: {wrappedComponent: React.FunctionComponent}): React.ReactElement {
-    const WrappedComponent = props.wrappedComponent
-
+export default function ScreenerLayoutWrapper(props: IScreenerLayoutWrapperProps): React.ReactElement {
+    
     const [state, setState] = React.useState<IScreenerLayoutWrapperState>({
         providerNotInstalled: false,
         wrongNetwork: false,
@@ -173,6 +178,13 @@ export default function ScreenerLayoutWrapper(props: {wrappedComponent: React.Fu
         }))
     }
 
+    const setBackgroundShadowed = (): void => {
+        setState(prevState => ({
+            ...prevState,
+            backgroundShadowed: true
+        }))
+    }
+
     const setMenuDisplayed = (): void => {
         setState(prevState => ({
             ...prevState,
@@ -246,6 +258,7 @@ export default function ScreenerLayoutWrapper(props: {wrappedComponent: React.Fu
     }
 
     const methods: RootMethodsType = {
+        setBackgroundShadowed: setBackgroundShadowed,
         setAccountInfoDisplayed: setAccountInfoDisplayed,
         setMenuDisplayed: setMenuDisplayed,
         setArbitrumNetworkWindowDisplayed: setArbitrumNetworkWindowDisplayed,
@@ -266,7 +279,7 @@ export default function ScreenerLayoutWrapper(props: {wrappedComponent: React.Fu
             <ApolloProvider client={client}>
                 <RootContext.Provider value={contextData}>
                     <Head>
-                        <title>{getComponentName(props.wrappedComponent)}</title>
+                        <title>{props.title}</title>
                         <link rel="icon" type="image/x-icon" href="/images/appIcon.svg"></link>
                     </Head> 
 
@@ -274,7 +287,7 @@ export default function ScreenerLayoutWrapper(props: {wrappedComponent: React.Fu
                         <Navbar />    
                         
                         <main id={styles.main}>                    
-                                <WrappedComponent />
+                            {props.children}
                         </main> 
                         
                         <MenuPanel />

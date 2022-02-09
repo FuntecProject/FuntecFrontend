@@ -3,7 +3,7 @@ import { IPoll } from "./graphqlQuerys"
 import { IRootContextType } from "../components/screenerLayoutWrapper"
 import { contributorHasRequested } from "./web3methods"
 
-const checkIfOracleCanClaim = async (rootContext: IRootContextType, pollData: IPoll): Promise<boolean> => {
+const checkIfOracleCanClaim = async (pollData: IPoll): Promise<boolean> => {
     let _currentTimeUnix = getCurrentTimeUnix()
 
     if (
