@@ -13,7 +13,7 @@ import AccountButton from "./accountButton"
 
 export default function MenuPanel(): React.ReactElement {
     const rootContext: IRootContextType = React.useContext(RootContext)
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const createReceiverAccountListener = async (): Promise<void> => {
         const reciverId = await getReceiverId(rootContext.state.accountsStorageInstance, rootContext.state.account)
@@ -106,11 +106,11 @@ export default function MenuPanel(): React.ReactElement {
     }
 
     const MenuPanelElements = () => {
-        if (isDesktopOrLaptop) {
-            return <MenuPanelElementsDesktop />
+        if (isMobile) {
+            return <MenuPanelElementsMobile />
         }
 
-        return <MenuPanelElementsMobile />
+        return <MenuPanelElementsDesktop />
     }
 
     return (

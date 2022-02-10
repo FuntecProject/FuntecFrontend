@@ -30,7 +30,7 @@ interface IActivePollsListState {
 
 export default function ActivePollsList(): React.ReactElement {
     const rootContext: IRootContextType = React.useContext(RootContext) 
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isMobile = useMediaQuery({ maxWidth: 1200})
     const [getPollsAsOracle, pollsAsOracle] = useLazyQuery<{polls: IPoll[]}>(pollsQueryByOracleId)
     const [getPollsAsReceiver, pollsAsReceiver] = useLazyQuery<{polls: IPoll[]}>(pollsQueryByReceiverId, {})
 
@@ -211,9 +211,9 @@ export default function ActivePollsList(): React.ReactElement {
     }
 
     return (
-        isDesktopOrLaptop ?
-            <DesktopVersion />
-            :
+        isMobile ?
             <MobileVersion />
+            :
+            <DesktopVersion />
     )
 }

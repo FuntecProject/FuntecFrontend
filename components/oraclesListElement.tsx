@@ -15,7 +15,7 @@ interface IOraclesListElementProps {
 }
 
 export default function OraclesListElement(props: IOraclesListElementProps): React.ReactElement {
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const DesktopVersion = () => {
         return (
@@ -72,9 +72,9 @@ export default function OraclesListElement(props: IOraclesListElementProps): Rea
     }
 
     return(
-        isDesktopOrLaptop ?
-            <DesktopVersion />
-            :
+        isMobile ?
             <MobileVersion />
+            :
+            <DesktopVersion />
     )
 }

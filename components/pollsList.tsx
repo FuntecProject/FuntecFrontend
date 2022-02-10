@@ -20,7 +20,7 @@ interface IPollsListProps {
 export default function PollsList(props: IPollsListProps): React.ReactElement {
     const polls = useQuery<{polls: IPoll[]}>(getPollsQuery)
     const [getPoll, poll] = useLazyQuery<{poll: IPoll}>(getPollQuery)
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     React.useEffect(() => {
         if (props.parentState.idSearched != '') {
@@ -93,9 +93,9 @@ export default function PollsList(props: IPollsListProps): React.ReactElement {
     }
 
     return (
-        isDesktopOrLaptop ?
-            <DesktopVersion />
-            :
+        isMobile ?
             <MobileVersion />
+            :
+            <DesktopVersion />
     )
 }

@@ -20,20 +20,17 @@ export default function AccountButton(): React.ReactElement {
     const rootContext: IRootContextType = React.useContext(RootContext)
 
     React.useEffect(() => {
-        const callback = async () => {
-            if (rootContext.state.web3 != null) {
-                if (rootContext.state.account != null) {
-                    let balance = await rootContext.state.web3.eth.getBalance(rootContext.state.account)
-
-                    setState(prevState => ({
-                        ...prevState,
-                        balance: balance
-                    }))
-                }
+        if (rootContext.state.web3 != null) {
+            if (rootContext.state.account != null) {
+                rootContext.state.web3.eth.getBalance(rootContext.state.account)
+                    .then(balance => {
+                        setState(prevState => ({
+                            ...prevState,
+                            balance: balance
+                        }))
+                    })        
             }
         }
-
-        callback()
     }, [rootContext.state])
 
     if (

@@ -43,8 +43,11 @@ const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
 
     React.useEffect(() => {
         const callback = async() => {
-            let oracleCanClaim = await checkIfOracleCanClaim(props.pollData)
-            let oracleCanResolve = await checkIfOracleCanResolve(props.pollData)
+            let oracleCanClaimPromise = checkIfOracleCanClaim(props.pollData)
+            let oracleCanResolvePromise = checkIfOracleCanResolve(props.pollData)
+
+            let oracleCanClaim = await oracleCanClaimPromise
+            let oracleCanResolve = await oracleCanResolvePromise
 
             setState(prevState => ({
                 ...prevState,

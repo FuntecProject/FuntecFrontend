@@ -22,8 +22,11 @@ export default function AccountInfoWindow (): React.ReactElement {
     React.useEffect((): void => {
         const callback = async (): Promise<void> => {
             if (rootContext.state.pollRewardsInstance && rootContext.state.account) {
-                let oracleId = await rootContext.state.accountsStorageInstance.methods.addressToOracleId(rootContext.state.account).call()
-                let receiverId = await rootContext.state.accountsStorageInstance.methods.addressToReceiverId(rootContext.state.account).call()
+                let oracleIdPromise = rootContext.state.accountsStorageInstance.methods.addressToOracleId(rootContext.state.account).call()
+                let receiverIdPromise = rootContext.state.accountsStorageInstance.methods.addressToReceiverId(rootContext.state.account).call()
+
+                let oracleId = await oracleIdPromise
+                let receiverId = await receiverIdPromise
 
                 setState(prevState => ({
                     ...prevState,

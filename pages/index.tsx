@@ -4,19 +4,12 @@ import Image from 'next/dist/client/image'
 import styles from '../styles/index.module.scss'
 import metaData from '../public/etc/metaData.json'
 import { useMediaQuery } from "react-responsive"
-import { GetServerSideProps } from 'next'
-import isMobile from 'ismobilejs'
 import React from 'react'
 
 declare let window: any
 
-interface IWelcomeProps {
-    userAgent: string
-}
-
-const Welcome = ({ userAgent }: IWelcomeProps): React.ReactElement => {
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
-    const isServer = (typeof window === 'undefined')? false : true
+const Welcome = (): React.ReactElement => {
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const DesktopVersion = () => {
         return (
@@ -107,33 +100,14 @@ const Welcome = ({ userAgent }: IWelcomeProps): React.ReactElement => {
             </Head>
 
             {
-                isServer ?
-                    isMobile(userAgent).any ?
-                        <MobileVersion />
-                        :
-                        <DesktopVersion />
-                    :
-                    isDesktopOrLaptop ?
-                        <DesktopVersion />
-                        :
-                        <MobileVersion />
-                    
+                isMobile ?
+                    <MobileVersion />
+                :
+                    <DesktopVersion />
             }
         </div>
     )
 }
 
-const getServerSideProps: GetServerSideProps = async (context) => {
-    let userAgent = context.req.headers["user-agent"]
-
-    return {
-        props: { userAgent: userAgent }
-    }
-}
-
 export default Welcome
-
-export {
-    getServerSideProps
-}
 

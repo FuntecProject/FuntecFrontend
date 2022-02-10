@@ -24,7 +24,7 @@ export default function OraclesList(props: IOraclesListProps): React.ReactElemen
     const oracles = useQuery<{oracles: IOracle[]}>(oraclesQuery)
     const [getOracle, oracle] = useLazyQuery<{oracle: IOracle}>(getOracleQuery)
 
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224})
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     useEffect((): void => {
         const callback = async () => {
@@ -126,9 +126,9 @@ export default function OraclesList(props: IOraclesListProps): React.ReactElemen
     }
 
     return(
-        isDesktopOrLaptop ?
-            <DesktopVersion />
-            :
+        isMobile ?
             <MobileVersion />
+            :
+            <DesktopVersion />
     )
 }

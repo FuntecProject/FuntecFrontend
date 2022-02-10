@@ -46,8 +46,7 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
         description: null
     })
 
-    const rootContext: IRootContextType = React.useContext(RootContext)
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     React.useEffect(() => {
         let pollStatus = getPollStatus(props.pollData)      
@@ -182,10 +181,10 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
     }
 
     return (
-        isDesktopOrLaptop ?
-            <DesktopVersion />
-            :
+        isMobile ?
             <MobileVersion />
+            :
+            <DesktopVersion />
     )
 }
 

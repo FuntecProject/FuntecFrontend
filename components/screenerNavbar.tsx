@@ -23,21 +23,18 @@ export default function ScreenerNavbar(): React.ReactElement {
     })
 
     const rootContext: IRootContextType = React.useContext(RootContext)
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     React.useEffect(() => {
-        const callback = async () => {
-            if (rootContext.state.web3 != null) {
-                let gasPrice = await getGasPrice(rootContext)
-
-                setState(prevState => ({
-                    ...prevState,
-                    gasPrice: gasPrice
-                }))
-            }
+        if (rootContext.state.web3 != null) {
+            getGasPrice(rootContext)
+                .then(gasPrice => {
+                    setState(prevState => ({
+                        ...prevState,
+                        gasPrice: gasPrice
+                    }))
+                })
         }
-
-        callback()
     }, [rootContext.state])
 
     const NavElement = (props: {page: string, textContent: string}) => {
@@ -123,10 +120,10 @@ export default function ScreenerNavbar(): React.ReactElement {
     }
 
     return (
-        isDesktopOrLaptop ?
-            <DesktopNavbar />
-            :
+        isMobile ?
             <MobileNavBar />
+            :
+            <DesktopNavbar />
     )
 }
 

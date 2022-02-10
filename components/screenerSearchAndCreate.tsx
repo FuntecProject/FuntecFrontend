@@ -15,7 +15,7 @@ interface IScreenerSearchAndCreateProps {
 
 export default function ScreenerSearchAndCreate(props: IScreenerSearchAndCreateProps): React.ReactElement {
     const rootContext: IRootContextType = React.useContext(RootContext)
-    const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 })
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const DesktopVersion = () => {
         let searchInput = React.createRef() as any
@@ -99,9 +99,9 @@ export default function ScreenerSearchAndCreate(props: IScreenerSearchAndCreateP
     }
 
     return (
-        isDesktopOrLaptop ?
-            <DesktopVersion />
-        :
+        isMobile ?
             <MobileVersion />
+        :
+            <DesktopVersion />
     )
 }
