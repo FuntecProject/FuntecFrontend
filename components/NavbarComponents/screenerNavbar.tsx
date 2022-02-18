@@ -1,26 +1,20 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import GasIcon from "../public/images/gasIcon.svg"
-import BellIcon from "../public/images/bellIcon.svg"
-import CrossIcon from "../public/images/crossIcon.svg"
-import ArbitrumIcon from "../public/images/arbitrum.svg"
-import styles from "../styles/screenerNavbar.module.scss"
-import { RootContext, IRootContextType } from './screenerLayoutWrapper'
-import { getGasPrice } from '../library/web3methods'
+import GasIcon from "./../../public/images/gasIcon.svg"
+import BellIcon from "./../../public/images/bellIcon.svg"
+import CrossIcon from "./../../public/images/crossIcon.svg"
+import styles from "./../../styles/screenerNavbar.module.scss"
+import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import { getGasPrice } from '../../library/web3methods'
 import { useMediaQuery } from 'react-responsive'
-import AccountButton from '../components/accountButton'
+import AccountButton from './accountButton'
+import MenuPanel from './menuPanel'
 
-interface IScreenerNavbarState {
-    balance: string
-    gasPrice: string
-}
 
-export default function ScreenerNavbar(): React.ReactElement {
-    const [state, setState] = React.useState<IScreenerNavbarState>({
-        balance: "",
-        gasPrice: 'N/A'
-    })
+const ScreenerNavbar = (): React.ReactElement => {
+    const [gasPrice, setGasPrice] = React.useState<string>('N/A')
+    const [menuDisplayed, setMenuDisplayed] = React.useState<boolean>(false)
 
     const rootContext: IRootContextType = React.useContext(RootContext)
     const isMobile = useMediaQuery({ maxWidth: 1200})
@@ -29,10 +23,7 @@ export default function ScreenerNavbar(): React.ReactElement {
         if (rootContext.state.web3 != null) {
             getGasPrice(rootContext)
                 .then(gasPrice => {
-                    setState(prevState => ({
-                        ...prevState,
-                        gasPrice: gasPrice
-                    }))
+                    setGasPrice(gasPrice)
                 })
         }
     }, [rootContext.state])
@@ -55,10 +46,10 @@ export default function ScreenerNavbar(): React.ReactElement {
 
     const MenuButtonElement = (): React.ReactElement => {
         return (
-            rootContext.state.menuDisplayed ?
+            menuDisplayed ?
                 <CrossIcon style={{marginRight: '20px'}}/>
                 :
-                <div onClick={rootContext.methods.setMenuDisplayed} id={styles.menuIcon}>
+                <div onClick={() => {setMenuDisplayed(true)}} id={styles.menuIcon}>
                     <div></div>
                     <div></div>
                     <div></div>
@@ -89,7 +80,7 @@ export default function ScreenerNavbar(): React.ReactElement {
 
                         <div id={styles.gasPanel} title='Current gas price on the network'>
                             <GasIcon />
-                            <div id={styles.gasPrice}>{state.gasPrice}</div>
+                            <div id={styles.gasPrice}>{gasPrice}</div>
                         </div>  
 
                         <div id={styles.notificationsPanel}></div>  
@@ -120,11 +111,19 @@ export default function ScreenerNavbar(): React.ReactElement {
     }
 
     return (
-        isMobile ?
-            <MobileNavBar />
-            :
-            <DesktopNavbar />
+        <>
+            {
+                isMobile ?
+                    <MobileNavBar />
+                    :
+                    <DesktopNavbar />
+            }
+
+            <MenuPanel menuDisplayed={menuDisplayed} closeMenuCallback={() => {setMenuDisplayed(false)}} />
+        </>
     )
 }
+
+export default ScreenerNavbar
 
 

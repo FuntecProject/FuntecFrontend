@@ -1,6 +1,6 @@
 import { getPollStatus } from "./utils"
 import { addStringToIPFS } from "./ipfsQuerys"
-import { IRootContextType } from "../components/screenerLayoutWrapper"
+import { IRootContextType } from "../components/Global components/screenerLayoutWrapper"
 import BigNumber from "bignumber.js"
 import { sucessMessageWithclick } from "./alertWindows"
 import { Contract } from "web3-eth-contract"

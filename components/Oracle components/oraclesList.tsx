@@ -2,24 +2,23 @@ import React, { useEffect } from "react"
 import {
     IOracle,
     getOracleQuery
-} from '../library/graphqlQuerys'
-import styles from "../styles/oraclesList.module.scss"
+} from '../../library/graphqlQuerys'
+import styles from "../../styles/oraclesList.module.scss"
 import OraclesListElement from "./oraclesListElement"
-import { IOraclesState } from "../pages/oracles"
-import LoadingElement from "./loadingElement"
-import ScreenerBox from "./screenerBox"
+import LoadingElement from "../Global components/loadingElement"
+import ScreenerBox from "../Global components/screenerBox"
 import { useQuery, gql, useLazyQuery } from "@apollo/client"
-import { oraclesQuery } from "./../library/graphqlQuerys"
+import { oraclesQuery } from "./../../library/graphqlQuerys"
 import { useMediaQuery } from "react-responsive"
 import { isAddress } from "web3-utils"
-import { getAddressFromENS, getOracleId } from "../library/web3methods"
-import { RootContext, IRootContextType } from './screenerLayoutWrapper'
+import { getAddressFromENS, getOracleId } from "../../library/web3methods"
+import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
 
 interface IOraclesListProps {
-    parentState: IOraclesState
+    idSearched: string
 }
 
-export default function OraclesList(props: IOraclesListProps): React.ReactElement {
+const OraclesList = (props: IOraclesListProps): React.ReactElement => {
     const rootContext: IRootContextType = React.useContext(RootContext)
     const oracles = useQuery<{oracles: IOracle[]}>(oraclesQuery)
     const [getOracle, oracle] = useLazyQuery<{oracle: IOracle}>(getOracleQuery)
@@ -28,33 +27,33 @@ export default function OraclesList(props: IOraclesListProps): React.ReactElemen
 
     useEffect((): void => {
         const callback = async () => {
-            if (props.parentState.idSearched != '') {
-                if (isAddress(props.parentState.idSearched)) {
+            if (props.idSearched != '') {
+                if (isAddress(props.idSearched)) {
                     let oracleId = await getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)
 
                     getOracle({variables: {id: oracleId}})
                 }
 
                 else {
-                    if (props.parentState.idSearched.endsWith('.eth')) {                        
-                        let oracleAddress = await getAddressFromENS(rootContext.state.web3, props.parentState.idSearched)
+                    if (props.idSearched.endsWith('.eth')) {                        
+                        let oracleAddress = await getAddressFromENS(rootContext.state.web3, props.idSearched)
                         let oracleId = await getOracleId(rootContext.state.accountsStorageInstance, oracleAddress)
 
                         getOracle({variables: {id: oracleId}})
                     }
 
                     else {
-                        getOracle({variables: {id: props.parentState.idSearched}})
+                        getOracle({variables: {id: props.idSearched}})
                     }
                 }
             }
         }
 
         callback()
-    }, [props.parentState.idSearched])
+    }, [props.idSearched])
 
     const SearchedOracle = (): React.ReactElement => {
-        if (props.parentState.idSearched != '') {
+        if (props.idSearched != '') {
             if (oracle.loading == false && oracle.data != undefined) {
                 if (oracle.data.oracle != null) {
                     return (
@@ -132,3 +131,5 @@ export default function OraclesList(props: IOraclesListProps): React.ReactElemen
             <DesktopVersion />
     )
 }
+
+export default OraclesList

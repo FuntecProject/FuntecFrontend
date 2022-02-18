@@ -1,6 +1,6 @@
 import { getCurrentTimeUnix } from "./utils"
 import { IPoll } from "./graphqlQuerys"
-import { IRootContextType } from "../components/screenerLayoutWrapper"
+import { IRootContextType } from "../components/Global components/screenerLayoutWrapper"
 import { contributorHasRequested } from "./web3methods"
 
 const checkIfOracleCanClaim = async (pollData: IPoll): Promise<boolean> => {

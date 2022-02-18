@@ -6,7 +6,7 @@ import {
     claimContributorReward,
     claimOracleReward, 
     solvePoll
-} from '../library/web3methods'
+} from './../../library/web3methods'
 
 import { 
     checkIfContributorCanContribute,
@@ -15,11 +15,11 @@ import {
     checkIfOracleCanClaim,
     checkIfOracleCanResolve,
     checkIfReceiverCanClaim
-} from '../library/web3Checks'
-import styles from "../styles/pollsListElement.module.scss"
-import { RootContext, IRootContextType } from './screenerLayoutWrapper'
-import { IPoll } from '../library/graphqlQuerys'
-import { errorMessageWithoutClick } from '../library/alertWindows'
+} from './../../library/web3Checks'
+import styles from "./../../styles/pollsListElement.module.scss"
+import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import { IPoll } from './../../library/graphqlQuerys'
+import { errorMessageWithoutClick } from './../../library/alertWindows'
 import { toWei } from 'web3-utils'
 
 interface IPollListElementRowProps {

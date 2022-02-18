@@ -1,8 +1,8 @@
 import React from "react"
 import Image from 'next/image'
-import styles from "../styles/screenerSearchAndCreate.module.scss"
-import Magnifier from "../public/images/magnifier.svg"
-import CrossIcon from "../public/images/crossIcon.svg"
+import styles from "../../styles/screenerSearchAndCreate.module.scss"
+import Magnifier from "../../public/images/magnifier.svg"
+import CrossIcon from "../../public/images/crossIcon.svg"
 import { IRootContextType, RootContext } from "./screenerLayoutWrapper"
 import { useMediaQuery } from 'react-responsive'
 
@@ -11,9 +11,10 @@ interface IScreenerSearchAndCreateProps {
     createButtonText: string
     idSearched: string
     setIdSearched: (idSearched: string) => void
+    setCreateWindowDisplayed: () => void
 }
 
-export default function ScreenerSearchAndCreate(props: IScreenerSearchAndCreateProps): React.ReactElement {
+const ScreenerSearchAndCreate = (props: IScreenerSearchAndCreateProps): React.ReactElement => {
     const rootContext: IRootContextType = React.useContext(RootContext)
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
@@ -51,7 +52,12 @@ export default function ScreenerSearchAndCreate(props: IScreenerSearchAndCreateP
                             null
                     }
                 </div>          
-                <div onClick={rootContext.methods.setCreateWindowDisplayed} id={styles.createButton}>{props.createButtonText}</div>
+                <div 
+                    onClick={props.setCreateWindowDisplayed} 
+                    id={styles.createButton}
+                >
+                    {props.createButtonText}
+                </div>
             </div>
         )
     }
@@ -63,7 +69,7 @@ export default function ScreenerSearchAndCreate(props: IScreenerSearchAndCreateP
             <div id={styles.searchAndCreateMobile}>
                 <div 
                     id={styles.createButtonMobile}
-                    onClick={rootContext.methods.setCreateWindowDisplayed}
+                    onClick={props.setCreateWindowDisplayed}
                 >
                     <Image src="/images/createWindowIcon.png" alt="Open create poll or oracle window" width={45} height={45} />
                 </div>
@@ -105,3 +111,5 @@ export default function ScreenerSearchAndCreate(props: IScreenerSearchAndCreateP
             <DesktopVersion />
     )
 }
+
+export default ScreenerSearchAndCreate

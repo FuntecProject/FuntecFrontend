@@ -1,13 +1,19 @@
 import React from "react"
-import CrossIcon from "../public/images/crossIcon.svg"
-import { IRootContextType, RootContext } from './screenerLayoutWrapper'
-import styles from "../styles/selectWalletWindow.module.scss"
+import CrossIcon from "../../public/images/crossIcon.svg"
+import { IRootContextType, RootContext } from '../Global components/screenerLayoutWrapper'
+import styles from "../../styles/selectWalletWindow.module.scss"
 import Image from "next/dist/client/image"
-import { errorMessageWithClick } from "../library/alertWindows"
+import { errorMessageWithClick } from "./../../library/alertWindows"
+import ScreenMouseLock from "../Global components/screenMouseLock"
 
 declare let window: any
 
-export default function SelectWalletWindow(): React.ReactElement | null {
+interface ISelectWalletWindowProps {
+    windowDisplayed: boolean
+    closeWindowListener: () => void
+}
+
+const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement | null => {
     const rootContext: IRootContextType = React.useContext(RootContext)
 
     const Content = (): React.ReactElement => {
@@ -33,7 +39,7 @@ export default function SelectWalletWindow(): React.ReactElement | null {
             <div id={styles.walletsIframeWindow}>
                 <div id={styles.walletsIframeTitleAndSvg}>                
                     <h2>Choose a wallet:</h2>
-                    <CrossIcon id={styles.closeWalletsIframe} onClick={() => {rootContext.methods.removeDisplayedElement()}} />
+                    <CrossIcon id={styles.closeWalletsIframe} onClick={props.closeWindowListener} />
                 </div>
     
                 <div id={styles.wallets}>
@@ -61,9 +67,18 @@ export default function SelectWalletWindow(): React.ReactElement | null {
     }
 
     return (
-        rootContext.state.selectWalletWindowDisplayed ?
-            <Content />
+        props.windowDisplayed ?
+            <>
+                <Content />
+
+                <ScreenMouseLock 
+                    backgroundShadowed={true}
+                    removeDisplayedElement={props.closeWindowListener} 
+                />
+            </>
             :
             null
     )
 }
+
+export default SelectWalletWindow

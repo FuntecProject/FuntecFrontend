@@ -1,35 +1,34 @@
 import React from "react"
 import PollListElement, { PollParticipantTypes } from "./pollsListElement"
-import styles from "../styles/pollsList.module.scss"
-import LoadingElement from "./loadingElement"
-import ScreenerBox from "./screenerBox"
+import styles from "./../../styles/pollsList.module.scss"
+import LoadingElement from "./../Global components/loadingElement"
+import ScreenerBox from "./../Global components/screenerBox"
 import PollScreenerLegend from "./pollScreenerLegend"
 import { 
     IPoll,
     getPollQuery,
     getPollsQuery
-} from "./../library/graphqlQuerys"
-import { IPollsState } from "../pages/polls"
+} from "../../library/graphqlQuerys"
 import { useQuery, useLazyQuery } from "@apollo/client"
 import { useMediaQuery } from 'react-responsive'
 
 interface IPollsListProps {
-    parentState: IPollsState
+    idSearched: string
 }
 
-export default function PollsList(props: IPollsListProps): React.ReactElement {
+const PollsList = (props: IPollsListProps): React.ReactElement => {
     const polls = useQuery<{polls: IPoll[]}>(getPollsQuery)
     const [getPoll, poll] = useLazyQuery<{poll: IPoll}>(getPollQuery)
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
     React.useEffect(() => {
-        if (props.parentState.idSearched != '') {
-            getPoll({variables: {id: props.parentState.idSearched}})
+        if (props.idSearched != '') {
+            getPoll({variables: {id: props.idSearched}})
         }
-    }, [props.parentState.idSearched])
+    }, [props.idSearched])
 
     const Content = (): React.ReactElement => {
-        if (props.parentState.idSearched != '') {
+        if (props.idSearched != '') {
             if (poll.loading != true && poll.data != undefined) {
                 if (poll.data.poll != null) {
                     return (
@@ -99,3 +98,5 @@ export default function PollsList(props: IPollsListProps): React.ReactElement {
             <DesktopVersion />
     )
 }
+
+export default PollsList

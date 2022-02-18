@@ -1,36 +1,28 @@
 import React from 'react'
-import Arrow from "../public/images/arrow.svg"
-import PlusIcon from "../public/images/plusIcon.svg"
-import styles from "../styles/pollsListElement.module.scss"
+import Arrow from "./../../public/images/arrow.svg"
+import PlusIcon from "./../../public/images/plusIcon.svg"
+import styles from "./../../styles/pollsListElement.module.scss"
 import {  
     getReadableDate,
     IPollStatusTypes,
     getPollStatus
-} from '../library/utils'
-import { IPoll } from '../library/graphqlQuerys'
+} from '../../library/utils'
+import { IPoll } from '../../library/graphqlQuerys'
 import {
     OracleRow,
     ReceiverRow,
     ContributorRow,
     ContributeRow
 } from './pollListElementRows'
-import { getDescriptionFromHash } from '../library/ipfsQuerys'
+import { getDescriptionFromHash } from '../../library/ipfsQuerys'
 import { useMediaQuery } from 'react-responsive'
 import { fromWei } from 'web3-utils'
-import { PollAditionalInfoMobile } from './pollAdditionalInfoMobile'
-import { IRootContextType, RootContext } from './screenerLayoutWrapper'
-
-enum PollParticipantTypes {
-    Contribute,
-    Receiver,
-    Contributor,
-    Oracle
-}
+import PollAditionalInfoMobile from './pollAdditionalInfoMobile'
 
 interface IPollListElementProps {
     pollData: IPoll,
     key?: string,
-    pollType: number
+    pollType: PollParticipantTypes
 }
 
 interface IPollListElementState {
@@ -39,7 +31,14 @@ interface IPollListElementState {
     description: string | null
 }
 
-export default function PollListElement(props: IPollListElementProps): React.ReactElement {
+enum PollParticipantTypes {
+    Contribute,
+    Receiver,
+    Contributor,
+    Oracle
+}
+
+const PollListElement = (props: IPollListElementProps): React.ReactElement => {
     const [state, setState] = React.useState<IPollListElementState>({
         expand: false,
         pollStatus: null,
@@ -54,7 +53,8 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
         setState(prevState => ({
             ...prevState,
             pollStatus: pollStatus
-        }))             
+        }))        
+
         getDescriptionFromHash(props.pollData.hash)
             .then(description => {
                 setState(prevState => ({
@@ -116,17 +116,7 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
     }
 
     const MobileVersion = (): React.ReactElement => {
-        const [_state, _setState] = React.useState<{displayed: boolean}>({
-            displayed: false
-        })
-
-        const AditionalInfo = () => {
-            if (_state.displayed) {
-                return <PollAditionalInfoMobile pollData={props.pollData} />
-            }
-
-            return null
-        }
+        const [displayed, setDisplayed] = React.useState<boolean>(false)
 
         return (
             <div className={styles.pollElement}>
@@ -166,15 +156,19 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
                     </div>
 
                     <div id={styles.morePollElementMobile}>
-                        <PlusIcon onClick={() => {
-                            _setState(prevState => ({
-                                ...prevState,
-                                displayed: true
-                            }))
-                        }}/>
+                        <PlusIcon onClick={() => {setDisplayed(true)}}/>
                     </div>
                     
-                    <AditionalInfo />
+                    {
+                        displayed ?
+                            <PollAditionalInfoMobile 
+                                pollData={props.pollData} 
+                                closeWindow={() => {setDisplayed(false)}} 
+                                pollType={props.pollType}
+                            />
+                            :
+                            null
+                    }
                 </div>
             </div>
         )
@@ -187,6 +181,8 @@ export default function PollListElement(props: IPollListElementProps): React.Rea
             <DesktopVersion />
     )
 }
+
+export default PollListElement
 
 export {
     PollParticipantTypes

@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../styles/pollScreenerLegend.module.scss'
+import styles from './../../styles/pollScreenerLegend.module.scss'
 
 export default function PollScreenerLegend(): React.ReactElement {
     return (

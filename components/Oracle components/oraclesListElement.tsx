@@ -1,11 +1,11 @@
 import React from "react"
-import styles from "../styles/oraclesListElement.module.scss"
+import styles from "./../../styles/oraclesListElement.module.scss"
 import { 
     getDaysAndHoursFromUnix,
     converGWeiToEth,
     getTwoDecimalPercent
-} from "../library/utils"
-import { IOracle } from "../library/graphqlQuerys"
+} from "./../../library/utils"
+import { IOracle } from "./../../library/graphqlQuerys"
 import { useMediaQuery } from "react-responsive"
 import { fromWei } from "web3-utils"
 
@@ -14,7 +14,7 @@ interface IOraclesListElementProps {
     oracleData: IOracle
 }
 
-export default function OraclesListElement(props: IOraclesListElementProps): React.ReactElement {
+const OraclesListElement = (props: IOraclesListElementProps): React.ReactElement => {
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const DesktopVersion = () => {
@@ -78,3 +78,5 @@ export default function OraclesListElement(props: IOraclesListElementProps): Rea
             <DesktopVersion />
     )
 }
+
+export default OraclesListElement

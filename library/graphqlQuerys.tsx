@@ -131,7 +131,7 @@ const getPollsQuery = gql`
 
 /** exportable methods to query the subgraph */
 
-const getContributionsAsContributor = async (_client: ApolloClient<NormalizedCacheObject> , _contributorAddress: string): Promise<{data: Array<IContribution> | null, error: string | null}> => {
+const getContributionsAsContributor = async (_client: ApolloClient<object> , _contributorAddress: string): Promise<{data: Array<IContribution> | null, error: string | null}> => {
     try {
         return {
             data: (await _client.query({query: gql(contributionsQuery(`where: {contributorAddress: "${_contributorAddress}"}`))})).data.contributions,

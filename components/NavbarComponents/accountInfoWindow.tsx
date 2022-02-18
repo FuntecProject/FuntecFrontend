@@ -1,17 +1,23 @@
 import React from "react"
-import styles from "../styles/accountInfoWindow.module.scss"
-import RedirectIcon from "../public/images/redirect.svg"
-import CopyIcon from "../public/images/copy.svg"
-import LockIcon from "../public/images/lockIcon.svg"
-import CrossIcon from "../public/images/crossIcon.svg"
-import { RootContext, IRootContextType } from './screenerLayoutWrapper'
+import styles from "../../styles/accountInfoWindow.module.scss"
+import RedirectIcon from "../../public/images/redirect.svg"
+import CopyIcon from "../../public/images/copy.svg"
+import LockIcon from "../../public/images/lockIcon.svg"
+import CrossIcon from "../../public/images/crossIcon.svg"
+import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import ScreenMouseLock from "../Global components/screenMouseLock"
+
+interface IAccountInfoWindowProps {
+    windowDisplayed: boolean
+    closeWindowListener: () => void
+}
 
 interface IAccountInfoWindowState {
     receiverId: string | null,
     oracleId: string | null
 }
 
-export default function AccountInfoWindow (): React.ReactElement {
+const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement => {
     const [state, setState] = React.useState<IAccountInfoWindowState>({
         receiverId: null,
         oracleId: null
@@ -66,7 +72,7 @@ export default function AccountInfoWindow (): React.ReactElement {
                     <div id={styles.titleAndClose}>
                         <h1 id={styles.title}>Account</h1>
                         <CrossIcon 
-                            onClick={() => {rootContext.methods.removeDisplayedElement()}} 
+                            onClick={props.closeWindowListener} 
                             id={styles.closeAccountInfo}
                         />
                     </div>
@@ -120,9 +126,18 @@ export default function AccountInfoWindow (): React.ReactElement {
     }
 
     return (
-        rootContext.state.accountInfoDisplayed ?
-            <AccountInfoPannel />
+        props.windowDisplayed ?
+            <>
+                <AccountInfoPannel />
+
+                <ScreenMouseLock 
+                    backgroundShadowed={true} 
+                    removeDisplayedElement={props.closeWindowListener} 
+                />
+            </>
         :
             null
     )
 }
+
+export default AccountInfoWindow

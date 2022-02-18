@@ -1,17 +1,16 @@
 import React from 'react'
-import CreateOracleWindow from "../components/createOracleWindow"
-import OraclesList from '../components/oraclesList'
-import { IRootContextType, RootContext } from '../components/screenerLayoutWrapper'
-import ScreenerSearchAndCreate from '../components/screenerSearchAndCreate'
+import CreateOracleWindow from "../components/Oracle components/createOracleWindow"
+import OraclesList from '../components/Oracle components/oraclesList'
+import { IRootContextType, RootContext } from '../components/Global components/screenerLayoutWrapper'
+import ScreenerSearchAndCreate from '../components/Global components/screenerSearchAndCreate'
 
 interface IOraclesState {
     idSearched: string
 }
 
-export default function Oracles(): React.ReactElement {
-    const [state, setState] = React.useState<IOraclesState>({
-        idSearched: ''
-    })
+const Oracles = (): React.ReactElement => {
+    const [idSearched, setIdSearched] = React.useState<string>('')
+    const [createOracleWindowDisplayed, setCreateOracleWindowDisplayed] = React.useState<boolean>(false)
 
     const rootContext: IRootContextType = React.useContext(RootContext)
 
@@ -19,28 +18,27 @@ export default function Oracles(): React.ReactElement {
         rootContext.methods.setActivePage("oracles")
     }, [])
 
-    const setIdSearched = (idSearched: string) => {
-        setState(prevState => ({
-            ...prevState,
-            idSearched: idSearched
-        }))
-    }
-
     return (
         <>
             <ScreenerSearchAndCreate
                 inputPlaceholder='Search oracle by ID address or ENS name'
                 createButtonText='Create oracle'
-                idSearched={state.idSearched}
+                idSearched={idSearched}
                 setIdSearched={setIdSearched}
+                setCreateWindowDisplayed={() => {setCreateOracleWindowDisplayed(true)}}
             />
 
-            <OraclesList parentState={state} />
+            <OraclesList idSearched={idSearched} />
 
-            <CreateOracleWindow />
+            <CreateOracleWindow 
+                windowDisplayed={createOracleWindowDisplayed}
+                closeWindow={() => {setCreateOracleWindowDisplayed(false)}}
+            />
         </>
     )
 }
+
+export default Oracles
 
 export type {
     IOraclesState

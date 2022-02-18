@@ -4,7 +4,7 @@ $linkColor: rgb(28, 100, 167);
     border: 1px solid grey;
     background-color: white;
     border-radius: 15px;
-    position: absolute;
+    position: fixed;
     z-index: 10;
     top: 30px;
     left: 50%;
@@ -12,14 +12,6 @@ $linkColor: rgb(28, 100, 167);
     width: 400px;
     max-width: 90%;
     height: 470px;
-    // padding-left: 30px;
-    // padding-right: 30px;
-
-
-    // display: flex;
-    // flex-direction: column;
-    // // align-items: flex-start;
-    // margin: auto;
 }
 
 #form {
