@@ -28,11 +28,26 @@ const AccountButton = (): React.ReactElement => {
         }
     }, [rootContext.state])
 
+    const Result = () => {
+        return (
+            <>
+                <Content />
+    
+                <AccountInfoWindow 
+                    windowDisplayed={accountInfoWindowDisplayed} 
+                    closeWindowListener={() => {setAccountInfoWindowDisplayed(false)}} 
+                />
+                
+                <SelectWalletWindow 
+                    windowDisplayed={selectWalletWindowDisplayed} 
+                    closeWindowListener={() => {setSelectWalletWindowDisplayed(false)}} 
+                />
+            </>
+        )
+    }
+
     const Content = (): React.ReactElement => {
-        if (
-            rootContext.state.accounts != null &&
-            rootContext.state.account != null 
-            ) {
+        if (rootContext.state.accounts != null && rootContext.state.account != null) {
             if (rootContext.state.accounts.length > 0) {
                 if (rootContext.state.wrongNetwork ) {
                     return (
@@ -56,25 +71,23 @@ const AccountButton = (): React.ReactElement => {
                     )
                 }
 
-                else {
-                    return (
-                        <div 
-                            onClick={() => {
-                                setAccountInfoWindowDisplayed(true)
-                            }} 
-                            id={styles.connectWallet} 
-                            className={styles.connectWalletWhite}
-                        >
-                            <div id={styles.balanceDiv}>
-                                {new BigNumber(balance).div(new BigNumber('1000000000000000000')).toFixed(9).toString()} ETH
-                            </div>
-
-                            <div id={styles.addressDiv}>
-                                {`${rootContext.state.account.substring(0, 6)}...${rootContext.state.account.substring(rootContext.state.account.length - 4, rootContext.state.account.length)}`}
-                            </div>
+                return (
+                    <div 
+                        onClick={() => {
+                            setAccountInfoWindowDisplayed(true)
+                        }} 
+                        id={styles.connectWallet} 
+                        className={styles.connectWalletWhite}
+                    >
+                        <div id={styles.balanceDiv}>
+                            {new BigNumber(balance).div(new BigNumber('1000000000000000000')).toFixed(9).toString()} ETH
                         </div>
-                    )
-                }
+
+                        <div id={styles.addressDiv}>
+                            {`${rootContext.state.account.substring(0, 6)}...${rootContext.state.account.substring(rootContext.state.account.length - 4, rootContext.state.account.length)}`}
+                        </div>
+                    </div>
+                )
             }
         }
 
@@ -90,21 +103,7 @@ const AccountButton = (): React.ReactElement => {
         )
     }
 
-    return (
-        <>
-            <Content />
-
-            <AccountInfoWindow 
-                windowDisplayed={accountInfoWindowDisplayed} 
-                closeWindowListener={() => {setAccountInfoWindowDisplayed(false)}} 
-            />
-            
-            <SelectWalletWindow 
-                windowDisplayed={selectWalletWindowDisplayed} 
-                closeWindowListener={() => {setSelectWalletWindowDisplayed(false)}} 
-            />
-        </>
-    )
+    return <Result />
 }
 
 export default AccountButton

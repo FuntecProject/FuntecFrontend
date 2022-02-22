@@ -21,16 +21,32 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
     const rootContext: IRootContextType = React.useContext(RootContext)
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
+    const Result = () => {
+        return (
+            props.menuDisplayed ?
+                <>
+                    <div id={styles.menuPanel} style={{'right' : '10px'}}>
+                        <MenuPanelElements />
+                    </div>
+    
+                    <ScreenMouseLock 
+                        backgroundShadowed={false}
+                        removeDisplayedElement={props.closeMenuCallback}
+                    />
+                </>
+            :
+                <div id={styles.menuPanel}>
+                    <MenuPanelElements />
+                </div>
+        )
+    }
+
     const MenuPanelElements = () => {
         if (isMobile) {
             return <MenuPanelElementsMobile />
         }
 
         return <MenuPanelElementsDesktop />
-    }
-
-    const MenuPanelElementsDesktop = (): React.ReactElement => {
-        return <MenuAcionsElements />
     }
 
     const MenuPanelElementsMobile = () => {
@@ -55,6 +71,10 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
                 <MenuAcionsElements />
             </>
         )
+    }
+
+    const MenuPanelElementsDesktop = (): React.ReactElement => {
+        return <MenuAcionsElements />
     }
 
     const SeparationBar = () => {
@@ -83,9 +103,9 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
             <>
                 <div 
                     className={styles.menuElement}
-                    onClick={async () => {
+                    onClick={() => {
                         if (rootContext.state.account != null) {
-                            await createReceiverAccountListener()
+                            createReceiverAccountListener()
                         }
 
                         else {
@@ -119,23 +139,7 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
         }
     }
 
-    return (
-        props.menuDisplayed ?
-            <>
-                <div id={styles.menuPanel} style={{'right' : '10px'}}>
-                    <MenuPanelElements />
-                </div>
-
-                <ScreenMouseLock 
-                    backgroundShadowed={false}
-                    removeDisplayedElement={props.closeMenuCallback}
-                />
-            </>
-        :
-            <div id={styles.menuPanel}>
-                <MenuPanelElements />
-            </div>
-    )
+    return Result()
 }
 
 export default MenuPanel

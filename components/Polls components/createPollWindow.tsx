@@ -39,10 +39,62 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
         }
     }, [props.windowDisplayed])
 
+    const Result = () => {
+        return (
+            <>
+                <div 
+                    id={styles.createPollIFrame} 
+                    style={
+                        props.windowDisplayed ? 
+                            {'display': 'initial'} 
+                            : 
+                            {'display': 'none'}
+                    }
+                >
+                    <div id={styles.createPoll}>
+                        <div id={styles.createPollTitleAndSvg}>
+                            <h2 id={styles.createPollTitle}>Create poll:</h2>
+                            <CrossIcon onClick={props.closeWindow} id={styles.closeCreatePoll} />
+                        </div>
+    
+                        <div id={styles.form}>
+                            <label htmlFor="receiverId">Receiver ID:</label>
+                            <input type="number" id={styles.receiverId} min="0" max="1000000" step="1" onChange={event => {
+                                setState(prevState => ({...prevState, receiverId: Number(event.target.value)}))}} ref={input => {receiverId = input}}/>
+                            <label htmlFor="oracleId">Oracle ID:</label>
+                            <input type="number" id={styles.oracleId} min="0" max="1000000" step="1" onChange={event => {
+                                setState(prevState => ({...prevState, oracleId: Number(event.target.value)}))}} />
+                            <label htmlFor="contribution">Amount contributed:</label>
+                            <input type="number" id={styles.contribution} min="0.0001" max="10000.000000000000000000" step="0.0001" onChange={event => {
+                                setState(prevState => ({...prevState, amountContributed: Number(toWei(event.target.value))}))}}/>
+                            <label htmlFor="dateLimit">Date limit:</label>
+                            <input type="date" id={styles.dateLimit} onChange={event => {
+                                setState(prevState => ({...prevState, dateLimit: Number(convertDateToUnix(event.target.value))}))}}/>
+                            <label htmlFor="requirement">Requirement:</label>
+                            <textarea id={styles.requirement} onChange={event => {
+                                setState(prevState => ({...prevState, requirement: event.target.value}))}}></textarea>
+                        </div>
+                    </div> 
+    
+                    <div id={styles.buttons}>
+                        {/*TODO cancel button should clear the inputs*/}
+                        <div id={styles.cancel} onClick={props.closeWindow}>Cancel</div>
+                        <div id={styles.create} onClick={createPollListener}>Create</div>
+                    </div>
+                </div>
+    
+                {
+                    props.windowDisplayed ?
+                        <ScreenMouseLock backgroundShadowed={true} removeDisplayedElement={props.closeWindow}/>
+                        :
+                        null
+                }
+            </>
+        )
+    }
+
     const createPollListener = async (): Promise<void> => {
-        if (
-            rootContext.state.account != null
-        ) {
+        if (rootContext.state.account != null) {
             if (
                 state.receiverId == 0 ||
                 state.oracleId == 0 ||
@@ -54,14 +106,7 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
             }
 
             else {
-                await createPoll(
-                    rootContext,
-                    state.receiverId,
-                    state.oracleId,
-                    state.dateLimit,
-                    state.amountContributed,
-                    state.requirement
-                )
+                createPoll(rootContext, state.receiverId, state.oracleId, state.dateLimit, state.amountContributed, state.requirement)
             }
         }
 
@@ -70,57 +115,7 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
         }
     }
 
-    return (
-        <>
-            <div 
-                id={styles.createPollIFrame} 
-                style={
-                    props.windowDisplayed ? 
-                        {'display': 'initial'} 
-                        : 
-                        {'display': 'none'}
-                }
-            >
-                <div id={styles.createPoll}>
-                    <div id={styles.createPollTitleAndSvg}>
-                        <h2 id={styles.createPollTitle}>Create poll:</h2>
-                        <CrossIcon onClick={props.closeWindow} id={styles.closeCreatePoll} />
-                    </div>
-
-                    <div id={styles.form}>
-                        <label htmlFor="receiverId">Receiver ID:</label>
-                        <input type="number" id={styles.receiverId} min="0" max="1000000" step="1" onChange={event => {
-                            setState(prevState => ({...prevState, receiverId: Number(event.target.value)}))}} ref={input => {receiverId = input}}/>
-                        <label htmlFor="oracleId">Oracle ID:</label>
-                        <input type="number" id={styles.oracleId} min="0" max="1000000" step="1" onChange={event => {
-                            setState(prevState => ({...prevState, oracleId: Number(event.target.value)}))}} />
-                        <label htmlFor="contribution">Amount contributed:</label>
-                        <input type="number" id={styles.contribution} min="0.0001" max="10000.000000000000000000" step="0.0001" onChange={event => {
-                            setState(prevState => ({...prevState, amountContributed: Number(toWei(event.target.value))}))}}/>
-                        <label htmlFor="dateLimit">Date limit:</label>
-                        <input type="date" id={styles.dateLimit} onChange={event => {
-                            setState(prevState => ({...prevState, dateLimit: Number(convertDateToUnix(event.target.value))}))}}/>
-                        <label htmlFor="requirement">Requirement:</label>
-                        <textarea id={styles.requirement} onChange={event => {
-                            setState(prevState => ({...prevState, requirement: event.target.value}))}}></textarea>
-                    </div>
-                </div> 
-
-                <div id={styles.buttons}>
-                    {/*TODO cancel button should clear the inputs*/}
-                    <div id={styles.cancel} onClick={props.closeWindow}>Cancel</div>
-                    <div id={styles.create} onClick={createPollListener}>Create</div>
-                </div>
-            </div>
-
-            {
-                props.windowDisplayed ?
-                    <ScreenMouseLock backgroundShadowed={true} removeDisplayedElement={props.closeWindow}/>
-                    :
-                    null
-            }
-        </>
-    )
+    return <Result />
 }
 
 export default CreatePollWindow

@@ -16,6 +16,22 @@ interface ISelectWalletWindowProps {
 const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement | null => {
     const rootContext: IRootContextType = React.useContext(RootContext)
 
+    const Result = () => {
+        return (
+            props.windowDisplayed ?
+                <>
+                    <Content />
+    
+                    <ScreenMouseLock 
+                        backgroundShadowed={true}
+                        removeDisplayedElement={props.closeWindowListener} 
+                    />
+                </>
+                :
+                null
+        )
+    }
+
     const Content = (): React.ReactElement => {
         const connectMetamask = async () => {
             if (window.ethereum) {
@@ -66,19 +82,7 @@ const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement
         )
     }
 
-    return (
-        props.windowDisplayed ?
-            <>
-                <Content />
-
-                <ScreenMouseLock 
-                    backgroundShadowed={true}
-                    removeDisplayedElement={props.closeWindowListener} 
-                />
-            </>
-            :
-            null
-    )
+    return <Result />
 }
 
 export default SelectWalletWindow

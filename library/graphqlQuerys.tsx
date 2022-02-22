@@ -1,13 +1,13 @@
-import { ApolloClient, InMemoryCache, gql, NormalizedCacheObject } from "@apollo/client"
+import { gql } from "@apollo/client"
 
 interface IOracle {
-    id: string,
-    previousId: string,
-    oracleFee: string,
-    responseTime: string,
-    disabledOracle: boolean,
-    amountManaged: string,
-    numberPollsWrong: string,
+    id: string
+    previousId: string
+    oracleFee: string
+    responseTime: string
+    disabledOracle: boolean
+    amountManaged: string
+    numberPollsWrong: string
     numberPollsHandled: string
 }
 
@@ -34,20 +34,10 @@ interface IContribution {
     pollId: string,
     amountContributed: string,
     hasRequested: boolean
+    poll: IPoll
 }
 
-const oracleParameters = `
-    id
-    previousId
-    oracleFee
-    responseTime
-    disabledOracle
-    amountManaged
-    numberPollsWrong
-    numberPollsHandled
-`
-
-const pollParameters = `
+const pollResultElements = `
     id
     totalAmountContributed
     oracleId
@@ -64,98 +54,103 @@ const pollParameters = `
     hash
 `
 
-const contributionParameters = `
+const oracleResultElements = `
+    id
+    previousId
+    oracleFee
+    responseTime
+    disabledOracle
+    amountManaged
+    numberPollsWrong
+    numberPollsHandled
+`
+
+const contributionResultElements = `
     id
     contributorAddress
     pollId
     amountContributed
     hasRequested
-`
-
-const contributionsQuery = (whereClause: string): string => {
-    return `
-        query {
-            contributions (${whereClause}) {
-                ${contributionParameters}
-            }
-        }
-    `
-}
-
-const pollsQueryByOracleId = gql`
-    query polls($oracleId: String!) {
-        polls(where: {oracleId: $oracleId}) {
-            ${pollParameters}
-        }
+    poll {
+        ${pollResultElements}
     }
 `
 
-const pollsQueryByReceiverId = gql`
-    query polls($receiverId: String!) {
-        polls(where: {receiverId: $receiverId}) {
-            ${pollParameters}
-        }
-    }
-`
+/**
+ * Poll's query's
+ */
 
-const getOracleQuery = gql`
-    query Oracle($id: String!) {
-        oracle(id: $id) {
-            ${oracleParameters}
-        }
-    }
-`
-
-const oraclesQuery = gql`
-    query Oracles {
-        oracles(first: 10) {
-            ${oracleParameters}
-        }
-    }
-`
-
-const getPollQuery = gql`
+const pollByIdQuery = gql`
     query Poll($id: String!) {
         poll(id: $id) {
-            ${pollParameters}
+            ${pollResultElements}
         }
     }
 `
-const getPollsQuery = gql`
+const first5PollsQuery = gql`
     query Polls {
         polls(first: 5) {
-            ${pollParameters}
+            ${pollResultElements}
         }
     }
 `
 
-/** exportable methods to query the subgraph */
-
-const getContributionsAsContributor = async (_client: ApolloClient<object> , _contributorAddress: string): Promise<{data: Array<IContribution> | null, error: string | null}> => {
-    try {
-        return {
-            data: (await _client.query({query: gql(contributionsQuery(`where: {contributorAddress: "${_contributorAddress}"}`))})).data.contributions,
-            error: null
+const pollsByOracleIdQuery = gql`
+    query polls($oracleId: String!) {
+        polls(where: {oracleId: $oracleId}) {
+            ${pollResultElements}
         }
     }
+`
 
-    catch {
-        return {
-            data: null,
-            error: "There is a problem with the connection"
+const pollsByReceiverIdQuery = gql`
+    query polls($receiverId: String!) {
+        polls(where: {receiverId: $receiverId}) {
+            ${pollResultElements}
         }
     }
-}
+`
+
+/**
+ * Oracle's query's
+ */
+
+const oracleByIdQuery = gql`
+    query Oracle($id: String!) {
+        oracle(id: $id) {
+            ${oracleResultElements}
+        }
+    }
+`
+
+const first5OraclesQuery = gql`
+    query Oracles {
+        oracles(first: 10) {
+            ${oracleResultElements}
+        }
+    }
+`
+
+/**
+ * Contribution's query's
+ */
+
+const contributionsByContributorAddressQuery = gql`
+    query contributions($contributorAddress: String!) {
+        contributions (where: {contributorAddress: $contributorAddress}) {
+            ${contributionResultElements}
+        }
+    }
+`
 
 export {
-    oraclesQuery,
-    contributionsQuery,
-    getContributionsAsContributor,
-    getOracleQuery,
-    getPollQuery,
-    pollsQueryByOracleId,
-    pollsQueryByReceiverId,
-    getPollsQuery
+    pollByIdQuery,
+    first5PollsQuery,
+    pollsByOracleIdQuery,
+    pollsByReceiverIdQuery,
+    oracleByIdQuery,
+    first5OraclesQuery,
+    contributionsByContributorAddressQuery
 }
 
 export type {

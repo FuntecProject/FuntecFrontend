@@ -37,6 +37,56 @@ const CreateOracleWindow = (props: ICreateOracleProps): React.ReactElement => {
         }
     }, [props.windowDisplayed])
 
+    const Result = () => {
+        return (
+            <>
+                <div 
+                    id={styles.createOracleIframe} 
+                    style={
+                        props.windowDisplayed ?
+                            {'display': 'initial'}
+                            :
+                            {'display': 'none'}
+                    }
+                >
+                    <div id={styles.createOracle}>
+                        <div id={styles.createOracleTitleAndSvg}>                
+                            <h2 id={styles.createOracleTitle}>Create oracle:</h2>
+                            <CrossIcon onClick={props.closeWindow} id={styles.closeCreateOracle} />
+                        </div>  
+
+                        <div id={styles.form}>
+                            <label htmlFor="numberDaysRespond">Number of days to respond:</label>
+                            <input type="number" id={styles.numberDaysRespond} min="0" max="365" step="1" onChange={event => {
+                                setState(prevState => ({...prevState, responseDays: Number(event.target.value)}))}} ref={input => {oracleId = input}}></input>
+                            <label htmlFor="numberHoursRespond">Number of hours to respond:</label>
+                            <input type="number" id={styles.numberHoursRespond} min="0" max="24" step="1" onChange={event => {
+                                setState(prevState => ({...prevState, responseHours: Number(event.target.value)}))}}></input>
+                            <label htmlFor="oracleFee">Oracle fee:</label>
+                            <input type="number" id={styles.oracleFee} min="0.0001" max="10000.000000000000000000" step="0.0001" onChange={event => {
+                                setState(prevState => ({...prevState, oracleFee: Number(event.target.value)}))}}></input>
+                        </div>
+                    </div>  
+
+                    <div id={styles.buttons}>
+                        <div id={styles.cancel} onClick={props.closeWindow}>Cancel</div>
+                        <div id={styles.create} onClick={createOracleListener}>Create</div>
+                    </div>
+                </div>
+
+                {
+                    props.windowDisplayed ?
+                        <ScreenMouseLock 
+                            backgroundShadowed={true}
+                            removeDisplayedElement={props.closeWindow} 
+                        />
+                        :
+                        null
+                }
+            </>
+        )
+    }
+
     const createOracleListener = async (): Promise<void> => {        
         if (rootContext.state.account != null) {
             let oracleId = await getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)
@@ -67,53 +117,7 @@ const CreateOracleWindow = (props: ICreateOracleProps): React.ReactElement => {
         }
     }
 
-    return (
-        <>
-            <div 
-                id={styles.createOracleIframe} 
-                style={
-                    props.windowDisplayed ?
-                        {'display': 'initial'}
-                        :
-                        {'display': 'none'}
-                }
-            >
-                <div id={styles.createOracle}>
-                    <div id={styles.createOracleTitleAndSvg}>                
-                        <h2 id={styles.createOracleTitle}>Create oracle:</h2>
-                        <CrossIcon onClick={props.closeWindow} id={styles.closeCreateOracle} />
-                    </div>  
-
-                    <div id={styles.form}>
-                        <label htmlFor="numberDaysRespond">Number of days to respond:</label>
-                        <input type="number" id={styles.numberDaysRespond} min="0" max="365" step="1" onChange={event => {
-                            setState(prevState => ({...prevState, responseDays: Number(event.target.value)}))}} ref={input => {oracleId = input}}></input>
-                        <label htmlFor="numberHoursRespond">Number of hours to respond:</label>
-                        <input type="number" id={styles.numberHoursRespond} min="0" max="24" step="1" onChange={event => {
-                            setState(prevState => ({...prevState, responseHours: Number(event.target.value)}))}}></input>
-                        <label htmlFor="oracleFee">Oracle fee:</label>
-                        <input type="number" id={styles.oracleFee} min="0.0001" max="10000.000000000000000000" step="0.0001" onChange={event => {
-                            setState(prevState => ({...prevState, oracleFee: Number(event.target.value)}))}}></input>
-                    </div>
-                </div>  
-
-                <div id={styles.buttons}>
-                    <div id={styles.cancel} onClick={props.closeWindow}>Cancel</div>
-                    <div id={styles.create} onClick={createOracleListener}>Create</div>
-                </div>
-            </div>
-
-            {
-                props.windowDisplayed ?
-                    <ScreenMouseLock 
-                        backgroundShadowed={true}
-                        removeDisplayedElement={props.closeWindow} 
-                    />
-                    :
-                    null
-            }
-        </>
-    )
+    return <Result />
 }
 
 export default CreateOracleWindow

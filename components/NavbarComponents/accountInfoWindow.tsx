@@ -45,24 +45,20 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         callback()
     }, [rootContext.state])
 
-    const ReceiverId = (): React.ReactElement => {
-        if (state.receiverId) {
-            return <>#{state.receiverId}</>
-        }
-
-        else {
-            return <>Your account is not registered as a receiver yet</>  
-        }
-    }
-
-    const OracleId = (): React.ReactElement => {
-        if (state.oracleId) {
-            return <>#{state.oracleId}</>
-        }
-
-        else {
-            return <>Your account is not registered as an oracle yet</>
-        }
+    const Result = () => {
+        return (
+            props.windowDisplayed ?
+                <>
+                    <AccountInfoPannel />
+    
+                    <ScreenMouseLock 
+                        backgroundShadowed={true} 
+                        removeDisplayedElement={props.closeWindowListener} 
+                    />
+                </>
+            :
+                null
+        )
     }
 
     const AccountInfoPannel = (): React.ReactElement => {
@@ -125,19 +121,27 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         )
     }
 
-    return (
-        props.windowDisplayed ?
-            <>
-                <AccountInfoPannel />
+    const ReceiverId = (): React.ReactElement => {
+        if (state.receiverId) {
+            return <>#{state.receiverId}</>
+        }
 
-                <ScreenMouseLock 
-                    backgroundShadowed={true} 
-                    removeDisplayedElement={props.closeWindowListener} 
-                />
-            </>
-        :
-            null
-    )
+        else {
+            return <>Your account is not registered as a receiver yet</>  
+        }
+    }
+
+    const OracleId = (): React.ReactElement => {
+        if (state.oracleId) {
+            return <>#{state.oracleId}</>
+        }
+
+        else {
+            return <>Your account is not registered as an oracle yet</>
+        }
+    }
+
+    return <Result />
 }
 
 export default AccountInfoWindow

@@ -5,7 +5,7 @@ interface ILoadingElementProps {
     className: string
 }
 
-export default function LoadingElement(props: ILoadingElementProps): React.ReactElement {
+const LoadingElement = (props: ILoadingElementProps): React.ReactElement => {
     return (
         <div className={props.className}>
             <Image 
@@ -17,3 +17,5 @@ export default function LoadingElement(props: ILoadingElementProps): React.React
         </div>
     )
 }
+
+export default LoadingElement

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './../../styles/pollScreenerLegend.module.scss'
 
-export default function PollScreenerLegend(): React.ReactElement {
+const PollScreenerLegend = (): React.ReactElement => {
     return (
         <div id={styles.pollScreenerLegend}>
             <div>Poll ID</div>
@@ -14,3 +14,5 @@ export default function PollScreenerLegend(): React.ReactElement {
         </div> 
     )
 }
+
+export default PollScreenerLegend

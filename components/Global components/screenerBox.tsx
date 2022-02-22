@@ -4,7 +4,7 @@ interface IScreenerBoxProps {
     children: React.ReactElement
 } 
 
-export default function ScreenerBox(props: IScreenerBoxProps): React.ReactElement {
+const ScreenerBox = (props: IScreenerBoxProps): React.ReactElement => {
     return (
         <div style={style}>
             {props.children}
@@ -20,4 +20,6 @@ const style = {
     flexGrow: '1',
     width: '90%'
 }
+
+export default ScreenerBox
 

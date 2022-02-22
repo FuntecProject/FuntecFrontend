@@ -17,17 +17,12 @@ interface IOraclesListElementProps {
 const OraclesListElement = (props: IOraclesListElementProps): React.ReactElement => {
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
-    const DesktopVersion = () => {
-        return (
-            <div className={styles.oracleElement}>
-                <div>#{props.oracleData.id}</div>
-                <div>{getDaysAndHoursFromUnix(props.oracleData.responseTime)}</div>
-                <div>{converGWeiToEth(props.oracleData.oracleFee)} ETH</div>
-                <div>{fromWei(props.oracleData.amountManaged)} ETH</div>
-                <div>{getTwoDecimalPercent((Number(props.oracleData.numberPollsHandled) - Number(props.oracleData.numberPollsWrong)), props.oracleData.numberPollsHandled)}</div>
-                <div>{props.oracleData.numberPollsWrong}</div>
-                <div>{props.oracleData.numberPollsHandled}</div>
-            </div>
+    const Result = () => {
+        return(
+            isMobile ?
+                <MobileVersion />
+                :
+                <DesktopVersion />
         )
     }
 
@@ -71,12 +66,21 @@ const OraclesListElement = (props: IOraclesListElementProps): React.ReactElement
         )
     }
 
-    return(
-        isMobile ?
-            <MobileVersion />
-            :
-            <DesktopVersion />
-    )
+    const DesktopVersion = () => {
+        return (
+            <div className={styles.oracleElement}>
+                <div>#{props.oracleData.id}</div>
+                <div>{getDaysAndHoursFromUnix(props.oracleData.responseTime)}</div>
+                <div>{converGWeiToEth(props.oracleData.oracleFee)} ETH</div>
+                <div>{fromWei(props.oracleData.amountManaged)} ETH</div>
+                <div>{getTwoDecimalPercent((Number(props.oracleData.numberPollsHandled) - Number(props.oracleData.numberPollsWrong)), props.oracleData.numberPollsHandled)}</div>
+                <div>{props.oracleData.numberPollsWrong}</div>
+                <div>{props.oracleData.numberPollsHandled}</div>
+            </div>
+        )
+    }
+
+    return <Result />
 }
 
 export default OraclesListElement

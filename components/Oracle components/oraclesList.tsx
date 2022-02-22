@@ -1,14 +1,14 @@
 import React, { useEffect } from "react"
 import {
+    first5OraclesQuery,
     IOracle,
-    getOracleQuery
+    oracleByIdQuery
 } from '../../library/graphqlQuerys'
 import styles from "../../styles/oraclesList.module.scss"
 import OraclesListElement from "./oraclesListElement"
 import LoadingElement from "../Global components/loadingElement"
 import ScreenerBox from "../Global components/screenerBox"
-import { useQuery, gql, useLazyQuery } from "@apollo/client"
-import { oraclesQuery } from "./../../library/graphqlQuerys"
+import { useQuery, useLazyQuery } from "@apollo/client"
 import { useMediaQuery } from "react-responsive"
 import { isAddress } from "web3-utils"
 import { getAddressFromENS, getOracleId } from "../../library/web3methods"
@@ -20,37 +20,54 @@ interface IOraclesListProps {
 
 const OraclesList = (props: IOraclesListProps): React.ReactElement => {
     const rootContext: IRootContextType = React.useContext(RootContext)
-    const oracles = useQuery<{oracles: IOracle[]}>(oraclesQuery)
-    const [getOracle, oracle] = useLazyQuery<{oracle: IOracle}>(getOracleQuery)
+    const oracles = useQuery<{oracles: IOracle[]}>(first5OraclesQuery)
+    const [getOracle, oracle] = useLazyQuery<{oracle: IOracle}>(oracleByIdQuery)
 
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
     useEffect((): void => {
-        const callback = async () => {
-            if (props.idSearched != '') {
-                if (isAddress(props.idSearched)) {
-                    let oracleId = await getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)
-
-                    getOracle({variables: {id: oracleId}})
+        if (props.idSearched != '') {
+            if (isAddress(props.idSearched)) {
+                getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)
+                    .then(oracleId => getOracle({variables: {id: oracleId}}))
+            }
+            else {
+                if (props.idSearched.endsWith('.eth')) {                        
+                    getAddressFromENS(rootContext.state.web3, props.idSearched)
+                        .then(oracleAddress => getOracleId(rootContext.state.accountsStorageInstance, oracleAddress))
+                        .then(oracleId => getOracle({variables: {id: oracleId}}))
                 }
-
                 else {
-                    if (props.idSearched.endsWith('.eth')) {                        
-                        let oracleAddress = await getAddressFromENS(rootContext.state.web3, props.idSearched)
-                        let oracleId = await getOracleId(rootContext.state.accountsStorageInstance, oracleAddress)
-
-                        getOracle({variables: {id: oracleId}})
-                    }
-
-                    else {
-                        getOracle({variables: {id: props.idSearched}})
-                    }
+                    getOracle({variables: {id: props.idSearched}})
                 }
             }
         }
-
-        callback()
     }, [props.idSearched])
+
+    const Result = () => {
+        return (
+            <>
+                {
+                    isMobile ?
+                        null
+                        :
+                        <div id={styles.oraclesLegend}>
+                            <div>Oracle ID</div>
+                            <div>Response time</div>
+                            <div>Oracle fee</div>
+                            <div>Amount managed</div>
+                            <div>Success rate</div>
+                            <div>Number polls wrong</div>
+                            <div>Number polls handled</div>
+                        </div>
+                }
+
+                <ScreenerBox>
+                    <SearchedOracle />
+                </ScreenerBox>
+            </>
+        )
+    }
 
     const SearchedOracle = (): React.ReactElement => {
         if (props.idSearched != '') {
@@ -64,72 +81,28 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
                     )
                 }
                 
-                else {
-                    return <div className={styles.noElementFound}>The oracle searched doesn't exist</div>
-                }
+                return <div className={styles.noElementFound}>The oracle searched doesn't exist</div>
             }
 
-            else {
-                return <LoadingElement className={styles.oracleElementLoading} />
-            }
+            return <LoadingElement className={styles.oracleElementLoading} />
         }
 
-        else {
-            if (oracles.data) {
-                const allOracles = oracles.data.oracles.map(oracle => {
-                    return <OraclesListElement key={oracle.id} oracleData={oracle} /> 
-                })
+        if (oracles.data) {
+            const allOracles = oracles.data.oracles.map(oracle => {
+                return <OraclesListElement key={oracle.id} oracleData={oracle} /> 
+            })
 
-                return (
-                    <>
-                        <div className={styles.oracleTitle}>All oracles available:</div>
-                        {allOracles}
-                    </>
-                )
-            }
-
-            else {
-                return <LoadingElement className={styles.oracleElementLoading} />
-            }
+            return (
+                <>
+                    <div className={styles.oracleTitle}>All oracles available:</div>
+                    {allOracles}
+                </>
+            )
         }
+        return <LoadingElement className={styles.oracleElementLoading} />
     }
 
-    const DesktopVersion = () => {
-        return (
-            <>
-                <div id={styles.oraclesLegend}>
-                    <div>Oracle ID</div>
-                    <div>Response time</div>
-                    <div>Oracle fee</div>
-                    <div>Amount managed</div>
-                    <div>Success rate</div>
-                    <div>Number polls wrong</div>
-                    <div>Number polls handled</div>
-                </div>
-
-                <ScreenerBox>
-                    <SearchedOracle />
-                </ScreenerBox>
-            </>
-        )
-    }
-
-    const MobileVersion = () => {
-        return (
-            <>
-                <ScreenerBox>
-                    <SearchedOracle />
-                </ScreenerBox>
-            </>
-        )
-    }
-
-    return(
-        isMobile ?
-            <MobileVersion />
-            :
-            <DesktopVersion />
-    )
+    return <Result />
 }
 
 export default OraclesList

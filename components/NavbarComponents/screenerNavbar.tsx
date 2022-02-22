@@ -28,6 +28,70 @@ const ScreenerNavbar = (): React.ReactElement => {
         }
     }, [rootContext.state])
 
+    const Result = () => {
+        return (
+            <>
+                {
+                    isMobile ?
+                        <MobileNavBar />
+                        :
+                        <DesktopNavbar />
+                }
+    
+                <MenuPanel menuDisplayed={menuDisplayed} closeMenuCallback={() => {setMenuDisplayed(false)}} />
+            </>
+        )
+    }
+
+    const MobileNavBar = (): React.ReactElement => {
+        return (
+            <div id={styles.navMobile}>
+                <Link href="/">
+                    <a id={styles.home}>
+                        <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
+                    </a>
+                </Link>
+
+                <MenuButtonElement />
+            </div>
+        )
+    }
+
+    const DesktopNavbar = (): React.ReactElement => {
+        return (
+            <div id={styles.nav}>
+                <div id={styles.navElements}>
+                    <div id={styles.navLeftSide}>
+                        <Link href="/">
+                            <a id={styles.home} className={styles.navElement}>
+                                <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
+                            </a>
+                        </Link>
+
+                        <NavElement textContent="Polls" page="polls" />
+                        <NavElement textContent="Oracles" page="oracles" />
+                        <NavElement textContent="Active Polls" page="activepolls" />
+                    </div> 
+
+                    <div id={styles.navRigthSide}>
+                        <div id={styles.gasPanel} title='Current gas price on the network'>
+                            <GasIcon />
+                            <div id={styles.gasPrice}>{gasPrice}</div>
+                        </div>  
+
+                        <div id={styles.notificationsPanel}></div>  
+
+                        <AccountButton />    
+
+                        <BellIcon id={styles.bellIcon} />
+
+                        <MenuButtonElement />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     const NavElement = (props: {page: string, textContent: string}) => {
         return (
             <Link href={`/${props.page}`}>
@@ -57,71 +121,7 @@ const ScreenerNavbar = (): React.ReactElement => {
         )
     }
 
-    const DesktopNavbar = (): React.ReactElement => {
-        return (
-            <div id={styles.nav}>
-                <div id={styles.navElements}>
-                    <div id={styles.navLeftSide}>
-                        <Link href="/">
-                            <a id={styles.home} className={styles.navElement}>
-                                <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
-                            </a>
-                        </Link>
-
-                        <NavElement textContent="Polls" page="polls" />
-                        <NavElement textContent="Oracles" page="oracles" />
-                        <NavElement textContent="Active Polls" page="activepolls" />
-                    </div> 
-
-                    <div id={styles.navRigthSide}>
-                        {/* <div id={styles.arbitrumNavElement}>
-                            <ArbitrumIcon id={styles.arbitrumIcon} onClick={rootContext.methods.setArbitrumNetworkWindowDisplayed} />
-                        </div> */}
-
-                        <div id={styles.gasPanel} title='Current gas price on the network'>
-                            <GasIcon />
-                            <div id={styles.gasPrice}>{gasPrice}</div>
-                        </div>  
-
-                        <div id={styles.notificationsPanel}></div>  
-
-                        <AccountButton />    
-
-                        <BellIcon id={styles.bellIcon} />
-
-                        <MenuButtonElement />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const MobileNavBar = (): React.ReactElement => {
-        return (
-            <div id={styles.navMobile}>
-                <Link href="/">
-                    <a id={styles.home}>
-                        <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
-                    </a>
-                </Link>
-
-                <MenuButtonElement />
-            </div>
-        )
-    }
-
-    return (
-        <>
-            {
-                isMobile ?
-                    <MobileNavBar />
-                    :
-                    <DesktopNavbar />
-            }
-
-            <MenuPanel menuDisplayed={menuDisplayed} closeMenuCallback={() => {setMenuDisplayed(false)}} />
-        </>
-    )
+    return Result()
 }
 
 export default ScreenerNavbar

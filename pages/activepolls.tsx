@@ -1,4 +1,4 @@
-import { useApolloClient, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
 import LoadingElement from '../components/Global components/loadingElement'
@@ -6,8 +6,7 @@ import ScreenerBox from '../components/Global components/screenerBox'
 import { IRootContextType, RootContext } from '../components/Global components/screenerLayoutWrapper'
 import PollScreenerLegend from '../components/Polls components/pollScreenerLegend'
 import PollListElement, { PollParticipantTypes } from '../components/Polls components/pollsListElement'
-import { getContributionsAsContributor, getPollQuery, IPoll, pollsQueryByOracleId, pollsQueryByReceiverId } from '../library/graphqlQuerys'
-import { IPollStatusTypes } from '../library/utils'
+import { contributionsByContributorAddressQuery, IContribution, IPoll, pollsByOracleIdQuery, pollsByReceiverIdQuery } from '../library/graphqlQuerys'
 import { getOracleId, getReceiverId } from '../library/web3methods'
 import styles from '../styles/activePollsList.module.scss'
 
@@ -17,24 +16,16 @@ enum ParticipantType {
     Oracle = "Oracle"
 }
 
-interface IActivePollsListState {
-    participantType: ParticipantType
-    contributorPolls: Array<IPoll> | null
-    walletNotConnected: boolean 
-}
-
 const ActivePolls = (): React.ReactElement => {
     const rootContext: IRootContextType = React.useContext(RootContext)
-    const apolloClient = useApolloClient()
     const isMobile = useMediaQuery({ maxWidth: 1200})
-    const [getPollsAsOracle, pollsAsOracle] = useLazyQuery<{polls: IPoll[]}>(pollsQueryByOracleId)
-    const [getPollsAsReceiver, pollsAsReceiver] = useLazyQuery<{polls: IPoll[]}>(pollsQueryByReceiverId, {})
+    const [currentParticipantTypeSelected, setCurrentParticipantTypeSelected] 
+        = React.useState<ParticipantType>(ParticipantType.Receiver)
 
-    const [state, setState] = React.useState<IActivePollsListState>({
-        participantType: ParticipantType.Receiver,
-        contributorPolls: null,
-        walletNotConnected: true
-    })
+    const [getPollsAsOracle, pollsAsOracle] = useLazyQuery<{polls: IPoll[]}>(pollsByOracleIdQuery)
+    const [getPollsAsReceiver, pollsAsReceiver] = useLazyQuery<{polls: IPoll[]}>(pollsByReceiverIdQuery)
+    const [getContributionsAsContributor, contributionsAsContributor] 
+        = useLazyQuery<{contributions: IContribution[]}>(contributionsByContributorAddressQuery)
 
     React.useEffect(() => {
         rootContext.methods.setActivePage("activepolls")
@@ -45,143 +36,108 @@ const ActivePolls = (): React.ReactElement => {
             if (rootContext.state.pollRewardsInstance != null && rootContext.state.account != undefined) {
                 getPollsAsOracle({variables: {oracleId: await getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)}})
                 getPollsAsReceiver({variables: {receiverId: await getReceiverId(rootContext.state.accountsStorageInstance, rootContext.state.account)}})
-                let contributorPolls = await getPollsAsContributor()
-
-                setState(prevState => ({
-                    ...prevState,
-                    walletNotConnected: false,
-                    contributorPolls: contributorPolls
-                }))
+                getContributionsAsContributor({variables: {contributorAddress: rootContext.state.account}})
             }
         }
 
         callback()
     }, [rootContext.state.pollRewardsInstance, rootContext.state.account])
 
-    const getPollsAsContributor = async () => {
-        let pollsAsContributor: Array<IPoll> | null = []
-        
-        if (rootContext.state.account != null) {
-            let response = await getContributionsAsContributor(apolloClient, rootContext.state.account)
+    const Result = () => {
+        return (
+            <>
+                {
+                    isMobile ?
+                        <div id={styles.pollType}>
+                            <ParticipantTypeElementMobile participantType={ParticipantType.Receiver} />
+                            <ParticipantTypeElementMobile participantType={ParticipantType.Oracle} />
+                            <ParticipantTypeElementMobile participantType={ParticipantType.Contributor} />
+                        </div>
+                        :
+                        <>
+                            <div id={styles.pollType}>
+                                <ParticipantTypeElement participantType={ParticipantType.Receiver} />
+                                <ParticipantTypeElement participantType={ParticipantType.Oracle} />
+                                <ParticipantTypeElement participantType={ParticipantType.Contributor} />
+                            </div> 
 
-            if (response.data != null) {
-                for (let contribution of response.data) {
-                    pollsAsContributor.push((await apolloClient.query({query: getPollQuery, variables: {id: contribution.pollId}})).data.poll)
+                            <PollScreenerLegend />
+                        </>
                 }
-            }
-    
-            else {
-                pollsAsContributor = null
-            }
-    
-            return pollsAsContributor
-        }
 
-        return null
-    }
-
-    const setParticipantTypeState = (participantType: ParticipantType): void => {
-        setState(previousState => ({
-            ...previousState,
-            participantType: participantType
-        }))
-    }
-
-    const ParticipantTypeElement = (props: {participantType: ParticipantType}):React.ReactElement => {
-        if (props.participantType == state.participantType) {
-            return <div className={`${styles.pollTypeElement} ${styles.activePoll}`} onClick={() => {setParticipantTypeState(props.participantType)}}>{props.participantType} polls</div>
-        }
-
-        return <div className={styles.pollTypeElement} onClick={() => {setParticipantTypeState(props.participantType)}}>{props.participantType} polls</div>
+                <ScreenerBox>
+                    <ShowActivePollsList />
+                </ScreenerBox>
+            </>
+        )
     }
 
     const ParticipantTypeElementMobile = (props: {participantType: ParticipantType}):React.ReactElement => {
-        if (props.participantType == state.participantType) {
-            return <div className={`${styles.pollTypeElement} ${styles.activePoll}`} onClick={() => {setParticipantTypeState(props.participantType)}}>{props.participantType}</div>
+        if (props.participantType == currentParticipantTypeSelected) {
+            return <div className={`${styles.pollTypeElement} ${styles.activePoll}`} onClick={() => {setCurrentParticipantTypeSelected(props.participantType)}}>{props.participantType}</div>
         }
 
-        return <div className={styles.pollTypeElement} onClick={() => {setParticipantTypeState(props.participantType)}}>{props.participantType}</div>
+        return <div className={styles.pollTypeElement} onClick={() => {setCurrentParticipantTypeSelected(props.participantType)}}>{props.participantType}</div>
     }
-    
-    const Content = (): React.ReactElement | null => {
-        switch (state.participantType) {
-            case ParticipantType.Receiver:
-                return <ShowActivePollsList participantType={PollParticipantTypes.Receiver} />
+
+    const ParticipantTypeElement = (props: {participantType: ParticipantType}):React.ReactElement => {
+        if (props.participantType == currentParticipantTypeSelected) {
+            return <div className={`${styles.pollTypeElement} ${styles.activePoll}`} onClick={() => {setCurrentParticipantTypeSelected(props.participantType)}}>{props.participantType} polls</div>
+        }
+
+        return <div className={styles.pollTypeElement} onClick={() => {setCurrentParticipantTypeSelected(props.participantType)}}>{props.participantType} polls</div>
+    }
+
+    const ShowActivePollsList = () => {
+        if (rootContext.state.account != null) {
+            if (contributionsAsContributor.loading != null && contributionsAsContributor.data != undefined) {
+                return <SelectListByParticipantType />
+            }               
             
-            case ParticipantType.Oracle:
-                return <ShowActivePollsList participantType={PollParticipantTypes.Oracle} />
-
-            case ParticipantType.Contributor:
-                return <ShowActivePollsList participantType={PollParticipantTypes.Contributor} />
-
-            default:
-                return null
-        }
+            return <LoadingElement className={styles.activePollsElementLoading} />
+        }               
+        
+        return <div className={styles.noElementFound}>You need to connect with your wallet to see your polls</div>       
     }
 
-    const ShowActivePollsList = (_props: {participantType: PollParticipantTypes}) => {
-        if (state.walletNotConnected == false) {
-            if (pollsAsReceiver.loading != null && pollsAsReceiver.data != undefined) {
+    const SelectListByParticipantType = () => {
+        switch (currentParticipantTypeSelected) {
+            case ParticipantType.Receiver:
                 if (pollsAsReceiver.data.polls.length > 0) {
                     let result = pollsAsReceiver.data.polls.map(poll => {
-                        return <PollListElement pollData={poll} pollType={_props.participantType} key={poll.id} />
+                        return <PollListElement pollData={poll} pollType={PollParticipantTypes.Receiver} key={poll.id} />
+                    })
+
+                    return <>{result}</>
+                }
+
+                return <div className={styles.noElementFound}>You don't participate in any polls as a receiver</div>
+
+            case ParticipantType.Oracle:
+                if (pollsAsOracle.data.polls.length > 0) {
+                    let result = pollsAsOracle.data.polls.map(poll => {
+                        return <PollListElement pollData={poll} pollType={PollParticipantTypes.Oracle} key={poll.id} />
+                    })
+
+                    return <>{result}</>
+                }
+
+                return <div className={styles.noElementFound}>You don't participate in any polls as an oracle</div>
+
+            case ParticipantType.Contributor:
+                if (contributionsAsContributor.data.contributions.length > 0) {
+                    let result = contributionsAsContributor.data.contributions.map(contribution => {
+                        return <PollListElement pollData={contribution.poll} pollType={PollParticipantTypes.Contributor} key={contribution.poll.id} />
                     })
                 
                     return <>{result}</>
                 }               
-                else {
-                    return <div className={styles.noElementFound}>You don't participate in any polls as a receiver</div>
-                }
-            }               
-            else {
-                return <LoadingElement className={styles.activePollsElementLoading} />
-            }
-        }               
-        else {
-            return <div className={styles.noElementFound}>You need to connect with your wallet to see your polls</div>
-        } 
+                
+                return <div className={styles.noElementFound}>You don't participate in any polls as a contributor</div>
+        }
     }
 
-    const DesktopVersion = () => {
-        return (
-            <>
-                <div id={styles.pollType}>
-                    <ParticipantTypeElement participantType={ParticipantType.Receiver} />
-                    <ParticipantTypeElement participantType={ParticipantType.Oracle} />
-                    <ParticipantTypeElement participantType={ParticipantType.Contributor} />
-                </div>
-
-                <PollScreenerLegend />
-
-                <ScreenerBox>
-                    <Content /> 
-                </ScreenerBox>
-            </>
-        )
-    }
-
-    const MobileVersion = () => {
-        return (
-            <>
-                <div id={styles.pollType}>
-                    <ParticipantTypeElementMobile participantType={ParticipantType.Receiver} />
-                    <ParticipantTypeElementMobile participantType={ParticipantType.Oracle} />
-                    <ParticipantTypeElementMobile participantType={ParticipantType.Contributor} />
-                </div>
-
-                <ScreenerBox>
-                    <Content /> 
-                </ScreenerBox>
-            </>
-        )
-    }
-
-    return (
-        isMobile ?
-            <MobileVersion />
-            :
-            <DesktopVersion />
-    )
+    return <Result />
 }
 
 export default ActivePolls

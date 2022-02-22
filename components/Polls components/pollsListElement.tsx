@@ -64,59 +64,16 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
             })
     }, [])
 
-    const ThirdRow = (): React.ReactElement | null => {
-        switch (props.pollType) {
-            case PollParticipantTypes.Contribute:
-                return <ContributeRow pollData={props.pollData} />
-        
-            case PollParticipantTypes.Contributor:
-                return <ContributorRow pollData={props.pollData} />
-
-            case PollParticipantTypes.Receiver:
-                return <ReceiverRow pollData={props.pollData} />
-
-            case PollParticipantTypes.Oracle:
-                return <OracleRow pollData={props.pollData} />
-            
-            default:
-                return null
+    const Result = () => {
+        if (isMobile) {
+            return MobileVersion()
         }
-    }
 
-    const DesktopVersion = (): React.ReactElement => {
-        return (
-            <div className={styles.pollElement} style={{height: state.expand ? '150px' : '50px'}}>
-                <div className={styles.pollElementFirstRow}>
-                    <div>#{props.pollData.id}</div>
-                    <div>{state.pollStatus != null ? state.pollStatus[0] : "-"}</div>
-                    <div>{state.pollStatus != null ? state.pollStatus[1] : "-"}</div>
-                    <div>{fromWei(props.pollData.totalAmountContributed)} ETH</div>
-                    <div>{getReadableDate(props.pollData.dateLimit)}</div>
-                    <div>#{props.pollData.receiverId}</div>
-                    <div>#{props.pollData.oracleId}</div>
-                    <div className={styles.pollExpandContainer}>
-                        <Arrow 
-                            className={styles.pollExpand} 
-                            onClick={() => {setState(prevstate => ({
-                                ...prevstate,
-                                expand: !prevstate.expand
-                            }))}}
-                            style={{transform: state.expand ? 'rotate(180deg)' : ''}}
-                        />
-                    </div>
-                </div>  
-
-                <div className={styles.pollElementSecondRow}>
-                    <div>Description: {state.description}</div>
-                </div>  
-                        
-                <ThirdRow />
-            </div>
-        )
+        return DesktopVersion()
     }
 
     const MobileVersion = (): React.ReactElement => {
-        const [displayed, setDisplayed] = React.useState<boolean>(false)
+        const [pollAdditionalInfoDisplayed, setPollAditionalInfoDisplayed] = React.useState<boolean>(false)
 
         return (
             <div className={styles.pollElement}>
@@ -156,14 +113,14 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
                     </div>
 
                     <div id={styles.morePollElementMobile}>
-                        <PlusIcon onClick={() => {setDisplayed(true)}}/>
+                        <PlusIcon onClick={() => {setPollAditionalInfoDisplayed(true)}}/>
                     </div>
                     
                     {
-                        displayed ?
+                        pollAdditionalInfoDisplayed ?
                             <PollAditionalInfoMobile 
                                 pollData={props.pollData} 
-                                closeWindow={() => {setDisplayed(false)}} 
+                                closeWindow={() => {setPollAditionalInfoDisplayed(false)}} 
                                 pollType={props.pollType}
                             />
                             :
@@ -174,12 +131,58 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
         )
     }
 
-    return (
-        isMobile ?
-            <MobileVersion />
-            :
-            <DesktopVersion />
-    )
+    const DesktopVersion = (): React.ReactElement => {
+        return (
+            <div className={styles.pollElement} style={{height: state.expand ? '150px' : '50px'}}>
+                <div className={styles.pollElementFirstRow}>
+                    <div>#{props.pollData.id}</div>
+                    <div>{state.pollStatus != null ? state.pollStatus[0] : "-"}</div>
+                    <div>{state.pollStatus != null ? state.pollStatus[1] : "-"}</div>
+                    <div>{fromWei(props.pollData.totalAmountContributed)} ETH</div>
+                    <div>{getReadableDate(props.pollData.dateLimit)}</div>
+                    <div>#{props.pollData.receiverId}</div>
+                    <div>#{props.pollData.oracleId}</div>
+                    <div className={styles.pollExpandContainer}>
+                        <Arrow 
+                            className={styles.pollExpand} 
+                            onClick={() => {setState(prevstate => ({
+                                ...prevstate,
+                                expand: !prevstate.expand
+                            }))}}
+                            style={{transform: state.expand ? 'rotate(180deg)' : ''}}
+                        />
+                    </div>
+                </div>  
+
+                <div className={styles.pollElementSecondRow}>
+                    <div>Description: {state.description}</div>
+                </div>  
+                        
+                <ThirdRow />
+            </div>
+        )
+    }
+
+    const ThirdRow = (): React.ReactElement | null => {
+        switch (props.pollType) {
+            case PollParticipantTypes.Contribute:
+                return <ContributeRow pollData={props.pollData} />
+        
+            case PollParticipantTypes.Contributor:
+                return <ContributorRow pollData={props.pollData} />
+
+            case PollParticipantTypes.Receiver:
+                return <ReceiverRow pollData={props.pollData} />
+
+            case PollParticipantTypes.Oracle:
+                return <OracleRow pollData={props.pollData} />
+            
+            default:
+                return null
+        }
+    }
+
+    return Result()
 }
 
 export default PollListElement
