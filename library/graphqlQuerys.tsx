@@ -31,7 +31,6 @@ interface IPoll {
 interface IContribution {
     id: string,
     contributorAddress: string,
-    pollId: string,
     amountContributed: string,
     hasRequested: boolean
     poll: IPoll
@@ -68,7 +67,6 @@ const oracleResultElements = `
 const contributionResultElements = `
     id
     contributorAddress
-    pollId
     amountContributed
     hasRequested
     poll {

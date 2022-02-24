@@ -4,6 +4,7 @@ import Image from 'next/image'
 import GasIcon from "./../../public/images/gasIcon.svg"
 import BellIcon from "./../../public/images/bellIcon.svg"
 import CrossIcon from "./../../public/images/crossIcon.svg"
+import SettingsIcon from "../../public/images/settings.svg"
 import styles from "./../../styles/screenerNavbar.module.scss"
 import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
 import { getGasPrice } from '../../library/web3methods'
@@ -74,6 +75,8 @@ const ScreenerNavbar = (): React.ReactElement => {
                     </div> 
 
                     <div id={styles.navRigthSide}>
+                        <SettingsIcon id={styles.settingsIcon}/>
+
                         <div id={styles.gasPanel} title='Current gas price on the network'>
                             <GasIcon />
                             <div id={styles.gasPrice}>{gasPrice}</div>

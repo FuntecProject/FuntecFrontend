@@ -8,7 +8,6 @@ import welcome from "../pages/index"
 import { getComponentName } from '../library/utils'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 
-
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	if (Component == welcome) {
 		return (

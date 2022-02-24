@@ -51,7 +51,7 @@ const Welcome = (): React.ReactElement => {
                             <div id={styles.leftView}>
                                 <div id={styles.leftViewHeader}>
                                     <h1 id={styles.title}>Welcome to Funtec!</h1>
-                                    <p id={styles.subTitle}>Here we help you <span className={styles.boldText}>get the content that you want</span> by allowing you to contribute to incentivise content creators to produce specific content.</p>
+                                    <p id={styles.subTitle}>Here we help you <span className={styles.boldText}>get the videos, streams, books that you want</span> by allowing you to incentivise creators to produce specific content.</p>
                                     <div id={styles.firstViewButtons}>
                                         <Link href={"/polls"}>
                                             <input type={"button"} value={"Enter app"} id={styles.enterAppButton}></input>
@@ -78,7 +78,7 @@ const Welcome = (): React.ReactElement => {
                 <div id={styles.bodyMobile}>
                     <div id={styles.firstViewMobile}>
                         <h1 id={styles.titleMobile}>Welcome to Funtec!</h1>
-                        <p id={styles.subTitleMobile}>Here we help you <span className={styles.boldText}>get the content that you want</span> by allowing you to contribute to incentivise content creators to produce specific content.</p>
+                        <p id={styles.subTitleMobile}>Here we help you <span className={styles.boldText}>get the videos, streams, books that you want</span> by allowing you to incentivise creators to produce specific content.</p>
                         <div id={styles.firstViewButtonsMobile}>
                             <Link href={"/polls"}>
                                 <input type={"button"} value={"Enter app"} id={styles.enterAppButton}></input>
