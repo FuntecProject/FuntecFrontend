@@ -1,8 +1,8 @@
 import React from "react"
 import PollListElement, { PollParticipantTypes } from "./pollsListElement"
 import styles from "./../../styles/pollsList.module.scss"
-import LoadingElement from "./../Global components/loadingElement"
-import ScreenerBox from "./../Global components/screenerBox"
+import LoadingElement from "../GlobalComponents/loadingElement"
+import ScreenerBox from "../GlobalComponents/screenerBox"
 import PollScreenerLegend from "./pollScreenerLegend"
 import { 
     first5PollsQuery,

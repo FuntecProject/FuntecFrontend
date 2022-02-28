@@ -6,7 +6,7 @@ import BellIcon from "./../../public/images/bellIcon.svg"
 import CrossIcon from "./../../public/images/crossIcon.svg"
 import SettingsIcon from "../../public/images/settings.svg"
 import styles from "./../../styles/screenerNavbar.module.scss"
-import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { getGasPrice } from '../../library/web3methods'
 import { useMediaQuery } from 'react-responsive'
 import AccountButton from './accountButton'

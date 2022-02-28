@@ -1,8 +1,8 @@
 import React from 'react'
-import CreatePollWindow from "../components/Polls components/createPollWindow"
-import PollsList from '../components/Polls components/pollsList'
-import { IRootContextType, RootContext } from '../components/Global components/screenerLayoutWrapper'
-import ScreenerSearchAndCreate from '../components/Global components/screenerSearchAndCreate'
+import CreatePollWindow from "../components/PollsComponents/createPollWindow"
+import PollsList from '../components/PollsComponents/pollsList'
+import { IRootContextType, RootContext } from '../components/GlobalComponents/screenerLayoutWrapper'
+import ScreenerSearchAndCreate from '../components/GlobalComponents/screenerSearchAndCreate'
 
 interface IPollsState {
     idSearched: string
@@ -39,6 +39,11 @@ export default function Polls(): React.ReactElement {
         </>
     )
 }
+
+// async function getStaticProps() {
+//     const client = useApolloClient()
+//     let results = await client.query<IPoll[]>({query: first5PollsQuery})
+// }
 
 export type {
     IPollsState

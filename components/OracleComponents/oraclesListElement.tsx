@@ -4,8 +4,8 @@ import {
     getDaysAndHoursFromUnix,
     converGWeiToEth,
     getTwoDecimalPercent
-} from "./../../library/utils"
-import { IOracle } from "./../../library/graphqlQuerys"
+} from "../../library/utils"
+import { IOracle } from "../../library/graphqlQuerys"
 import { useMediaQuery } from "react-responsive"
 import { fromWei } from "web3-utils"
 

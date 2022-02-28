@@ -1,10 +1,10 @@
 import React from "react"
 import CrossIcon from "../../public/images/crossIcon.svg"
-import { IRootContextType, RootContext } from '../Global components/screenerLayoutWrapper'
+import { IRootContextType, RootContext } from '../GlobalComponents/screenerLayoutWrapper'
 import styles from "../../styles/selectWalletWindow.module.scss"
 import Image from "next/dist/client/image"
 import { errorMessageWithClick } from "./../../library/alertWindows"
-import ScreenMouseLock from "../Global components/screenMouseLock"
+import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
 
 declare let window: any
 

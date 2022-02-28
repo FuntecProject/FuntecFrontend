@@ -1,20 +1,12 @@
 import React from "react"
 import styles from "./../../styles/createPoll.module.scss"
 import CrossIcon from "./../../public/images/crossIcon.svg"
-import { createPoll } from "./../../library/web3methods"
-import { convertDateToUnix } from "./../../library/utils"
-import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
-import { errorMessageWithoutClick } from './../../library/alertWindows'
+import { createPoll } from "../../library/web3methods"
+import { convertDateToUnix } from "../../library/utils"
+import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
+import { errorMessageWithoutClick } from '../../library/alertWindows'
 import { toWei } from "web3-utils"
-import ScreenMouseLock from "../Global components/screenMouseLock"
-
-interface ICreatePollWindowState {
-    receiverId: number,
-    oracleId: number,
-    amountContributed: number,
-    dateLimit: number,
-    requirement: string 
-}
+import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
 
 interface ICreatePollWindowProps {
     windowDisplayed: boolean
@@ -22,20 +14,18 @@ interface ICreatePollWindowProps {
 }
 
 const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => {
-    const [state, setState] = React.useState<ICreatePollWindowState>({
-        receiverId: 0,
-        oracleId: 0,
-        amountContributed: 0,
-        dateLimit: 0,
-        requirement: ""
-    })
+    const [receiverId, setReceiverId] = React.useState<number>(0)
+    const [oracleId, setOracleId] = React.useState<number>(0)
+    const [amountContributed, setAmountContributed] = React.useState<number>(0)
+    const [dateLimit, setDateLimit] = React.useState<number>(0)
+    const [requirement, setRequirement] = React.useState<string>("")
 
     const rootContext: IRootContextType = React.useContext(RootContext)
-    let receiverId = React.useRef() as any
+    let receiverIdRef = React.useRef() as any
 
     React.useEffect((): void => {
         if (props.windowDisplayed) {
-            receiverId.focus()
+            receiverIdRef.focus()
         }
     }, [props.windowDisplayed])
 
@@ -58,21 +48,21 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
                         </div>
     
                         <div id={styles.form}>
-                            <label htmlFor="receiverId">Receiver ID:</label>
+                            <label htmlFor="receiverId">Receiver ID / ENS name:</label>
                             <input type="number" id={styles.receiverId} min="0" max="1000000" step="1" onChange={event => {
-                                setState(prevState => ({...prevState, receiverId: Number(event.target.value)}))}} ref={input => {receiverId = input}}/>
-                            <label htmlFor="oracleId">Oracle ID:</label>
+                                setReceiverId(Number(event.target.value))}} ref={input => {receiverIdRef = input}}/>
+                            <label htmlFor="oracleId">Oracle ID / ENS name:</label>
                             <input type="number" id={styles.oracleId} min="0" max="1000000" step="1" onChange={event => {
-                                setState(prevState => ({...prevState, oracleId: Number(event.target.value)}))}} />
+                                setOracleId(Number(event.target.value))}} />
                             <label htmlFor="contribution">Amount contributed:</label>
                             <input type="number" id={styles.contribution} min="0.0001" max="10000.000000000000000000" step="0.0001" onChange={event => {
-                                setState(prevState => ({...prevState, amountContributed: Number(toWei(event.target.value))}))}}/>
+                                setAmountContributed(Number(toWei(event.target.value)))}}/>
                             <label htmlFor="dateLimit">Date limit:</label>
                             <input type="date" id={styles.dateLimit} onChange={event => {
-                                setState(prevState => ({...prevState, dateLimit: Number(convertDateToUnix(event.target.value))}))}}/>
+                                setDateLimit(Number(convertDateToUnix(event.target.value)))}}/>
                             <label htmlFor="requirement">Requirement:</label>
                             <textarea id={styles.requirement} onChange={event => {
-                                setState(prevState => ({...prevState, requirement: event.target.value}))}}></textarea>
+                                setRequirement(event.target.value)}}></textarea>
                         </div>
                     </div> 
     
@@ -96,17 +86,17 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
     const createPollListener = async (): Promise<void> => {
         if (rootContext.state.account != null) {
             if (
-                state.receiverId == 0 ||
-                state.oracleId == 0 ||
-                state.amountContributed == 0 ||
-                state.dateLimit == 0 ||
-                state.requirement == ""
+                receiverId == 0 ||
+                oracleId == 0 ||
+                amountContributed == 0 ||
+                dateLimit == 0 ||
+                requirement == ""
             ) {
                 errorMessageWithoutClick(rootContext.state.MySwal, <>All values must be filled"</>)
             }
 
             else {
-                createPoll(rootContext, state.receiverId, state.oracleId, state.dateLimit, state.amountContributed, state.requirement)
+                createPoll(rootContext, receiverId, oracleId, dateLimit, amountContributed, requirement)
             }
         }
 
@@ -115,7 +105,7 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
         }
     }
 
-    return <Result />
+    return Result()
 }
 
 export default CreatePollWindow

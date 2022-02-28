@@ -4,8 +4,8 @@ import RedirectIcon from "../../public/images/redirect.svg"
 import CopyIcon from "../../public/images/copy.svg"
 import LockIcon from "../../public/images/lockIcon.svg"
 import CrossIcon from "../../public/images/crossIcon.svg"
-import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
-import ScreenMouseLock from "../Global components/screenMouseLock"
+import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
+import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
 
 interface IAccountInfoWindowProps {
     windowDisplayed: boolean

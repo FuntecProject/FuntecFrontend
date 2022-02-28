@@ -1,5 +1,5 @@
 import React from 'react'
-import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import styles from "../../styles/screenerNavbar.module.scss"
 import { errorMessageWithClick } from './../../library/alertWindows'
 import { switchToRinkeby } from './../../library/web3methods'

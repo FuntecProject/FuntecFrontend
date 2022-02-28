@@ -5,12 +5,12 @@ import {
     getReceiverId
 } from '../../library/web3methods'
 import styles from "../../styles/screenerLayout.module.scss"
-import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { errorMessageWithoutClick } from "../../library/alertWindows"
 import metaData from '../../public/etc/metaData.json'
 import { useMediaQuery } from 'react-responsive'
 import AccountButton from "./accountButton"
-import ScreenMouseLock from "../Global components/screenMouseLock"
+import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
 
 interface IMenuPanelProps {
     menuDisplayed: boolean

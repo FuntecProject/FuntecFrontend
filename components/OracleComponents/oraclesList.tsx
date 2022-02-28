@@ -6,13 +6,13 @@ import {
 } from '../../library/graphqlQuerys'
 import styles from "../../styles/oraclesList.module.scss"
 import OraclesListElement from "./oraclesListElement"
-import LoadingElement from "../Global components/loadingElement"
-import ScreenerBox from "../Global components/screenerBox"
+import LoadingElement from "../GlobalComponents/loadingElement"
+import ScreenerBox from "../GlobalComponents/screenerBox"
 import { useQuery, useLazyQuery } from "@apollo/client"
 import { useMediaQuery } from "react-responsive"
 import { isAddress } from "web3-utils"
 import { getAddressFromENS, getOracleId } from "../../library/web3methods"
-import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 
 interface IOraclesListProps {
     idSearched: string

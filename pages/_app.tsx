@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import React from 'react'
-import ScreenerLayoutWrapper from '../components/Global components/screenerLayoutWrapper'
+import ScreenerLayoutWrapper from '../components/GlobalComponents/screenerLayoutWrapper'
 import Polls from "./polls"
 import Oracles from "./oracles"
 import ActivePolls from "./activepolls"

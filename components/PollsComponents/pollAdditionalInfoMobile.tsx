@@ -3,8 +3,8 @@ import styles from "./../../styles/pollAditionalInfoMobileWindow.module.scss"
 import { IPoll } from "../../library/graphqlQuerys"
 import { getDescriptionFromHash } from "../../library/ipfsQuerys"
 import CrossIcon from "./../../public/images/crossIcon.svg"
-import ScreenMouseLock from '../Global components/screenMouseLock'
-import LoadingElement from "../Global components/loadingElement"
+import ScreenMouseLock from '../GlobalComponents/screenMouseLock'
+import LoadingElement from "../GlobalComponents/loadingElement"
 import { PollParticipantTypes } from "./pollsListElement"
 
 interface IPollAditionalInfoMobileState {

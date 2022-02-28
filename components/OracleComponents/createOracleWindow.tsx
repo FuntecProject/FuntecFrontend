@@ -6,9 +6,9 @@ import {
     createOracle,
     getOracleId
 } from '../../library/web3methods'
-import { RootContext, IRootContextType } from '../Global components/screenerLayoutWrapper'
+import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { errorMessageWithoutClick } from "../../library/alertWindows"
-import ScreenMouseLock from "../Global components/screenMouseLock"
+import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
 
 interface ICreateOracleProps {
     windowDisplayed: boolean
