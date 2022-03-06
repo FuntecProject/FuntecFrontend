@@ -3,7 +3,7 @@ import styles from './../../styles/pollScreenerLegend.module.scss'
 
 const PollScreenerLegend = (): React.ReactElement => {
     return (
-        <div id={styles.pollScreenerLegend}>
+        <div id={styles.pollScreenerLegend} className="desktopView">
             <div>Poll ID</div>
             <div>State</div>
             <div>Result</div>

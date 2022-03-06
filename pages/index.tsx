@@ -26,7 +26,7 @@ const Welcome = (): React.ReactElement => {
 
     const DesktopVersion = () => {
         return (
-            <div id="indexDesktop" className={styles.main}>
+            <div className={`${styles.main} desktopView`}>
                 <div id={styles.navElements}>
                     <div id={styles.navLeftSide}>
                         <Link href={"/"}>
@@ -83,7 +83,7 @@ const Welcome = (): React.ReactElement => {
 
     const MobileVersion = () => {
         return (
-            <div id="indexMobile" className={styles.bodyMobile}>
+            <div className={`${styles.bodyMobile} mobileView`}>
                     <div id={styles.firstViewMobile}>
                         <h1 id={styles.titleMobile}>Welcome to Funtec!</h1>
                         <p id={styles.subTitleMobile}>Here we help you <span className={styles.boldText}>get the videos, streams, books that you want</span> by allowing you to incentivise creators to produce specific content.</p>

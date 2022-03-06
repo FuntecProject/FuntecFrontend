@@ -78,7 +78,7 @@ const OraclesListElement = (props: IOraclesListElementProps): React.ReactElement
         )
     }
 
-    return <Result />
+    return Result()
 }
 
 export default OraclesListElement

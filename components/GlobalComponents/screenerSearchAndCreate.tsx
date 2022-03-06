@@ -107,7 +107,7 @@ const ScreenerSearchAndCreate = (props: IScreenerSearchAndCreateProps): React.Re
         )
     }
 
-    return <Result />
+    return Result()
 }
 
 export default ScreenerSearchAndCreate

@@ -5,7 +5,7 @@ import Head from "next/head"
 import Navbar from "../NavbarComponents/screenerNavbar"
 import styles from "../../styles/screenerLayout.module.scss"
 import { AbiItem } from 'web3-utils'
-import { ApolloClient, InMemoryCache, ApolloProvider, NormalizedCacheObject } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import MetaData from '../../public/etc/metaData.json'
 import { Contract } from "web3-eth-contract"
 
@@ -94,7 +94,6 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
     const handleChainChanged = () => window.location.reload
 
     const handleAccountChanged = async () => {
-        console.log('changed')
         let accounts = await web3ConnectionData.web3.eth.getAccounts()
         
         setWeb3ConnectionData(prevState => ({

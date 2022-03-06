@@ -46,24 +46,19 @@ const ActivePolls = (): React.ReactElement => {
     const Result = () => {
         return (
             <>
-                {
-                    isMobile ?
-                        <div id={styles.pollType}>
-                            <ParticipantTypeElementMobile participantType={ParticipantType.Receiver} />
-                            <ParticipantTypeElementMobile participantType={ParticipantType.Oracle} />
-                            <ParticipantTypeElementMobile participantType={ParticipantType.Contributor} />
-                        </div>
-                        :
-                        <>
-                            <div id={styles.pollType}>
-                                <ParticipantTypeElement participantType={ParticipantType.Receiver} />
-                                <ParticipantTypeElement participantType={ParticipantType.Oracle} />
-                                <ParticipantTypeElement participantType={ParticipantType.Contributor} />
-                            </div> 
+                <div id={styles.pollType} className="mobileView">
+                    <ParticipantTypeElementMobile participantType={ParticipantType.Receiver} />
+                    <ParticipantTypeElementMobile participantType={ParticipantType.Oracle} />
+                    <ParticipantTypeElementMobile participantType={ParticipantType.Contributor} />
+                </div>    
 
-                            <PollScreenerLegend />
-                        </>
-                }
+                <div id={styles.pollType} className="desktopView">
+                    <ParticipantTypeElement participantType={ParticipantType.Receiver} />
+                    <ParticipantTypeElement participantType={ParticipantType.Oracle} />
+                    <ParticipantTypeElement participantType={ParticipantType.Contributor} />
+                </div>       
+                
+                <PollScreenerLegend />
 
                 <ScreenerBox>
                     <ShowActivePollsList />
@@ -89,23 +84,22 @@ const ActivePolls = (): React.ReactElement => {
     }
 
     const ShowActivePollsList = () => {
-        if (rootContext.web3ConnectionData.account != null) {
-            return <SelectListByParticipantType />
-        }               
-        
-        return <div className={styles.noElementFound}>You need to connect with your wallet to see your polls</div>       
+        return rootContext.web3ConnectionData.account != null ?
+            <SelectListByParticipantType />
+            :
+            <div className={styles.noElementFound}>You need to connect with your wallet to see your polls</div>
     }
 
     const SelectListByParticipantType = () => {
         switch (currentParticipantTypeSelected) {
             case ParticipantType.Receiver:
-                return <ShowPollsAsReceiver />
+                return ShowPollsAsReceiver()
 
             case ParticipantType.Oracle:
-                return <ShowPollsAsOracle />
+                return ShowPollsAsOracle()
 
             case ParticipantType.Contributor:
-                return <ShowPollsAsContributor />
+                return ShowActivePollsList()
         }
     }
 

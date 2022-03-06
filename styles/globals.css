@@ -4,25 +4,25 @@
   box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Quicksand';
+    src: url("/textFonts/Quicksand-VariableFont_wght.ttf") format("truetype");
+    font-display: auto;
+  }
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@font-face {
-  font-family: 'Quicksand';
-  src: url("/textFonts/Quicksand-VariableFont_wght.ttf") format("truetype");
-  font-display: auto;
-}
-
 @media (max-width: 1000px) {
-  #indexDesktop {
-    display: none;
+  .desktopView {
+    display: none !important;
   }
 }
 
 @media (min-width: 1000px) {
-  #indexMobile {
-    display: none;
+  .mobileView {
+    display: none !important;
   }
 }

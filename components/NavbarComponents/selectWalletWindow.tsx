@@ -1,4 +1,4 @@
-import React, { Provider } from "react"
+import React from "react"
 import CrossIcon from "../../public/images/crossIcon.svg"
 import { IRootContextType, RootContext } from '../GlobalComponents/screenerLayoutWrapper'
 import styles from "../../styles/selectWalletWindow.module.scss"
@@ -7,6 +7,7 @@ import { errorMessageWithClick } from "./../../library/alertWindows"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import Web3 from "web3"
+import { useMediaQuery } from 'react-responsive'
 
 declare let window: any
 
@@ -17,6 +18,7 @@ interface ISelectWalletWindowProps {
 
 const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement | null => {
     const rootContext: IRootContextType = React.useContext(RootContext)
+    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const Result = () => {
         return (
@@ -43,21 +45,32 @@ const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement
                 </div>
     
                 <div id={styles.wallets}>
-                    <div id={styles.metamaskWallet} className={styles.walletElement} onClick={connectUsingMetamask}>
-                        <div className={styles.walletName}>Metamask</div>
-                        <Image src="/images/metamask.png" alt="Metamask wallet icon" width={32} height={32} />
-                    </div>
-
-                    <div id={styles.walletConnectWallet} className={styles.walletElement} onClick={connectUsingWalletConnect}>
-                        <div className={styles.walletName}>WalletConnect</div>
-                        <Image src="/images/walletConnectIcon.svg" alt="WalletConnect wallet icon" width={32} height={32} />
-                    </div>
+                    <WalletsList />
                 </div>
 
                 <div id={styles.footer}>
                     <div>New to ethereum?</div>
                     <a id={styles.learnMore} href="https://ethereum.org/en/wallets/" target="_blank" rel="noopener noreferrer">Learn more about wallets</a>
                 </div>
+            </div>
+        )
+    }
+
+    const WalletsList = () => {
+        return isMobile ?
+            <ConnectUsingWalletConnectButton />
+            :
+            <>
+                <ConnectUsingMetamaskButton />
+                <ConnectUsingWalletConnectButton />
+            </>
+    }
+
+    const ConnectUsingMetamaskButton = () => {
+        return (
+            <div id={styles.metamaskWallet} className={styles.walletElement} onClick={connectUsingMetamask}>
+                <div className={styles.walletName}>Metamask</div>
+                <Image src="/images/metamask.png" alt="Metamask wallet icon" width={32} height={32} />
             </div>
         )
     }
@@ -80,6 +93,15 @@ const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement
                 </>
             )
         }
+    }
+
+    const ConnectUsingWalletConnectButton = () => {
+        return (
+            <div id={styles.walletConnectWallet} className={styles.walletElement} onClick={connectUsingWalletConnect}>
+                <div className={styles.walletName}>WalletConnect</div>
+                <Image src="/images/walletConnectIcon.svg" alt="WalletConnect wallet icon" width={32} height={32} />
+            </div>
+        )
     }
 
     const connectUsingWalletConnect = async () => {

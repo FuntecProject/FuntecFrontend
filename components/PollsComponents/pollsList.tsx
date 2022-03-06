@@ -30,12 +30,7 @@ const PollsList = (props: IPollsListProps): React.ReactElement => {
     const Result = () => {
         return (
             <>
-                {
-                    isMobile ?
-                        null
-                        :
-                        <PollScreenerLegend/>
-                }
+                <PollScreenerLegend />
 
                 <ScreenerBox>
                     <Content />

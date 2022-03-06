@@ -9,7 +9,6 @@ import OraclesListElement from "./oraclesListElement"
 import LoadingElement from "../GlobalComponents/loadingElement"
 import ScreenerBox from "../GlobalComponents/screenerBox"
 import { useQuery, useLazyQuery } from "@apollo/client"
-import { useMediaQuery } from "react-responsive"
 import { isAddress } from "web3-utils"
 import { getAddressFromENS, getOracleId } from "../../library/web3methods"
 import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
@@ -22,8 +21,6 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
     const rootContext: IRootContextType = React.useContext(RootContext)
     const oracles = useQuery<{oracles: IOracle[]}>(first5OraclesQuery)
     const [getOracle, oracle] = useLazyQuery<{oracle: IOracle}>(oracleByIdQuery)
-
-    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     useEffect((): void => {
         if (props.idSearched != '') {
@@ -47,20 +44,15 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
     const Result = () => {
         return (
             <>
-                {
-                    isMobile ?
-                        null
-                        :
-                        <div id={styles.oraclesLegend}>
-                            <div>Oracle ID</div>
-                            <div>Response time</div>
-                            <div>Oracle fee</div>
-                            <div>Amount managed</div>
-                            <div>Success rate</div>
-                            <div>Number polls wrong</div>
-                            <div>Number polls handled</div>
-                        </div>
-                }
+                <div id={styles.oraclesLegend} className="desktopView">
+                    <div>Oracle ID</div>
+                    <div>Response time</div>
+                    <div>Oracle fee</div>
+                    <div>Amount managed</div>
+                    <div>Success rate</div>
+                    <div>Number polls wrong</div>
+                    <div>Number polls handled</div>
+                </div>
 
                 <ScreenerBox>
                     <SearchedOracle />
