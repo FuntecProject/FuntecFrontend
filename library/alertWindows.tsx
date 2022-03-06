@@ -1,7 +1,10 @@
 import React from "react"
-import Swal from "sweetalert2"
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
-const errorMessageWithoutClick = (MySwal: typeof Swal, message: React.ReactElement, time?: number) => {
+let MySwal = withReactContent(Swal)
+
+const errorMessageWithoutClick = (message: React.ReactElement, time?: number) => {
     if (time == undefined) {
         time = 1500
     }
@@ -14,7 +17,7 @@ const errorMessageWithoutClick = (MySwal: typeof Swal, message: React.ReactEleme
     })
 }
 
-const errorMessageWithClick = (MySwal: typeof Swal, message: React.ReactElement) => {
+const errorMessageWithClick = (message: React.ReactElement) => {
     MySwal.fire({
         icon: 'error',
         title: <div style={{fontFamily: 'Quicksand, sans-serif'}}>{message}</div>,
@@ -23,7 +26,6 @@ const errorMessageWithClick = (MySwal: typeof Swal, message: React.ReactElement)
 }
 
 const successMessageWithoutClick = (
-    MySwal: typeof Swal, 
     message: React.ReactElement, 
     time?: number
 ) => {
@@ -40,7 +42,6 @@ const successMessageWithoutClick = (
 }
 
 const sucessMessageWithclick = (
-    MySwal: typeof Swal,
     message: React.ReactElement
 ) => {
     MySwal.fire({

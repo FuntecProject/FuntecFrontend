@@ -66,6 +66,7 @@ const PollsList = (props: IPollsListProps): React.ReactElement => {
             let pollsElements = polls.data.polls.map(poll => {
                 return <PollListElement pollType={PollParticipantTypes.Contribute} pollData={poll} key={poll.id} />
             })
+            
             return (
                 <>
                     <div className={styles.pollTitle}>Last polls created:</div>
@@ -77,7 +78,7 @@ const PollsList = (props: IPollsListProps): React.ReactElement => {
         return <LoadingElement className={styles.pollElementLoading} />
     }
 
-    return <Result />
+    return Result()
 }
 
 export default PollsList

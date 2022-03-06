@@ -28,13 +28,13 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
     useEffect((): void => {
         if (props.idSearched != '') {
             if (isAddress(props.idSearched)) {
-                getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)
+                getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)
                     .then(oracleId => getOracle({variables: {id: oracleId}}))
             }
             else {
                 if (props.idSearched.endsWith('.eth')) {                        
-                    getAddressFromENS(rootContext.state.web3, props.idSearched)
-                        .then(oracleAddress => getOracleId(rootContext.state.accountsStorageInstance, oracleAddress))
+                    getAddressFromENS(rootContext.web3ConnectionData.web3, props.idSearched)
+                        .then(oracleAddress => getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, oracleAddress))
                         .then(oracleId => getOracle({variables: {id: oracleId}}))
                 }
                 else {
@@ -102,7 +102,7 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
         return <LoadingElement className={styles.oracleElementLoading} />
     }
 
-    return <Result />
+    return Result()
 }
 
 export default OraclesList

@@ -15,7 +15,7 @@ const Oracles = (): React.ReactElement => {
     const rootContext: IRootContextType = React.useContext(RootContext)
 
     React.useEffect(() => {
-        rootContext.methods.setActivePage("oracles")
+        rootContext.setActivePage("oracles")
     }, [])
 
     return (

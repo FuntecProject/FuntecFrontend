@@ -42,11 +42,10 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
     }
 
     const MenuPanelElements = () => {
-        if (isMobile) {
-            return <MenuPanelElementsMobile />
-        }
-
-        return <MenuPanelElementsDesktop />
+        return isMobile ?
+            <MenuPanelElementsMobile />
+            :
+            <MenuPanelElementsDesktop />
     }
 
     const MenuPanelElementsMobile = () => {
@@ -85,7 +84,7 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
         return (
             <Link href={`/${props.page}`}>
                 {
-                    rootContext.state.activePage == props.page ?
+                    rootContext.activePage == props.page ?
                         <div className={styles.pageElement} style={{fontWeight: 'bold'}}>
                             {props.textContent}
                         </div>
@@ -104,12 +103,12 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
                 <div 
                     className={styles.menuElement}
                     onClick={() => {
-                        if (rootContext.state.account != null) {
+                        if (rootContext.web3ConnectionData.account != null) {
                             createReceiverAccountListener()
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Wallet not connected</>)
+                            errorMessageWithoutClick(<>Wallet not connected</>)
                         }
                     }}
                 >Sing Up as a receiver</div>
@@ -128,14 +127,14 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
     }
 
     const createReceiverAccountListener = async (): Promise<void> => {
-        const reciverId = await getReceiverId(rootContext.state.accountsStorageInstance, rootContext.state.account)
+        const reciverId = await getReceiverId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)
 
         if (reciverId == 0) {
-            await createReceiverAccount(rootContext.state)
+            await createReceiverAccount(rootContext.web3ConnectionData)
         }
 
         else {
-            errorMessageWithoutClick(rootContext.state.MySwal, <>You can only sign up as a receiver once per account</>, 2000)
+            errorMessageWithoutClick(<>You can only sign up as a receiver once per account</>, 2000)
         }
     }
 

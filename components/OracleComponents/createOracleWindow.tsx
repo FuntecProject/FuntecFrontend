@@ -88,8 +88,8 @@ const CreateOracleWindow = (props: ICreateOracleProps): React.ReactElement => {
     }
 
     const createOracleListener = async (): Promise<void> => {        
-        if (rootContext.state.account != null) {
-            let oracleId = await getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)
+        if (rootContext.web3ConnectionData.account != null) {
+            let oracleId = await getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)
 
             if (oracleId == 0) {
                 if (
@@ -99,25 +99,25 @@ const CreateOracleWindow = (props: ICreateOracleProps): React.ReactElement => {
                     let oracleFeeGWei = new BigNumber(10).pow(9).multipliedBy(state.oracleFee)
                     let responseTime = (state.responseHours + state.responseDays * 24) * 60 * 60
         
-                    await createOracle(rootContext.state, responseTime, oracleFeeGWei)
+                    await createOracle(rootContext.web3ConnectionData, responseTime, oracleFeeGWei)
                 }
         
                 else {
-                    errorMessageWithoutClick(rootContext.state.MySwal, <>All values must be filled</>)
+                    errorMessageWithoutClick(<>All values must be filled</>)
                 }
             }
 
             else {
-                errorMessageWithoutClick(rootContext.state.MySwal, <>This account already has an oracle created</>)
+                errorMessageWithoutClick(<>This account already has an oracle created</>)
             }
         }
 
         else {
-            errorMessageWithoutClick(rootContext.state.MySwal, <>Please connect your wallet</>)
+            errorMessageWithoutClick(<>Please connect your wallet</>)
         }
     }
 
-    return <Result />
+    return Result()
 }
 
 export default CreateOracleWindow

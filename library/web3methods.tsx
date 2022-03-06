@@ -6,14 +6,13 @@ import { sucessMessageWithclick } from "./alertWindows"
 import { Contract } from "web3-eth-contract"
 import Web3 from "web3"
 
-const createReceiverAccount = async (rootState: IRootContextType["state"]): Promise<void> => {
+const createReceiverAccount = async (rootState: IRootContextType["web3ConnectionData"]): Promise<void> => {
     rootState.accountsStorageInstance.methods.createReceiverAccount().send({from: rootState.account})
         .on('error', (error: string) => {
             console.log(error)
         })
         .on('transactionHash', (tx: string) => {
             sucessMessageWithclick(
-                rootState.MySwal, 
                 <>Transaction has been sucessfully sent, check it out <a href={`https://rinkeby.etherscan.io/tx/${tx}`} target="_blank" rel="noopener noreferrer" style={{color: 'lightBlue'}}>here</a></>
             )
         })
@@ -23,7 +22,7 @@ const createReceiverAccount = async (rootState: IRootContextType["state"]): Prom
 }
 
 const createOracle = async(
-    rootState: IRootContextType["state"],
+    rootState: IRootContextType["web3ConnectionData"],
     responseTime: Number,
     fee: BigNumber
 ) => {
@@ -33,7 +32,6 @@ const createOracle = async(
         })
         .on('transactionHash', (tx: string) => {
             sucessMessageWithclick(
-                rootState.MySwal, 
                 <>Transaction has been sucessfully sent, check it out <a href={`https://rinkeby.etherscan.io/tx/${tx}`} target="_blank" rel="noopener noreferrer" style={{color: 'lightBlue'}}>here</a></>
             )
         })
@@ -53,7 +51,7 @@ const createPoll = async(
     let hash = await addStringToIPFS(requirement)
 
     if (hash) {
-        rootContext.state.pollRewardsInstance.methods.createPoll(receiverId.toString(), dateLimit.toString(), oracleId.toString(), hash).send({from: rootContext.state.account, value: amount})
+        rootContext.web3ConnectionData.pollRewardsInstance.methods.createPoll(receiverId.toString(), dateLimit.toString(), oracleId.toString(), hash).send({from: rootContext.web3ConnectionData.account, value: amount})
             .on('error', (e: string) => {
                 console.log(e)
             })
@@ -62,7 +60,6 @@ const createPoll = async(
             })
             .on('transactionHash', (tx:string) => {
                 sucessMessageWithclick(
-                    rootContext.state.MySwal, 
                     <>Transaction has been sucessfully sent, check it out <a href={`https://rinkeby.etherscan.io/tx/${tx}`} target="_blank" rel="noopener noreferrer" style={{color: 'lightBlue'}}>here</a></>
                 )
             })
@@ -77,13 +74,12 @@ const contribute = async(
     pollId: string,
     amount: string
 ): Promise<void> => {
-    rootContext.state.pollRewardsInstance.methods.contribute(pollId).send({from: rootContext.state.account, value: amount})
+    rootContext.web3ConnectionData.pollRewardsInstance.methods.contribute(pollId).send({from: rootContext.web3ConnectionData.account, value: amount})
             .on('error', (e: string) => {
                 console.log(e)
             })
             .on('transactionHash', (tx: string) => {
                 sucessMessageWithclick(
-                    rootContext.state.MySwal, 
                     <>Transaction has been sucessfully sent, check it out <a href={`https://rinkeby.etherscan.io/tx/${tx}`} target="_blank" rel="noopener noreferrer" style={{color: 'lightBlue'}}>here</a></>
                 )
             })
@@ -91,7 +87,7 @@ const contribute = async(
 
 const getPoll = async(rootContext: IRootContextType, pollId: string) => {
     try {
-        return await rootContext.state.pollRewardsInstance.methods.polls(pollId).call()
+        return await rootContext.web3ConnectionData.pollRewardsInstance.methods.polls(pollId).call()
     }
 
     catch (error) {
@@ -100,7 +96,7 @@ const getPoll = async(rootContext: IRootContextType, pollId: string) => {
 }
 
 const getPollsLength = async(rootContext: IRootContextType) => {
-    return await rootContext.state.pollRewardsInstance.methods.getPollsLength().call()
+    return await rootContext.web3ConnectionData.pollRewardsInstance.methods.getPollsLength().call()
 }
 
 const getOracleId = async(accountsStorageInstance: Contract, account: String) => {
@@ -112,27 +108,27 @@ const getReceiverId = async(accountsStorageInstance: Contract, account: string) 
 }
 
 const getOracle = async(rootContext: IRootContextType, oracleId: string) => {
-    return await rootContext.state.pollRewardsInstance.methods.oracles(oracleId).call()
+    return await rootContext.web3ConnectionData.pollRewardsInstance.methods.oracles(oracleId).call()
 }
 
 const claimReceiverReward = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.state.pollRewardsInstance.methods.claimReceiverReward(pollId).send({from: rootContext.state.account})
+    await rootContext.web3ConnectionData.pollRewardsInstance.methods.claimReceiverReward(pollId).send({from: rootContext.web3ConnectionData.account})
 }
 
 const claimContributorReward = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.state.pollRewardsInstance.methods.claimContribution(pollId).send({from: rootContext.state.account})
+    await rootContext.web3ConnectionData.pollRewardsInstance.methods.claimContribution(pollId).send({from: rootContext.web3ConnectionData.account})
 }
 
 const claimOracleReward = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.state.pollRewardsInstance.methods.claimOracleReward(pollId).send({from: rootContext.state.account})
+    await rootContext.web3ConnectionData.pollRewardsInstance.methods.claimOracleReward(pollId).send({from: rootContext.web3ConnectionData.account})
 }
 
 const generateDispute = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.state.pollRewardsInstance.methods.generateDispute(pollId).send({from: rootContext.state.account})
+    await rootContext.web3ConnectionData.pollRewardsInstance.methods.generateDispute(pollId).send({from: rootContext.web3ConnectionData.account})
 }
 
 const solvePoll = async(rootContext: IRootContextType, result: boolean, pollId: string): Promise<void> => {
-    await rootContext.state.pollRewardsInstance.methods.resolvePoll(result, pollId).send({from: rootContext.state.account})
+    await rootContext.web3ConnectionData.pollRewardsInstance.methods.resolvePoll(result, pollId).send({from: rootContext.web3ConnectionData.account})
 }
 
 const contributorHasRequested = async(
@@ -143,7 +139,7 @@ const contributorHasRequested = async(
 }
 
 const getGasPrice = async(rootContext: IRootContextType): Promise<string> => {
-    return Math.round(Number(await rootContext.state.web3.eth.getGasPrice()) / (10 ** 9)).toString()
+    return Math.round(Number(await rootContext.web3ConnectionData.web3.eth.getGasPrice()) / (10 ** 9)).toString()
 } 
 
 const getAddressFromENS = async(web3: Web3, ensName: string): Promise<string> => {

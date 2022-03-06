@@ -18,12 +18,10 @@ const OraclesListElement = (props: IOraclesListElementProps): React.ReactElement
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const Result = () => {
-        return(
-            isMobile ?
-                <MobileVersion />
-                :
-                <DesktopVersion />
-        )
+        return isMobile ?
+            <MobileVersion />
+            :
+            <DesktopVersion />
     }
 
     const MobileVersion = () => {

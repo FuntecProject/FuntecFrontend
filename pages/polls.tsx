@@ -16,7 +16,7 @@ export default function Polls(): React.ReactElement {
     let rootContext: IRootContextType = React.useContext(RootContext)
 
     React.useEffect(() => {
-        rootContext.methods.setActivePage("polls")
+        rootContext.setActivePage("polls")
     }, [])
 
     return (

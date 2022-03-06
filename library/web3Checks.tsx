@@ -32,7 +32,7 @@ const checkIfOracleCanClaim = async (pollData: IPoll): Promise<boolean> => {
 
 const checkIfContributorCanClaim = async (rootContext: IRootContextType, pollData: IPoll): Promise<boolean> => {
     let _currentTimeUnix = getCurrentTimeUnix()
-    let _contributorHasRequested = await contributorHasRequested(rootContext.state.pollRewardsInstance, rootContext.state.account, pollData.id)
+    let _contributorHasRequested = await contributorHasRequested(rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account, pollData.id)
 
     if (
         _contributorHasRequested == false &&

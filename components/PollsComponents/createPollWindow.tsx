@@ -84,7 +84,7 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
     }
 
     const createPollListener = async (): Promise<void> => {
-        if (rootContext.state.account != null) {
+        if (rootContext.web3ConnectionData.account != null) {
             if (
                 receiverId == 0 ||
                 oracleId == 0 ||
@@ -92,7 +92,7 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
                 dateLimit == 0 ||
                 requirement == ""
             ) {
-                errorMessageWithoutClick(rootContext.state.MySwal, <>All values must be filled"</>)
+                errorMessageWithoutClick(<>All values must be filled"</>)
             }
 
             else {
@@ -101,7 +101,7 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
         }
 
         else {
-            errorMessageWithoutClick(rootContext.state.MySwal, <>Wallet not connected</>)
+            errorMessageWithoutClick(<>Wallet not connected</>)
         }
     }
 

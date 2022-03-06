@@ -4,8 +4,6 @@ import contractsMetaData from '../../public/etc/contractsMetadata.json'
 import Head from "next/head"
 import Navbar from "../NavbarComponents/screenerNavbar"
 import styles from "../../styles/screenerLayout.module.scss"
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import { AbiItem } from 'web3-utils'
 import { ApolloClient, InMemoryCache, ApolloProvider, NormalizedCacheObject } from '@apollo/client'
 import MetaData from '../../public/etc/metaData.json'
@@ -18,115 +16,74 @@ interface IScreenerLayoutWrapperProps {
     children: React.ReactElement
 }
 
-interface IScreenerLayoutWrapperState {
-    providerNotInstalled: boolean
-    wrongNetwork: boolean
+interface IWeb3ConnectionData {
+    provider: any | null
     web3: Web3 | null
-    accounts: string[] | null
     account: string | null
-    pollRewardsInstance: Contract
-    accountsStorageInstance: Contract
-    activePage: string | null
-    MySwal: typeof Swal
+    pollRewardsInstance: Contract | null
+    accountsStorageInstance: Contract | null
 }
 
 interface IRootContextType {
-    state: IScreenerLayoutWrapperState,
-    methods: RootMethodsType
-}
-
-interface RootMethodsType {
-    setAccounts: (accounts: string[]) => void
+    web3ConnectionData: IWeb3ConnectionData
+    activePage: String | null
     setActivePage: (activePage: string) => void
+    setWeb3AndAccountsInstance: (provider: any) => Promise<void>
 }
 
 let RootContext = React.createContext<IRootContextType>({} as IRootContextType)
-
 let client = new ApolloClient({uri: MetaData.subgraphUrl, cache: new InMemoryCache()})
 
 const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactElement => {
-    
-    const [state, setState] = React.useState<IScreenerLayoutWrapperState>({
-        providerNotInstalled: false,
-        wrongNetwork: false,
+    const [activePage, setActivePage] = React.useState<String | null>(null)
+
+    const initialState: IWeb3ConnectionData = {
+        provider: null,
         web3: null,
-        accounts: null,
         account: null,
         pollRewardsInstance: null,
-        accountsStorageInstance: null,
-        activePage: null,
-        MySwal: withReactContent(Swal),
-    })
+        accountsStorageInstance: null
+    }
+    const [web3ConnectionData, setWeb3ConnectionData] = React.useState<IWeb3ConnectionData>(initialState)
 
     React.useEffect(() => {  
-        const setUpWeb3DataAndListeners = async () => {
-            if (window.ethereum) {
-                await setWeb3AndAccountsInstances()         
-
-                window.ethereum.on('chainChanged', handleChainChanged)
-                window.ethereum.on('accountsChanged', handleAccountChanged)   
-
-                return () => {
-                    window.ethereum.removeListener('chainChanged', handleChainChanged)
-                    window.ethereum.removeListener('accountsChanged', handleAccountChanged)
-                }
-            }       
-
-            else {
-                setState(prevState => ({
-                    ...prevState,
-                    providerNotInstalled: true
-                }))
-            }
+        if (window.ethereum) {
+            setWeb3AndAccountsInstances(window.ethereum)
         }
-
-        setUpWeb3DataAndListeners()
     }, [])
 
-    const handleChainChanged = (): void => {
-        window.location.reload()
-    }
+    const setWeb3AndAccountsInstances = async (provider: any): Promise<void> => {
+        let web3 = new Web3(provider)
+        let accounts = await web3.eth.getAccounts()   
 
-    const handleAccountChanged = (): void => {
-        window.location.reload()
-    }
-
-    React.useEffect(() => {
-        if (window.ethereum) {
-            if (window.ethereum.chainId != null) {
-                if (window.ethereum.chainId == '0x4') {
-                    setContractsInstances()
-                }
-                else {
-                    setState(prevState => ({
-                        ...prevState,
-                        wrongNetwork: true
-                    }))
-                }  
-            } 
-        }
-    }, [state.web3])
-
-    const setWeb3AndAccountsInstances = async (): Promise<void> => {
-        if (state.web3 == null) {
-            let web3 = new Web3(window.ethereum)
-            let accounts = await web3.eth.getAccounts()   
-
-            setState(prevState => ({
+        if (accounts.length > 0) {
+            setWeb3ConnectionData(prevState => ({
                 ...prevState,
+                provider: provider,
                 web3: web3,
-                accounts: accounts,
-                account: accounts[0],
+                account: accounts[0]
             }))
         }
     }
 
+    React.useEffect(() => {
+        if (web3ConnectionData.web3) {
+            if (web3ConnectionData.provider.chainId == '0x4') {
+                setContractsInstances()
+            }
+
+            web3ConnectionData.provider.on('chainChanged', handleChainChanged)
+            web3ConnectionData.provider.on('accountsChanged', handleAccountChanged)
+            web3ConnectionData.provider.on('disconnect', resetWeb3ConnectionData)
+        }
+    }, [web3ConnectionData.web3])
+
     const setContractsInstances = (): void => {
-        if (state.web3 != null) {
-            let pollRewardsInstance = new state.web3.eth.Contract(contractsMetaData.pollRewardsABI as AbiItem[], contractsMetaData.pollRewardsAddress)
-            let accountsStorageInstace = new state.web3.eth.Contract(contractsMetaData.accountsStorageABI as AbiItem[], contractsMetaData.accountsStorageAddress)
+        if (web3ConnectionData.web3 != null) {
+            let pollRewardsInstance = new web3ConnectionData.web3.eth.Contract(contractsMetaData.pollRewardsABI as AbiItem[], contractsMetaData.pollRewardsAddress)
+            let accountsStorageInstace = new web3ConnectionData.web3.eth.Contract(contractsMetaData.accountsStorageABI as AbiItem[], contractsMetaData.accountsStorageAddress)
             
-            setState(prevState => ({
+            setWeb3ConnectionData(prevState => ({
                 ...prevState,
                 pollRewardsInstance: pollRewardsInstance as unknown as Contract,
                 accountsStorageInstance: accountsStorageInstace as unknown as Contract,
@@ -134,45 +91,44 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
         }
     }
 
-    const setActivePage = (activePage: string): void => {
-        setState(prevState => ({
-            ...prevState,
-            activePage: activePage
-        }))
-    }
+    const handleChainChanged = () => window.location.reload
 
-    const setAccounts = (accounts: string[]): void => {
-        setState(prevState => ({
+    const handleAccountChanged = async () => {
+        console.log('changed')
+        let accounts = await web3ConnectionData.web3.eth.getAccounts()
+        
+        setWeb3ConnectionData(prevState => ({
             ...prevState,
-            accounts: accounts, 
             account: accounts[0]
         }))
     }
 
-    const methods: RootMethodsType = {
-        setAccounts: setAccounts,
+    const resetWeb3ConnectionData = () => setWeb3ConnectionData({...initialState})
+
+    const rootContext: IRootContextType = {
+        web3ConnectionData: web3ConnectionData,
+        activePage: activePage,
         setActivePage: setActivePage,
+        setWeb3AndAccountsInstance: setWeb3AndAccountsInstances
     }
 
     return (
-        <>
-            <ApolloProvider client={client}>
-                <RootContext.Provider value={{state: state, methods: methods}}>
-                    <Head>
-                        <title>{props.title}</title>
-                        <link rel="icon" type="image/x-icon" href="/images/appIcon.svg"></link>
-                    </Head> 
-
-                    <div id={styles.body}>
-                        <Navbar />    
-                        
-                        <main id={styles.main}>                    
-                            {props.children}
-                        </main>                         
-                    </div>  
-                </RootContext.Provider>
-            </ApolloProvider>
-        </>
+        <ApolloProvider client={client}>
+            <RootContext.Provider value={rootContext}>
+                <Head>
+                    <title>{props.title}</title>
+                    <link rel="icon" type="image/x-icon" href="/images/appIcon.svg"></link>
+                </Head> 
+                
+                <main id={styles.body}>
+                    <Navbar />    
+                    
+                    <div id={styles.main}>                    
+                        {props.children}
+                    </div>                         
+                </main>  
+            </RootContext.Provider>
+        </ApolloProvider>
     )
 }
 

@@ -65,11 +65,10 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
     }, [])
 
     const Result = () => {
-        if (isMobile) {
-            return MobileVersion()
-        }
-
-        return DesktopVersion()
+        return isMobile ?
+            <MobileVersion />
+            :
+            <DesktopVersion />
     }
 
     const MobileVersion = (): React.ReactElement => {

@@ -27,9 +27,9 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
 
     React.useEffect((): void => {
         const callback = async (): Promise<void> => {
-            if (rootContext.state.pollRewardsInstance && rootContext.state.account) {
-                let oracleIdPromise = rootContext.state.accountsStorageInstance.methods.addressToOracleId(rootContext.state.account).call()
-                let receiverIdPromise = rootContext.state.accountsStorageInstance.methods.addressToReceiverId(rootContext.state.account).call()
+            if (rootContext.web3ConnectionData.pollRewardsInstance && rootContext.web3ConnectionData.account) {
+                let oracleIdPromise = rootContext.web3ConnectionData.accountsStorageInstance.methods.addressToOracleId(rootContext.web3ConnectionData.account).call()
+                let receiverIdPromise = rootContext.web3ConnectionData.accountsStorageInstance.methods.addressToReceiverId(rootContext.web3ConnectionData.account).call()
 
                 let oracleId = await oracleIdPromise
                 let receiverId = await receiverIdPromise
@@ -43,7 +43,7 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         }
 
         callback()
-    }, [rootContext.state])
+    }, [rootContext.web3ConnectionData])
 
     const Result = () => {
         return (
@@ -75,7 +75,7 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         
                     <div id={styles.accountNumberTitle}>Connected with account:</div>
         
-                    <div id={styles.account}>{`${rootContext.state.account.substring(0, 12)}...${rootContext.state.account.substring(rootContext.state.account.length - 12, rootContext.state.account.length)}`}</div>
+                    <div id={styles.account}>{`${rootContext.web3ConnectionData.account.substring(0, 12)}...${rootContext.web3ConnectionData.account.substring(rootContext.web3ConnectionData.account.length - 12, rootContext.web3ConnectionData.account.length)}`}</div>
         
                     <div id={styles.addressActions}>
                         <a id={styles.viewOnExplorer} className={styles.link} target="_blank">

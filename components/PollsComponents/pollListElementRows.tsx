@@ -56,10 +56,10 @@ const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
             }))
         }
 
-        if (rootContext.state.pollRewardsInstance && rootContext.state.account) {
+        if (rootContext.web3ConnectionData.pollRewardsInstance && rootContext.web3ConnectionData.account) {
             callback()
         }
-    }, [rootContext.state.pollRewardsInstance, rootContext.state.account])
+    }, [rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account])
 
 
     return (
@@ -75,7 +75,7 @@ const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Oracle reward can't be claimed</>)
+                            errorMessageWithoutClick(<>Oracle reward can't be claimed</>)
                         }
                     }}
                 ></input>
@@ -107,7 +107,7 @@ const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Poll can't be resolved</>)
+                            errorMessageWithoutClick(<>Poll can't be resolved</>)
                         }
                     }}
                 ></input>
@@ -153,7 +153,7 @@ const ReceiverRow = (props: IPollListElementRowProps): React.ReactElement => {
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Receiver reward can't be claimed</>)
+                            errorMessageWithoutClick(<>Receiver reward can't be claimed</>)
                         }
                     }}
                 ></input>
@@ -171,7 +171,7 @@ const ReceiverRow = (props: IPollListElementRowProps): React.ReactElement => {
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Poll can't be disputed</>)
+                            errorMessageWithoutClick(<>Poll can't be disputed</>)
                         }
                     }}
                 ></input>
@@ -212,7 +212,7 @@ const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => 
         }
 
         callback()
-    }, [rootContext.state.pollRewardsInstance, rootContext.state.account])
+    }, [rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account])
 
     return (
         <div className={styles.activePollThirdRow}>
@@ -227,7 +227,7 @@ const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => 
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Contribution can't be claimed</>)
+                            errorMessageWithoutClick(<>Contribution can't be claimed</>)
                         }
                     }}
                 ></input>
@@ -244,7 +244,7 @@ const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => 
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Poll can't be disputed</>)
+                            errorMessageWithoutClick(<>Poll can't be disputed</>)
                         }
                     }}
                 ></input>
@@ -300,22 +300,22 @@ const ContributeRow = (props: IPollListElementRowProps): React.ReactElement => {
                 onClick={async (): Promise<void> => {
                     if (state.canContribute) {
                         if (state.contribution != null) {
-                            if (rootContext.state.account) {
+                            if (rootContext.web3ConnectionData.account) {
                                 await contribute(rootContext, props.pollData.id, toWei(state.contribution))
                             }
 
                             else { 
-                                errorMessageWithoutClick(rootContext.state.MySwal, <>Connect with your wallet first to contribute</>)                      
+                                errorMessageWithoutClick(<>Connect with your wallet first to contribute</>)                      
                             }
                         }
 
                         else {
-                            errorMessageWithoutClick(rootContext.state.MySwal, <>Contribution can't be empty</>)
+                            errorMessageWithoutClick(<>Contribution can't be empty</>)
                         }
                     } 
 
                     else {
-                        errorMessageWithoutClick(rootContext.state.MySwal, <>Contribution period is over</>)
+                        errorMessageWithoutClick(<>Contribution period is over</>)
                     }
                 }} 
                 value={"Contribute"}

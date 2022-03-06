@@ -1,29 +1,21 @@
 import React from "react"
-import { IRootContextType, RootContext } from "./screenerLayoutWrapper"
 
 interface IScreenMouseLockProps {
     backgroundShadowed: boolean
     removeDisplayedElement: () => void
 }
 
-const ScreenMouseLock = (props: IScreenMouseLockProps): React.ReactElement | null => {
-    const rootContext = React.useContext<IRootContextType>(RootContext)
-
-    if (props.backgroundShadowed) {
-        return (
-            <div 
-                onClick={() => {props.removeDisplayedElement()}} 
-                style={Object.assign({}, screenMouseLockStyle, {backdropFilter: "blur(10px)"})} 
-            />
-        )
-    }
-
-    return (
+const ScreenMouseLock = (props: IScreenMouseLockProps): React.ReactElement => {
+    return props.backgroundShadowed ?
         <div 
-            onClick={() => {props.removeDisplayedElement()}}
+            onClick={props.removeDisplayedElement} 
+            style={Object.assign({}, screenMouseLockStyle, {backdropFilter: "blur(10px)"})} 
+        />
+        :
+        <div 
+            onClick={props.removeDisplayedElement}
             style={screenMouseLockStyle}
         />
-    )
 }
 
 const screenMouseLockStyle = {

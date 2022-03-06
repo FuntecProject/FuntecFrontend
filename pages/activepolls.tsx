@@ -28,20 +28,20 @@ const ActivePolls = (): React.ReactElement => {
         = useLazyQuery<{contributions: IContribution[]}>(contributionsByContributorAddressQuery)
 
     React.useEffect(() => {
-        rootContext.methods.setActivePage("activepolls")
+        rootContext.setActivePage("activepolls")
     }, [])
 
     React.useEffect((): void => {
         const callback = async(): Promise<void> => {
-            if (rootContext.state.pollRewardsInstance != null && rootContext.state.account != undefined) {
-                getPollsAsOracle({variables: {oracleId: await getOracleId(rootContext.state.accountsStorageInstance, rootContext.state.account)}})
-                getPollsAsReceiver({variables: {receiverId: await getReceiverId(rootContext.state.accountsStorageInstance, rootContext.state.account)}})
-                getContributionsAsContributor({variables: {contributorAddress: rootContext.state.account}})
+            if (rootContext.web3ConnectionData.pollRewardsInstance != null && rootContext.web3ConnectionData.account != undefined) {
+                getPollsAsOracle({variables: {oracleId: await getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)}})
+                getPollsAsReceiver({variables: {receiverId: await getReceiverId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)}})
+                getContributionsAsContributor({variables: {contributorAddress: rootContext.web3ConnectionData.account}})
             }
         }
 
         callback()
-    }, [rootContext.state.pollRewardsInstance, rootContext.state.account])
+    }, [rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account])
 
     const Result = () => {
         return (
@@ -89,12 +89,8 @@ const ActivePolls = (): React.ReactElement => {
     }
 
     const ShowActivePollsList = () => {
-        if (rootContext.state.account != null) {
-            if (contributionsAsContributor.loading != null && contributionsAsContributor.data != undefined) {
-                return <SelectListByParticipantType />
-            }               
-            
-            return <LoadingElement className={styles.activePollsElementLoading} />
+        if (rootContext.web3ConnectionData.account != null) {
+            return <SelectListByParticipantType />
         }               
         
         return <div className={styles.noElementFound}>You need to connect with your wallet to see your polls</div>       
@@ -103,41 +99,65 @@ const ActivePolls = (): React.ReactElement => {
     const SelectListByParticipantType = () => {
         switch (currentParticipantTypeSelected) {
             case ParticipantType.Receiver:
-                if (pollsAsReceiver.data.polls.length > 0) {
-                    let result = pollsAsReceiver.data.polls.map(poll => {
-                        return <PollListElement pollData={poll} pollType={PollParticipantTypes.Receiver} key={poll.id} />
-                    })
-
-                    return <>{result}</>
-                }
-
-                return <div className={styles.noElementFound}>You don't participate in any polls as a receiver</div>
+                return <ShowPollsAsReceiver />
 
             case ParticipantType.Oracle:
-                if (pollsAsOracle.data.polls.length > 0) {
-                    let result = pollsAsOracle.data.polls.map(poll => {
-                        return <PollListElement pollData={poll} pollType={PollParticipantTypes.Oracle} key={poll.id} />
-                    })
-
-                    return <>{result}</>
-                }
-
-                return <div className={styles.noElementFound}>You don't participate in any polls as an oracle</div>
+                return <ShowPollsAsOracle />
 
             case ParticipantType.Contributor:
-                if (contributionsAsContributor.data.contributions.length > 0) {
-                    let result = contributionsAsContributor.data.contributions.map(contribution => {
-                        return <PollListElement pollData={contribution.poll} pollType={PollParticipantTypes.Contributor} key={contribution.poll.id} />
-                    })
-                
-                    return <>{result}</>
-                }               
-                
-                return <div className={styles.noElementFound}>You don't participate in any polls as a contributor</div>
+                return <ShowPollsAsContributor />
         }
     }
 
-    return <Result />
+    const ShowPollsAsReceiver = () => {
+        if(pollsAsReceiver.loading != null && pollsAsReceiver.data != undefined) {
+            if (pollsAsReceiver.data.polls.length > 0) {
+                let pollsAsReceiverRows = pollsAsReceiver.data.polls.map(poll => {
+                    return <PollListElement pollData={poll} pollType={PollParticipantTypes.Receiver} key={poll.id} />
+                }) 
+
+                return <>{pollsAsReceiverRows}</>
+            }
+
+            return <div className={styles.noElementFound}>You don't participate in any polls as a receiver</div>                    
+        }
+
+        return <LoadingElement className={styles.activePollsElementLoading} />
+    }
+
+    const ShowPollsAsOracle = () => {
+        if (pollsAsReceiver.loading != null && pollsAsReceiver.data != undefined) {
+            if (pollsAsOracle.data.polls.length > 0) {
+                let pollsAsOracleRows = pollsAsOracle.data.polls.map(poll => {
+                    return <PollListElement pollData={poll} pollType={PollParticipantTypes.Oracle} key={poll.id} />
+                })
+
+                return <>{pollsAsOracleRows}</>
+            }
+
+            return <div className={styles.noElementFound}>You don't participate in any polls as an oracle</div>
+        }
+
+        return <LoadingElement className={styles.activePollsElementLoading} />
+    }
+
+    const ShowPollsAsContributor = () => {
+        if (contributionsAsContributor.loading != null && contributionsAsContributor.data != undefined) {
+            if (contributionsAsContributor.data.contributions.length > 0) {
+                let contributionsAsContributorRows = contributionsAsContributor.data.contributions.map(contribution => {
+                    return <PollListElement pollData={contribution.poll} pollType={PollParticipantTypes.Contributor} key={contribution.poll.id} />
+                })  
+                
+                return <>{contributionsAsContributorRows}</>
+            }               
+            
+            return <div className={styles.noElementFound}>You don't participate in any polls as a contributor</div>
+        }
+
+        return <LoadingElement className={styles.activePollsElementLoading} />
+    }
+
+    return Result()
 }
 
 export default ActivePolls

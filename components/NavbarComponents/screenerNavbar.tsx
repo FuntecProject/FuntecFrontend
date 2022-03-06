@@ -21,13 +21,13 @@ const ScreenerNavbar = (): React.ReactElement => {
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
     React.useEffect(() => {
-        if (rootContext.state.web3 != null) {
+        if (rootContext.web3ConnectionData.web3 != null) {
             getGasPrice(rootContext)
                 .then(gasPrice => {
                     setGasPrice(gasPrice)
                 })
         }
-    }, [rootContext.state])
+    }, [rootContext.web3ConnectionData])
 
     const Result = () => {
         return (
@@ -75,6 +75,11 @@ const ScreenerNavbar = (): React.ReactElement => {
                     </div> 
 
                     <div id={styles.navRigthSide}>
+                        <button onClick={() => {
+                            if (rootContext.web3ConnectionData.provider) {
+                                rootContext.web3ConnectionData.provider.disconnect()
+                            }
+                        }}>Disconnect</button>
                         <SettingsIcon id={styles.settingsIcon}/>
 
                         <div id={styles.gasPanel} title='Current gas price on the network'>
@@ -102,8 +107,9 @@ const ScreenerNavbar = (): React.ReactElement => {
                     {props.textContent}   
                     
                     {
-                        rootContext.state.activePage == props.page ?
-                            <div className={`${styles.navElementSurline} ${styles.active}`}></div> :
+                        rootContext.activePage == props.page ?
+                            <div className={`${styles.navElementSurline} ${styles.active}`}></div> 
+                            :
                             <div className={styles.navElementSurline}></div>
                     }
                 </a>
@@ -112,16 +118,14 @@ const ScreenerNavbar = (): React.ReactElement => {
     }
 
     const MenuButtonElement = (): React.ReactElement => {
-        return (
-            menuDisplayed ?
-                <CrossIcon style={{marginRight: '20px'}}/>
-                :
-                <div onClick={() => {setMenuDisplayed(true)}} id={styles.menuIcon}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-        )
+        return menuDisplayed ?
+            <CrossIcon style={{marginRight: '20px'}}/>
+            :
+            <div onClick={() => {setMenuDisplayed(true)}} id={styles.menuIcon}>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
     }
 
     return Result()
