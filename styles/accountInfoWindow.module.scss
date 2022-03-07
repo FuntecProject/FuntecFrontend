@@ -11,7 +11,7 @@ $linkColor: rgb(28, 100, 167);
     transform: translateX(-50%);
     width: 400px;
     max-width: 90%;
-    height: 520px;
+    min-height: 470px;
 }
 
 #form {
@@ -197,5 +197,6 @@ $linkColor: rgb(28, 100, 167);
     padding: 10px;
     text-align: center;
     margin-top: 20px;
+    margin-bottom: 25px;
     cursor: pointer;
 }
