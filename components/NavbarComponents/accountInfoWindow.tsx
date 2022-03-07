@@ -116,9 +116,22 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
                             <LockIcon />
                         </a>
                     </div>
+
+                    <DisconnectButton />
                 </div>
             </div>
         )
+    }
+
+    const DisconnectButton = () => {
+        return rootContext.web3ConnectionData.provider && rootContext.web3ConnectionData.provider.isWalletConnect ?
+            <div id={styles.disconnectButton} onClick={() => {
+                if (rootContext.web3ConnectionData.provider) {
+                    rootContext.web3ConnectionData.provider.disconnect()
+                }
+            }}>Disconnect</div> 
+            :
+            null
     }
 
     const ReceiverId = (): React.ReactElement => {
@@ -141,7 +154,7 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         }
     }
 
-    return <Result />
+    return Result()
 }
 
 export default AccountInfoWindow

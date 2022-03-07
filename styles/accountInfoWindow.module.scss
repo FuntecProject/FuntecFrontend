@@ -11,7 +11,7 @@ $linkColor: rgb(28, 100, 167);
     transform: translateX(-50%);
     width: 400px;
     max-width: 90%;
-    height: 470px;
+    height: 520px;
 }
 
 #form {
@@ -186,4 +186,16 @@ $linkColor: rgb(28, 100, 167);
         margin: 0 10px 0;
         transform: scale(0.75);
     }
+}
+
+#disconnectButton {
+    border: 1px solid rgb(246, 221, 232);
+    color: rgb(232, 0, 111);
+    background-color: transparent;
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
 }

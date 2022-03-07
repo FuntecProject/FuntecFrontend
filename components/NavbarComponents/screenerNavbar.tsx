@@ -75,11 +75,6 @@ const ScreenerNavbar = (): React.ReactElement => {
                     </div> 
 
                     <div id={styles.navRigthSide}>
-                        <button onClick={() => {
-                            if (rootContext.web3ConnectionData.provider) {
-                                rootContext.web3ConnectionData.provider.disconnect()
-                            }
-                        }}>Disconnect</button>
                         <SettingsIcon id={styles.settingsIcon}/>
 
                         <div id={styles.gasPanel} title='Current gas price on the network'>
