@@ -1,8 +1,8 @@
 import React from 'react'
-import CreateOracleWindow from "../components/OracleComponents/createOracleWindow"
-import OraclesList from '../components/OracleComponents/oraclesList'
-import { IRootContextType, RootContext } from '../components/GlobalComponents/screenerLayoutWrapper'
-import ScreenerSearchAndCreate from '../components/GlobalComponents/screenerSearchAndCreate'
+import CreateOracleWindow from "../../components/OracleComponents/createOracleWindow"
+import OraclesList from '../../components/OracleComponents/oraclesList'
+import { IRootContextType, RootContext } from '../../components/GlobalComponents/screenerLayoutWrapper'
+import ScreenerSearchAndCreate from '../../components/GlobalComponents/screenerSearchAndCreate'
 
 interface IOraclesState {
     idSearched: string

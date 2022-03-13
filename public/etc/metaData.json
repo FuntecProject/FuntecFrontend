@@ -3,5 +3,6 @@
     "subgraphUrl": "https://api.thegraph.com/subgraphs/name/pabloturnes/thehard6",
     "infuraIPFSGateway": "https://ipfs.infura.io/ipfs",
     "githubUrl": "https://github.com/FuntecProject",
-    "ipfsPiningServiceUrl": "https://funtec.azurewebsites.net"
+    "ipfsPiningServiceUrl": "https://funtec.azurewebsites.net",
+    "usdPriceUrl": "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
 }

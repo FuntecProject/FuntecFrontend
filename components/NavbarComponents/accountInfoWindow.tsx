@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "../../styles/accountInfoWindow.module.scss"
+import styles from "../../styles/ComponentsStyles/NavbarComponentsStyles/accountInfoWindow.module.scss"
 import RedirectIcon from "../../public/images/redirect.svg"
 import CopyIcon from "../../public/images/copy.svg"
 import LockIcon from "../../public/images/lockIcon.svg"
@@ -46,19 +46,17 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
     }, [rootContext.web3ConnectionData])
 
     const Result = () => {
-        return (
-            props.windowDisplayed ?
-                <>
-                    <AccountInfoPannel />
+        return props.windowDisplayed ?
+            <>
+                <AccountInfoPannel />
     
-                    <ScreenMouseLock 
-                        backgroundShadowed={true} 
-                        removeDisplayedElement={props.closeWindowListener} 
-                    />
-                </>
+                <ScreenMouseLock 
+                    backgroundShadowed={true} 
+                    removeDisplayedElement={props.closeWindowListener} 
+                />
+            </>
             :
-                null
-        )
+            null
     }
 
     const AccountInfoPannel = (): React.ReactElement => {
@@ -135,23 +133,17 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
     }
 
     const ReceiverId = (): React.ReactElement => {
-        if (state.receiverId) {
-            return <>#{state.receiverId}</>
-        }
-
-        else {
-            return <>Your account is not registered as a receiver yet</>  
-        }
+        return state.receiverId ?
+            <>#{state.receiverId}</>
+            :
+            <>Your account is not registered as a receiver yet</>  
     }
 
     const OracleId = (): React.ReactElement => {
-        if (state.oracleId) {
-            return <>#{state.oracleId}</>
-        }
-
-        else {
-            return <>Your account is not registered as an oracle yet</>
-        }
+        return state.oracleId ?
+            <>#{state.oracleId}</>
+            :
+            <>Your account is not registered as an oracle yet</>
     }
 
     return Result()

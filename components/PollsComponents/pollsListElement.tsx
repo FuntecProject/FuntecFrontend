@@ -1,7 +1,7 @@
 import React from 'react'
 import Arrow from "./../../public/images/arrow.svg"
 import PlusIcon from "./../../public/images/plusIcon.svg"
-import styles from "./../../styles/pollsListElement.module.scss"
+import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollsListElement.module.scss"
 import {  
     getReadableDate,
     IPollStatusTypes,

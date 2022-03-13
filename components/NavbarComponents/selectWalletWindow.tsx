@@ -1,7 +1,7 @@
 import React from "react"
 import CrossIcon from "../../public/images/crossIcon.svg"
 import { IRootContextType, RootContext } from '../GlobalComponents/screenerLayoutWrapper'
-import styles from "../../styles/selectWalletWindow.module.scss"
+import styles from "../../styles/ComponentsStyles/NavbarComponentsStyles/selectWalletWindow.module.scss"
 import Image from "next/dist/client/image"
 import { errorMessageWithClick } from "./../../library/alertWindows"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
@@ -21,19 +21,17 @@ const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const Result = () => {
-        return (
-            props.windowDisplayed ?
-                <>
-                    <Content />
-    
-                    <ScreenMouseLock 
-                        backgroundShadowed={true}
-                        removeDisplayedElement={props.closeWindowListener} 
-                    />
-                </>
-                :
-                null
-        )
+        return props.windowDisplayed ?
+            <>
+                <Content />
+
+                <ScreenMouseLock 
+                    backgroundShadowed={true}
+                    removeDisplayedElement={props.closeWindowListener} 
+                />
+            </>
+            :
+            null
     }
 
     const Content = (): React.ReactElement => {

@@ -1,10 +1,11 @@
 import BigNumber from "bignumber.js"
 import { IPoll } from "./graphqlQuerys"
 import React from "react"
-import polls from "../pages/polls"
-import oracles from "../pages/oracles"
-import activePolls from "../pages/activepolls"
-import welcome from "../pages/index"
+import polls from "../src/pages/polls"
+import oracles from "../src/pages/oracles"
+import activePolls from "../src/pages/activepolls"
+import welcome from "../src/pages/index"
+import { USDPrice } from "./data"
 
 const converGWeiToEth = (wei: string) => {
     return (new BigNumber(wei).div('1000000000')).toString()
@@ -161,6 +162,18 @@ let getComponentName = (component: React.FunctionComponent) => {
     }
 }
 
+const displayAmount = async(amountInUSD: boolean, amount: string) => {
+    let bnEther = new BigNumber(amount).div(new BigNumber('1000000000000000000'))
+
+    if(amountInUSD) {
+        let usdPrice = await USDPrice.getPrice()
+
+        return `$${bnEther.multipliedBy(usdPrice.valueOf()).toString()}`
+    }
+
+    return `${bnEther.toFixed(9).toString()} ETH`
+}
+
 export {
     converGWeiToEth,
     convertDateToUnix,
@@ -171,5 +184,6 @@ export {
     getPollStatus,
     IPollStatusTypes,
     splitPascalCase,
-    getComponentName
+    getComponentName,
+    displayAmount
 }

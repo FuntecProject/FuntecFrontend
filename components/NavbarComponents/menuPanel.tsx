@@ -4,7 +4,7 @@ import {
     createReceiverAccount,
     getReceiverId
 } from '../../library/web3methods'
-import styles from "../../styles/screenerLayout.module.scss"
+import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerLayout.module.scss"
 import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { errorMessageWithoutClick } from "../../library/alertWindows"
 import metaData from '../../public/etc/metaData.json'

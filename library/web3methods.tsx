@@ -138,9 +138,13 @@ const contributorHasRequested = async(
     return (await pollRewardsInstance.methods.pollsUsersContributions(pollId, account).call())[1]
 }
 
-const getGasPrice = async(rootContext: IRootContextType): Promise<string> => {
-    return Math.round(Number(await rootContext.web3ConnectionData.web3.eth.getGasPrice()) / (10 ** 9)).toString()
+const getGasPrice = async(web3: Web3): Promise<string> => {
+    return Math.round(Number(await web3.eth.getGasPrice()) / (10 ** 9)).toString()
 } 
+
+const getAddressBalance = async(web3: Web3, address: string): Promise<string> => {
+    return await web3.eth.getBalance(address)
+}
 
 const getAddressFromENS = async(web3: Web3, ensName: string): Promise<string> => {
     return await web3.eth.ens.getAddress(ensName)
@@ -218,6 +222,7 @@ export {
     switchToArbitrumTesnetNetwork,
     addArbitrumTesnetNetwork,
     getGasPrice,
+    getAddressBalance,
     getAddressFromENS
 }
 

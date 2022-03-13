@@ -1,14 +1,14 @@
 import { useLazyQuery } from '@apollo/client'
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
-import LoadingElement from '../components/GlobalComponents/loadingElement'
-import ScreenerBox from '../components/GlobalComponents/screenerBox'
-import { IRootContextType, RootContext } from '../components/GlobalComponents/screenerLayoutWrapper'
-import PollScreenerLegend from '../components/PollsComponents/pollScreenerLegend'
-import PollListElement, { PollParticipantTypes } from '../components/PollsComponents/pollsListElement'
-import { contributionsByContributorAddressQuery, IContribution, IPoll, pollsByOracleIdQuery, pollsByReceiverIdQuery } from '../library/graphqlQuerys'
-import { getOracleId, getReceiverId } from '../library/web3methods'
-import styles from '../styles/activePollsList.module.scss'
+import LoadingElement from '../../components/GlobalComponents/loadingElement'
+import ScreenerBox from '../../components/GlobalComponents/screenerBox'
+import { IRootContextType, RootContext } from '../../components/GlobalComponents/screenerLayoutWrapper'
+import PollScreenerLegend from '../../components/PollsComponents/pollScreenerLegend'
+import PollListElement, { PollParticipantTypes } from '../../components/PollsComponents/pollsListElement'
+import { contributionsByContributorAddressQuery, IContribution, IPoll, pollsByOracleIdQuery, pollsByReceiverIdQuery } from '../../library/graphqlQuerys'
+import { getOracleId, getReceiverId } from '../../library/web3methods'
+import styles from '../../styles/ComponentsStyles/PollsComponentsStyles/activePollsList.module.scss'
 
 enum ParticipantType {
     Receiver = "Receiver", 

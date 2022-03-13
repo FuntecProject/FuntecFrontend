@@ -3,7 +3,7 @@ import Web3 from "web3"
 import contractsMetaData from '../../public/etc/contractsMetadata.json'
 import Head from "next/head"
 import Navbar from "../NavbarComponents/screenerNavbar"
-import styles from "../../styles/screenerLayout.module.scss"
+import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerLayout.module.scss"
 import { AbiItem } from 'web3-utils'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import MetaData from '../../public/etc/metaData.json'
@@ -27,8 +27,10 @@ interface IWeb3ConnectionData {
 interface IRootContextType {
     web3ConnectionData: IWeb3ConnectionData
     activePage: String | null
+    amountsInUsd: boolean
     setActivePage: (activePage: string) => void
     setWeb3AndAccountsInstance: (provider: any) => Promise<void>
+    setAmountsInUsd: (amountsInUsd: boolean) => void
 }
 
 let RootContext = React.createContext<IRootContextType>({} as IRootContextType)
@@ -36,6 +38,8 @@ let client = new ApolloClient({uri: MetaData.subgraphUrl, cache: new InMemoryCac
 
 const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactElement => {
     const [activePage, setActivePage] = React.useState<String | null>(null)
+    const [amountsInUsd, setAmountsInUsd] = React.useState<boolean>(true)
+    const [usdPrice, setUsdPrice] = React.useState<Number>(null)
 
     const initialState: IWeb3ConnectionData = {
         provider: null,
@@ -55,43 +59,31 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
     const setWeb3AndAccountsInstances = async (provider: any): Promise<void> => {
         let web3 = new Web3(provider)
         let accounts = await web3.eth.getAccounts()   
+        let pollRewardsInstance: Contract = null
+        let accountsStorageInstance: Contract = null
 
         if (accounts.length > 0) {
+            if (provider.chainId == '0x4') {
+                pollRewardsInstance = new web3.eth.Contract(contractsMetaData.pollRewardsABI as AbiItem[], contractsMetaData.pollRewardsAddress)
+                accountsStorageInstance = new web3.eth.Contract(contractsMetaData.accountsStorageABI as AbiItem[], contractsMetaData.accountsStorageAddress)
+            }
+
+            provider.on('chainChanged', handleChainChanged)
+            provider.on('accountsChanged', handleAccountChanged)
+            provider.on('disconnect', resetWeb3ConnectionData)
+
             setWeb3ConnectionData(prevState => ({
                 ...prevState,
                 provider: provider,
                 web3: web3,
-                account: accounts[0]
-            }))
-        }
-    }
-
-    React.useEffect(() => {
-        if (web3ConnectionData.web3) {
-            if (web3ConnectionData.provider.chainId == '0x4') {
-                setContractsInstances()
-            }
-
-            web3ConnectionData.provider.on('chainChanged', handleChainChanged)
-            web3ConnectionData.provider.on('accountsChanged', handleAccountChanged)
-            web3ConnectionData.provider.on('disconnect', resetWeb3ConnectionData)
-        }
-    }, [web3ConnectionData.web3])
-
-    const setContractsInstances = (): void => {
-        if (web3ConnectionData.web3 != null) {
-            let pollRewardsInstance = new web3ConnectionData.web3.eth.Contract(contractsMetaData.pollRewardsABI as AbiItem[], contractsMetaData.pollRewardsAddress)
-            let accountsStorageInstace = new web3ConnectionData.web3.eth.Contract(contractsMetaData.accountsStorageABI as AbiItem[], contractsMetaData.accountsStorageAddress)
-            
-            setWeb3ConnectionData(prevState => ({
-                ...prevState,
+                account: accounts[0],
                 pollRewardsInstance: pollRewardsInstance as unknown as Contract,
-                accountsStorageInstance: accountsStorageInstace as unknown as Contract,
+                accountsStorageInstance: accountsStorageInstance as unknown as Contract,
             }))
         }
     }
 
-    const handleChainChanged = () => window.location.reload
+    const handleChainChanged = () => window.location.reload()
 
     const handleAccountChanged = async () => {
         let accounts = await web3ConnectionData.web3.eth.getAccounts()
@@ -107,8 +99,10 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
     const rootContext: IRootContextType = {
         web3ConnectionData: web3ConnectionData,
         activePage: activePage,
+        amountsInUsd: amountsInUsd,
         setActivePage: setActivePage,
-        setWeb3AndAccountsInstance: setWeb3AndAccountsInstances
+        setWeb3AndAccountsInstance: setWeb3AndAccountsInstances,
+        setAmountsInUsd: setAmountsInUsd
     }
 
     return (

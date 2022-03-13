@@ -4,7 +4,7 @@ import {
     IOracle,
     oracleByIdQuery
 } from '../../library/graphqlQuerys'
-import styles from "../../styles/oraclesList.module.scss"
+import styles from "../../styles/ComponentsStyles/OracleComponentsStyles/oraclesList.module.scss"
 import OraclesListElement from "./oraclesListElement"
 import LoadingElement from "../GlobalComponents/loadingElement"
 import ScreenerBox from "../GlobalComponents/screenerBox"
@@ -28,6 +28,7 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
                 getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)
                     .then(oracleId => getOracle({variables: {id: oracleId}}))
             }
+            
             else {
                 if (props.idSearched.endsWith('.eth')) {                        
                     getAddressFromENS(rootContext.web3ConnectionData.web3, props.idSearched)
@@ -91,6 +92,7 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
                 </>
             )
         }
+
         return <LoadingElement className={styles.oracleElementLoading} />
     }
 

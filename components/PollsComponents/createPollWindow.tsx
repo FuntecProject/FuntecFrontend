@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./../../styles/createPoll.module.scss"
+import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/createPoll.module.scss"
 import CrossIcon from "./../../public/images/crossIcon.svg"
 import { createPoll } from "../../library/web3methods"
 import { convertDateToUnix } from "../../library/utils"

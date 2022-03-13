@@ -1,30 +1,28 @@
 import React from 'react'
 import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
-import styles from "../../styles/screenerNavbar.module.scss"
+import styles from "../../styles/ComponentsStyles/NavbarComponentsStyles/screenerNavbar.module.scss"
 import { errorMessageWithClick } from './../../library/alertWindows'
 import { switchToRinkeby } from './../../library/web3methods'
 import WrongNetworkIcon from "../../public/images/wrongNetwork.svg"
 import BigNumber from 'bignumber.js'
 import AccountInfoWindow from './accountInfoWindow'
 import SelectWalletWindow from './selectWalletWindow'
-
-declare let window: any
+import { getAddressBalance } from './../../library/web3methods'
+import { displayAmount } from '../../library/utils'
 
 const AccountButton = (): React.ReactElement => {
-    const [balance, setBalance] = React.useState<string>("")
     const [accountInfoWindowDisplayed, setAccountInfoWindowDisplayed] = React.useState<boolean>(false)
     const [selectWalletWindowDisplayed, setSelectWalletWindowDisplayed] = React.useState<boolean>(false)
+    const [balance, setBalance] = React.useState<string>("")
 
     const rootContext: IRootContextType = React.useContext(RootContext)
 
     React.useEffect(() => {
         if (rootContext.web3ConnectionData.web3 != null) {
-            if (rootContext.web3ConnectionData.account != null) {
-                rootContext.web3ConnectionData.web3.eth.getBalance(rootContext.web3ConnectionData.account)
-                    .then(balance => {
-                        setBalance(balance)
-                    })        
-            }
+            getAddressBalance(rootContext.web3ConnectionData.web3 ,rootContext.web3ConnectionData.account)
+                .then(balance => {
+                    setBalance(balance)
+                })
         }
     }, [rootContext.web3ConnectionData])
 
@@ -71,6 +69,7 @@ const AccountButton = (): React.ReactElement => {
             >
                 <div id={styles.balanceDiv}>
                     {new BigNumber(balance).div(new BigNumber('1000000000000000000')).toFixed(9).toString()} ETH
+                    {/* {displayAmount(rootContext.amountsInUsd, balance)} */}
                 </div>
 
                 <div id={styles.addressDiv}>
@@ -107,15 +106,14 @@ const AccountButton = (): React.ReactElement => {
             <div 
                 onClick={() => {
                     setSelectWalletWindowDisplayed(true)
-            }} 
+                }} 
                 id={styles.connectWallet} 
                 className={styles.connectWalletWhite}
-            >Connect to a wallet
-            </div>
+            >Connect to a wallet</div>
         )
     }
 
     return Result()
 }
 
-export default AccountButton
+export default React.memo(AccountButton)

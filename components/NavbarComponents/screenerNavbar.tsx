@@ -5,24 +5,22 @@ import GasIcon from "./../../public/images/gasIcon.svg"
 import BellIcon from "./../../public/images/bellIcon.svg"
 import CrossIcon from "./../../public/images/crossIcon.svg"
 import SettingsIcon from "../../public/images/settings.svg"
-import styles from "./../../styles/screenerNavbar.module.scss"
+import styles from "./../../styles/ComponentsStyles/NavbarComponentsStyles/screenerNavbar.module.scss"
 import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { getGasPrice } from '../../library/web3methods'
-import { useMediaQuery } from 'react-responsive'
 import AccountButton from './accountButton'
 import MenuPanel from './menuPanel'
+import SettingsWindow from './settingsWindow'
 
 
 const ScreenerNavbar = (): React.ReactElement => {
     const [gasPrice, setGasPrice] = React.useState<string>('N/A')
     const [menuDisplayed, setMenuDisplayed] = React.useState<boolean>(false)
-
     const rootContext: IRootContextType = React.useContext(RootContext)
-    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     React.useEffect(() => {
         if (rootContext.web3ConnectionData.web3 != null) {
-            getGasPrice(rootContext)
+            getGasPrice(rootContext.web3ConnectionData.web3)
                 .then(gasPrice => {
                     setGasPrice(gasPrice)
                 })
@@ -32,13 +30,8 @@ const ScreenerNavbar = (): React.ReactElement => {
     const Result = () => {
         return (
             <>
-                {
-                    isMobile ?
-                        <MobileNavBar />
-                        :
-                        <DesktopNavbar />
-                }
-    
+                <MobileNavBar />
+                <DesktopNavbar />
                 <MenuPanel menuDisplayed={menuDisplayed} closeMenuCallback={() => {setMenuDisplayed(false)}} />
             </>
         )
@@ -46,7 +39,7 @@ const ScreenerNavbar = (): React.ReactElement => {
 
     const MobileNavBar = (): React.ReactElement => {
         return (
-            <div id={styles.navMobile}>
+            <div id={styles.navMobile} className="mobileView">
                 <Link href="/">
                     <a id={styles.home}>
                         <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
@@ -60,7 +53,7 @@ const ScreenerNavbar = (): React.ReactElement => {
 
     const DesktopNavbar = (): React.ReactElement => {
         return (
-            <div id={styles.nav}>
+            <div id={styles.nav} className="desktopView">
                 <div id={styles.navElements}>
                     <div id={styles.navLeftSide}>
                         <Link href="/">
@@ -75,7 +68,7 @@ const ScreenerNavbar = (): React.ReactElement => {
                     </div> 
 
                     <div id={styles.navRigthSide}>
-                        <SettingsIcon id={styles.settingsIcon}/>
+                        <SettingsElements />
 
                         <div id={styles.gasPanel} title='Current gas price on the network'>
                             <GasIcon />
@@ -95,6 +88,17 @@ const ScreenerNavbar = (): React.ReactElement => {
         )
     }
 
+    const SettingsElements = (): React.ReactElement => {
+        const [settingsDisplayed, setSettingsDisplayed] = React.useState<boolean>(false)
+
+        return (
+            <div id={styles.settingsBox}>
+                <SettingsIcon id={styles.settingsIcon} onClick={() => {setSettingsDisplayed(true)}} />
+                <SettingsWindow displayed={settingsDisplayed} closeSettingsCallback={() => {setSettingsDisplayed(false)}} />
+            </div>
+        )
+    }
+
     const NavElement = (props: {page: string, textContent: string}) => {
         return (
             <Link href={`/${props.page}`}>
@@ -102,10 +106,10 @@ const ScreenerNavbar = (): React.ReactElement => {
                     {props.textContent}   
                     
                     {
-                        rootContext.activePage == props.page ?
-                            <div className={`${styles.navElementSurline} ${styles.active}`}></div> 
-                            :
-                            <div className={styles.navElementSurline}></div>
+                    rootContext.activePage == props.page ?
+                        <div className={`${styles.navElementSurline} ${styles.active}`}></div> 
+                        :
+                        <div className={styles.navElementSurline}></div>
                     }
                 </a>
             </Link>
@@ -127,5 +131,6 @@ const ScreenerNavbar = (): React.ReactElement => {
 }
 
 export default ScreenerNavbar
+
 
 

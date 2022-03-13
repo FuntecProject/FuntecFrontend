@@ -16,7 +16,7 @@ import {
     checkIfOracleCanResolve,
     checkIfReceiverCanClaim
 } from '../../library/web3Checks'
-import styles from "./../../styles/pollsListElement.module.scss"
+import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollsListElement.module.scss"
 import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { IPoll } from '../../library/graphqlQuerys'
 import { errorMessageWithoutClick } from '../../library/alertWindows'

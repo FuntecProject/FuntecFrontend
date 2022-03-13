@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./../../styles/pollAditionalInfoMobileWindow.module.scss"
+import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollAditionalInfoMobileWindow.module.scss"
 import { IPoll } from "../../library/graphqlQuerys"
 import { getDescriptionFromHash } from "../../library/ipfsQuerys"
 import CrossIcon from "./../../public/images/crossIcon.svg"

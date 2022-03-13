@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./../../styles/oraclesListElement.module.scss"
+import styles from "./../../styles/ComponentsStyles/OracleComponentsStyles/oraclesListElement.module.scss"
 import { 
     getDaysAndHoursFromUnix,
     converGWeiToEth,

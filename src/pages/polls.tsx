@@ -1,8 +1,8 @@
 import React from 'react'
-import CreatePollWindow from "../components/PollsComponents/createPollWindow"
-import PollsList from '../components/PollsComponents/pollsList'
-import { IRootContextType, RootContext } from '../components/GlobalComponents/screenerLayoutWrapper'
-import ScreenerSearchAndCreate from '../components/GlobalComponents/screenerSearchAndCreate'
+import CreatePollWindow from "../../components/PollsComponents/createPollWindow"
+import PollsList from '../../components/PollsComponents/pollsList'
+import { IRootContextType, RootContext } from '../../components/GlobalComponents/screenerLayoutWrapper'
+import ScreenerSearchAndCreate from '../../components/GlobalComponents/screenerSearchAndCreate'
 
 interface IPollsState {
     idSearched: string

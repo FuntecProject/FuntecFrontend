@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "../../styles/createOracle.module.scss"
+import styles from "../../styles/ComponentsStyles/OracleComponentsStyles/createOracle.module.scss"
 import CrossIcon from "../../public/images/crossIcon.svg"
 import BigNumber from "bignumber.js"
 import {

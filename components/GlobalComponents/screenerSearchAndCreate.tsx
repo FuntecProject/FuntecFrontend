@@ -1,6 +1,6 @@
 import React from "react"
 import Image from 'next/image'
-import styles from "../../styles/screenerSearchAndCreate.module.scss"
+import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerSearchAndCreate.module.scss"
 import Magnifier from "../../public/images/magnifier.svg"
 import CrossIcon from "../../public/images/crossIcon.svg"
 import { useMediaQuery } from 'react-responsive'
@@ -17,12 +17,10 @@ const ScreenerSearchAndCreate = (props: IScreenerSearchAndCreateProps): React.Re
     const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const Result = () => {
-        return (
-            isMobile ?
-                <MobileVersion />
+        return isMobile ?
+            <MobileVersion />
             :
-                <DesktopVersion />
-        )
+            <DesktopVersion />
     }
 
     const MobileVersion = () => {
@@ -47,17 +45,17 @@ const ScreenerSearchAndCreate = (props: IScreenerSearchAndCreateProps): React.Re
                     />
 
                     {
-                        props.idSearched != '' ?
-                            <CrossIcon
-                                id={styles.crossIcon}
-                                onClick={() => {
-                                    props.setIdSearched('')
-                                    searchInput.value = ''
-                                    searchInput.focus()
-                                }}
-                            /> 
-                            : 
-                            null
+                    props.idSearched != '' ?
+                        <CrossIcon
+                            id={styles.crossIcon}
+                            onClick={() => {
+                                props.setIdSearched('')
+                                searchInput.value = ''
+                                searchInput.focus()
+                            }}
+                        /> 
+                        : 
+                        null
                     }
                 </div>
             </div>
@@ -86,17 +84,17 @@ const ScreenerSearchAndCreate = (props: IScreenerSearchAndCreateProps): React.Re
                     />   
 
                     {
-                        props.idSearched != '' ?
-                            <CrossIcon
-                                id={styles.crossIcon}
-                                onClick={() => {
-                                    props.setIdSearched('')
-                                    searchInput.value = ''
-                                    searchInput.focus()
-                                }}
-                            /> 
-                            : 
-                            null
+                    props.idSearched != '' ?
+                        <CrossIcon
+                            id={styles.crossIcon}
+                            onClick={() => {
+                                props.setIdSearched('')
+                                searchInput.value = ''
+                                searchInput.focus()
+                            }}
+                        /> 
+                        : 
+                        null
                     }
                 </div>  
 

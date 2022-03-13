@@ -1,6 +1,6 @@
 import React from "react"
 import PollListElement, { PollParticipantTypes } from "./pollsListElement"
-import styles from "./../../styles/pollsList.module.scss"
+import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollsList.module.scss"
 import LoadingElement from "../GlobalComponents/loadingElement"
 import ScreenerBox from "../GlobalComponents/screenerBox"
 import PollScreenerLegend from "./pollScreenerLegend"
@@ -10,7 +10,6 @@ import {
     pollByIdQuery
 } from "../../library/graphqlQuerys"
 import { useQuery, useLazyQuery } from "@apollo/client"
-import { useMediaQuery } from 'react-responsive'
 
 interface IPollsListProps {
     idSearched: string
@@ -19,7 +18,6 @@ interface IPollsListProps {
 const PollsList = (props: IPollsListProps): React.ReactElement => {
     const polls = useQuery<{polls: IPoll[]}>(first5PollsQuery)
     const [getPoll, poll] = useLazyQuery<{poll: IPoll}>(pollByIdQuery)
-    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     React.useEffect(() => {
         if (props.idSearched != '') {

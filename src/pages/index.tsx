@@ -1,14 +1,13 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/dist/client/image'
-import styles from '../styles/index.module.scss'
-import metaData from '../public/etc/metaData.json'
+import styles from '../../styles/PagesStyles/index.module.scss'
+import metaData from '../../public/etc/metaData.json'
 import React from 'react'
 
 declare let window: any
 
 const Welcome = (): React.ReactElement => {
-
     const Result = () => {
         return (
             <>
