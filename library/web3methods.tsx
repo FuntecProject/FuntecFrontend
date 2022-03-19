@@ -1,13 +1,12 @@
 import { getPollStatus } from "./utils"
 import { addStringToIPFS } from "./ipfsQuerys"
-import { IRootContextType } from "../components/GlobalComponents/screenerLayoutWrapper"
 import BigNumber from "bignumber.js"
 import { sucessMessageWithclick } from "./alertWindows"
 import { Contract } from "web3-eth-contract"
 import Web3 from "web3"
 
-const createReceiverAccount = async (rootState: IRootContextType["web3ConnectionData"]): Promise<void> => {
-    rootState.accountsStorageInstance.methods.createReceiverAccount().send({from: rootState.account})
+const createReceiverAccount = async (accountsStorageInstance: Contract, account: string): Promise<void> => {
+    accountsStorageInstance.methods.createReceiverAccount().send({from: account})
         .on('error', (error: string) => {
             console.log(error)
         })
@@ -22,11 +21,12 @@ const createReceiverAccount = async (rootState: IRootContextType["web3Connection
 }
 
 const createOracle = async(
-    rootState: IRootContextType["web3ConnectionData"],
+    accountsStorageInstance: Contract,
+    account: string,
     responseTime: Number,
     fee: BigNumber
 ) => {
-    rootState.accountsStorageInstance.methods.createNewOracle(responseTime.toString(), fee.toString()).send({from: rootState.account})
+    accountsStorageInstance.methods.createNewOracle(responseTime.toString(), fee.toString()).send({from: account})
         .on('error', (e: string) => {
             console.log(e)
         })
@@ -41,7 +41,8 @@ const createOracle = async(
 }
 
 const createPoll = async(
-    rootContext: IRootContextType,
+    pollRewardsInstance: Contract,
+    account: string,
     receiverId: number,
     oracleId: number,
     dateLimit: number,
@@ -51,7 +52,7 @@ const createPoll = async(
     let hash = await addStringToIPFS(requirement)
 
     if (hash) {
-        rootContext.web3ConnectionData.pollRewardsInstance.methods.createPoll(receiverId.toString(), dateLimit.toString(), oracleId.toString(), hash).send({from: rootContext.web3ConnectionData.account, value: amount})
+        pollRewardsInstance.methods.createPoll(receiverId.toString(), dateLimit.toString(), oracleId.toString(), hash).send({from: account, value: amount})
             .on('error', (e: string) => {
                 console.log(e)
             })
@@ -70,11 +71,12 @@ const createPoll = async(
 }
 
 const contribute = async(
-    rootContext: IRootContextType,
+    pollRewardsInstance: Contract,
+    account: string,
     pollId: string,
     amount: string
 ): Promise<void> => {
-    rootContext.web3ConnectionData.pollRewardsInstance.methods.contribute(pollId).send({from: rootContext.web3ConnectionData.account, value: amount})
+    pollRewardsInstance.methods.contribute(pollId).send({from: account, value: amount})
             .on('error', (e: string) => {
                 console.log(e)
             })
@@ -85,9 +87,9 @@ const contribute = async(
             })
 }
 
-const getPoll = async(rootContext: IRootContextType, pollId: string) => {
+const getPoll = async(pollRewardsInstance: Contract, pollId: string) => {
     try {
-        return await rootContext.web3ConnectionData.pollRewardsInstance.methods.polls(pollId).call()
+        return await pollRewardsInstance.methods.polls(pollId).call()
     }
 
     catch (error) {
@@ -95,8 +97,8 @@ const getPoll = async(rootContext: IRootContextType, pollId: string) => {
     }
 }
 
-const getPollsLength = async(rootContext: IRootContextType) => {
-    return await rootContext.web3ConnectionData.pollRewardsInstance.methods.getPollsLength().call()
+const getPollsLength = async(pollRewardsInstance: Contract) => {
+    return await pollRewardsInstance.methods.getPollsLength().call()
 }
 
 const getOracleId = async(accountsStorageInstance: Contract, account: String) => {
@@ -107,28 +109,28 @@ const getReceiverId = async(accountsStorageInstance: Contract, account: string) 
     return await accountsStorageInstance.methods.addressToReceiverId(account).call()
 }
 
-const getOracle = async(rootContext: IRootContextType, oracleId: string) => {
-    return await rootContext.web3ConnectionData.pollRewardsInstance.methods.oracles(oracleId).call()
+const getOracle = async(pollRewardsInstance: Contract, oracleId: string) => {
+    return await pollRewardsInstance.methods.oracles(oracleId).call()
 }
 
-const claimReceiverReward = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.web3ConnectionData.pollRewardsInstance.methods.claimReceiverReward(pollId).send({from: rootContext.web3ConnectionData.account})
+const claimReceiverReward = async(pollRewardsInstance: Contract, account: string, pollId: string): Promise<void> => {
+    await pollRewardsInstance.methods.claimReceiverReward(pollId).send({from: account})
 }
 
-const claimContributorReward = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.web3ConnectionData.pollRewardsInstance.methods.claimContribution(pollId).send({from: rootContext.web3ConnectionData.account})
+const claimContributorReward = async(pollRewardsInstance: Contract, account: string, pollId: string): Promise<void> => {
+    await pollRewardsInstance.methods.claimContribution(pollId).send({from: account})
 }
 
-const claimOracleReward = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.web3ConnectionData.pollRewardsInstance.methods.claimOracleReward(pollId).send({from: rootContext.web3ConnectionData.account})
+const claimOracleReward = async(pollRewardsInstance: Contract, account: string, pollId: string): Promise<void> => {
+    await pollRewardsInstance.methods.claimOracleReward(pollId).send({from: account})
 }
 
-const generateDispute = async(rootContext: IRootContextType, pollId: string): Promise<void> => {
-    await rootContext.web3ConnectionData.pollRewardsInstance.methods.generateDispute(pollId).send({from: rootContext.web3ConnectionData.account})
+const generateDispute = async(pollRewardsInstance: Contract, account: string, pollId: string): Promise<void> => {
+    await pollRewardsInstance.methods.generateDispute(pollId).send({from: account})
 }
 
-const solvePoll = async(rootContext: IRootContextType, result: boolean, pollId: string): Promise<void> => {
-    await rootContext.web3ConnectionData.pollRewardsInstance.methods.resolvePoll(result, pollId).send({from: rootContext.web3ConnectionData.account})
+const solvePoll = async(pollRewardsInstance: Contract, account: string, result: boolean, pollId: string): Promise<void> => {
+    await pollRewardsInstance.methods.resolvePoll(result, pollId).send({from: account})
 }
 
 const contributorHasRequested = async(

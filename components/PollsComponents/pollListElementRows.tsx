@@ -17,10 +17,10 @@ import {
     checkIfReceiverCanClaim
 } from '../../library/web3Checks'
 import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollsListElement.module.scss"
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { IPoll } from '../../library/graphqlQuerys'
 import { errorMessageWithoutClick } from '../../library/alertWindows'
 import { toWei } from 'web3-utils'
+import { useAppDispatch, useAppSelector } from '../../src/app/hooks'
 
 interface IPollListElementRowProps {
     pollData: IPoll
@@ -32,14 +32,14 @@ interface IOracleRowState {
     oracleDecissionResult: boolean
 }
 
-const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
-    
+const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {    
     const [state, setState] = React.useState<IOracleRowState>({
         canClaim: false,
         canResolve: false,
         oracleDecissionResult: true
     })
+
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     React.useEffect(() => {
         const callback = async() => {
@@ -56,10 +56,10 @@ const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
             }))
         }
 
-        if (rootContext.web3ConnectionData.pollRewardsInstance && rootContext.web3ConnectionData.account) {
+        if (web3ConnectionData.pollRewardsInstance && web3ConnectionData.account) {
             callback()
         }
-    }, [rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account])
+    }, [web3ConnectionData.pollRewardsInstance, web3ConnectionData.account])
 
 
     return (
@@ -71,7 +71,7 @@ const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
                     value={"Claim oracle reward"}
                     onClick={(): void => {
                         if(state.canClaim) {
-                            claimOracleReward(rootContext, props.pollData.id)
+                            claimOracleReward(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, props.pollData.id)
                         }
 
                         else {
@@ -103,7 +103,7 @@ const OracleRow = (props: IPollListElementRowProps): React.ReactElement => {
                     value={"Resolve poll"}
                     onClick={(): void => {
                         if (state.canResolve) {
-                            solvePoll(rootContext, state.oracleDecissionResult, props.pollData.id)
+                            solvePoll(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, state.oracleDecissionResult, props.pollData.id)
                         }
 
                         else {
@@ -122,12 +122,12 @@ interface IReceiverAndContributorRowState {
 }
 
 const ReceiverRow = (props: IPollListElementRowProps): React.ReactElement => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
-
     const [state, setState] = React.useState<IReceiverAndContributorRowState>({
         canClaim: false,
         canDispute: false
     })
+
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     React.useEffect(() => {
         const canClaim = checkIfReceiverCanClaim(props.pollData)
@@ -149,7 +149,7 @@ const ReceiverRow = (props: IPollListElementRowProps): React.ReactElement => {
                     value={"Claim receiver reward"}
                     onClick={(): void => {
                         if (state.canClaim) {
-                            claimReceiverReward(rootContext, props.pollData.id)
+                            claimReceiverReward(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, props.pollData.id)
                         }
 
                         else {
@@ -167,7 +167,7 @@ const ReceiverRow = (props: IPollListElementRowProps): React.ReactElement => {
                     value={"Open dispute"}
                     onClick={(): void => {
                         if (state.canDispute) {
-                            generateDispute(rootContext, props.pollData.id)
+                            generateDispute(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, props.pollData.id)
                         }
 
                         else {
@@ -181,12 +181,12 @@ const ReceiverRow = (props: IPollListElementRowProps): React.ReactElement => {
 }
 
 const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
-
     const [state, setState] = React.useState<IReceiverAndContributorRowState>({
         canClaim: false,
         canDispute: false
     })
+
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     React.useEffect(() => {
         const callback = async () => {
@@ -203,7 +203,7 @@ const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => 
 
     React.useEffect(() => {
         const callback = async () => {
-            const canClaim = await checkIfContributorCanClaim(rootContext, props.pollData)
+            const canClaim = await checkIfContributorCanClaim(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, props.pollData)
 
             setState(prevState => ({
                 ...prevState,
@@ -212,7 +212,7 @@ const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => 
         }
 
         callback()
-    }, [rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account])
+    }, [web3ConnectionData.pollRewardsInstance, web3ConnectionData.account])
 
     return (
         <div className={styles.activePollThirdRow}>
@@ -223,7 +223,7 @@ const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => 
                     value={"Claim contribution"}
                     onClick={(): void => {
                         if (state.canClaim) {
-                            claimContributorReward(rootContext, props.pollData.id)
+                            claimContributorReward(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, props.pollData.id)
                         }
 
                         else {
@@ -240,7 +240,7 @@ const ContributorRow = (props: IPollListElementRowProps): React.ReactElement => 
                     value={"Open dispute"}
                     onClick={(): void => {
                         if (state.canDispute) {
-                            generateDispute(rootContext, props.pollData.id)
+                            generateDispute(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, props.pollData.id)
                         }
 
                         else {
@@ -264,7 +264,7 @@ const ContributeRow = (props: IPollListElementRowProps): React.ReactElement => {
         canContribute: false
     })
 
-    const rootContext: IRootContextType = React.useContext(RootContext)
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     React.useEffect((): void => {
         const callback = async(): Promise<void> => {
@@ -300,8 +300,8 @@ const ContributeRow = (props: IPollListElementRowProps): React.ReactElement => {
                 onClick={async (): Promise<void> => {
                     if (state.canContribute) {
                         if (state.contribution != null) {
-                            if (rootContext.web3ConnectionData.account) {
-                                await contribute(rootContext, props.pollData.id, toWei(state.contribution))
+                            if (web3ConnectionData.account) {
+                                await contribute(web3ConnectionData.pollRewardsInstance, web3ConnectionData.account, props.pollData.id, toWei(state.contribution))
                             }
 
                             else { 

@@ -8,6 +8,8 @@ import { AbiItem } from 'web3-utils'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import MetaData from '../../public/etc/metaData.json'
 import { Contract } from "web3-eth-contract"
+import { useAppDispatch, useAppSelector } from "../../src/app/hooks"
+import { resetWeb3ConnectionData, setAccount, setWeb3ConnectionData } from "../../src/features/web3ConnectionDataSlice"
 
 declare let window: any
 
@@ -16,39 +18,16 @@ interface IScreenerLayoutWrapperProps {
     children: React.ReactElement
 }
 
-interface IWeb3ConnectionData {
-    provider: any | null
-    web3: Web3 | null
-    account: string | null
-    pollRewardsInstance: Contract | null
-    accountsStorageInstance: Contract | null
+interface IScreenerLayoutWrapperContext {
+    setWeb3AndAccountsInstances: (provider: any) => Promise<void>
 }
 
-interface IRootContextType {
-    web3ConnectionData: IWeb3ConnectionData
-    activePage: String | null
-    amountsInUsd: boolean
-    setActivePage: (activePage: string) => void
-    setWeb3AndAccountsInstance: (provider: any) => Promise<void>
-    setAmountsInUsd: (amountsInUsd: boolean) => void
-}
-
-let RootContext = React.createContext<IRootContextType>({} as IRootContextType)
 let client = new ApolloClient({uri: MetaData.subgraphUrl, cache: new InMemoryCache()})
+let ScreenerLayoutWrapperContext = React.createContext<IScreenerLayoutWrapperContext>({} as IScreenerLayoutWrapperContext)
 
 const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactElement => {
-    const [activePage, setActivePage] = React.useState<String | null>(null)
-    const [amountsInUsd, setAmountsInUsd] = React.useState<boolean>(true)
-    const [usdPrice, setUsdPrice] = React.useState<Number>(null)
-
-    const initialState: IWeb3ConnectionData = {
-        provider: null,
-        web3: null,
-        account: null,
-        pollRewardsInstance: null,
-        accountsStorageInstance: null
-    }
-    const [web3ConnectionData, setWeb3ConnectionData] = React.useState<IWeb3ConnectionData>(initialState)
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
+    const dispatch = useAppDispatch()
 
     React.useEffect(() => {  
         if (window.ethereum) {
@@ -70,15 +49,14 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
 
             provider.on('chainChanged', handleChainChanged)
             provider.on('accountsChanged', handleAccountChanged)
-            provider.on('disconnect', resetWeb3ConnectionData)
+            provider.on('disconnect', () => handleDisconnect)
 
-            setWeb3ConnectionData(prevState => ({
-                ...prevState,
+            dispatch(setWeb3ConnectionData({
                 provider: provider,
                 web3: web3,
                 account: accounts[0],
-                pollRewardsInstance: pollRewardsInstance as unknown as Contract,
-                accountsStorageInstance: accountsStorageInstance as unknown as Contract,
+                pollRewardsInstance: pollRewardsInstance,
+                accountsStorageInstance: accountsStorageInstance
             }))
         }
     }
@@ -88,26 +66,14 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
     const handleAccountChanged = async () => {
         let accounts = await web3ConnectionData.web3.eth.getAccounts()
         
-        setWeb3ConnectionData(prevState => ({
-            ...prevState,
-            account: accounts[0]
-        }))
+        dispatch(setAccount(accounts[0]))
     }
 
-    const resetWeb3ConnectionData = () => setWeb3ConnectionData({...initialState})
-
-    const rootContext: IRootContextType = {
-        web3ConnectionData: web3ConnectionData,
-        activePage: activePage,
-        amountsInUsd: amountsInUsd,
-        setActivePage: setActivePage,
-        setWeb3AndAccountsInstance: setWeb3AndAccountsInstances,
-        setAmountsInUsd: setAmountsInUsd
-    }
+    const handleDisconnect = () => dispatch(resetWeb3ConnectionData())
 
     return (
-        <ApolloProvider client={client}>
-            <RootContext.Provider value={rootContext}>
+        <ScreenerLayoutWrapperContext.Provider value={{setWeb3AndAccountsInstances: setWeb3AndAccountsInstances}}>
+            <ApolloProvider client={client}>
                 <Head>
                     <title>{props.title}</title>
                     <link rel="icon" type="image/x-icon" href="/images/appIcon.svg"></link>
@@ -120,17 +86,13 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
                         {props.children}
                     </div>                         
                 </main>  
-            </RootContext.Provider>
-        </ApolloProvider>
+            </ApolloProvider>
+        </ScreenerLayoutWrapperContext.Provider>
     )
 }
 
 export default ScreenerLayoutWrapper
 
-export {
-    RootContext
-}
+export { ScreenerLayoutWrapperContext }
 
-export type {
-    IRootContextType
-}
+export type { IScreenerLayoutWrapperContext }

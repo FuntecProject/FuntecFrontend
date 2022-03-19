@@ -11,28 +11,29 @@ import ScreenerBox from "../GlobalComponents/screenerBox"
 import { useQuery, useLazyQuery } from "@apollo/client"
 import { isAddress } from "web3-utils"
 import { getAddressFromENS, getOracleId } from "../../library/web3methods"
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
+import { useAppSelector } from "../../src/app/hooks"
 
 interface IOraclesListProps {
     idSearched: string
 }
 
 const OraclesList = (props: IOraclesListProps): React.ReactElement => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
     const oracles = useQuery<{oracles: IOracle[]}>(first5OraclesQuery)
     const [getOracle, oracle] = useLazyQuery<{oracle: IOracle}>(oracleByIdQuery)
+
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     useEffect((): void => {
         if (props.idSearched != '') {
             if (isAddress(props.idSearched)) {
-                getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)
+                getOracleId(web3ConnectionData.accountsStorageInstance, web3ConnectionData.account)
                     .then(oracleId => getOracle({variables: {id: oracleId}}))
             }
             
             else {
                 if (props.idSearched.endsWith('.eth')) {                        
-                    getAddressFromENS(rootContext.web3ConnectionData.web3, props.idSearched)
-                        .then(oracleAddress => getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, oracleAddress))
+                    getAddressFromENS(web3ConnectionData.web3, props.idSearched)
+                        .then(oracleAddress => getOracleId(web3ConnectionData.accountsStorageInstance, oracleAddress))
                         .then(oracleId => getOracle({variables: {id: oracleId}}))
                 }
                 else {

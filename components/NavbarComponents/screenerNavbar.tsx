@@ -6,33 +6,33 @@ import BellIcon from "./../../public/images/bellIcon.svg"
 import CrossIcon from "./../../public/images/crossIcon.svg"
 import SettingsIcon from "../../public/images/settings.svg"
 import styles from "./../../styles/ComponentsStyles/NavbarComponentsStyles/screenerNavbar.module.scss"
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { getGasPrice } from '../../library/web3methods'
 import AccountButton from './accountButton'
 import MenuPanel from './menuPanel'
 import SettingsWindow from './settingsWindow'
+import { useAppSelector } from '../../src/app/hooks'
 
 
 const ScreenerNavbar = (): React.ReactElement => {
     const [gasPrice, setGasPrice] = React.useState<string>('N/A')
-    const [menuDisplayed, setMenuDisplayed] = React.useState<boolean>(false)
-    const rootContext: IRootContextType = React.useContext(RootContext)
+
+    const activePage = useAppSelector(state => state.activePage.value)
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     React.useEffect(() => {
-        if (rootContext.web3ConnectionData.web3 != null) {
-            getGasPrice(rootContext.web3ConnectionData.web3)
+        if (web3ConnectionData.web3 != null) {
+            getGasPrice(web3ConnectionData.web3)
                 .then(gasPrice => {
                     setGasPrice(gasPrice)
                 })
         }
-    }, [rootContext.web3ConnectionData])
+    }, [web3ConnectionData])
 
     const Result = () => {
         return (
             <>
                 <MobileNavBar />
                 <DesktopNavbar />
-                <MenuPanel menuDisplayed={menuDisplayed} closeMenuCallback={() => {setMenuDisplayed(false)}} />
             </>
         )
     }
@@ -106,7 +106,7 @@ const ScreenerNavbar = (): React.ReactElement => {
                     {props.textContent}   
                     
                     {
-                    rootContext.activePage == props.page ?
+                    activePage == props.page ?
                         <div className={`${styles.navElementSurline} ${styles.active}`}></div> 
                         :
                         <div className={styles.navElementSurline}></div>
@@ -117,14 +117,24 @@ const ScreenerNavbar = (): React.ReactElement => {
     }
 
     const MenuButtonElement = (): React.ReactElement => {
-        return menuDisplayed ?
-            <CrossIcon style={{marginRight: '20px'}}/>
-            :
-            <div onClick={() => {setMenuDisplayed(true)}} id={styles.menuIcon}>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+        const [menuDisplayed, setMenuDisplayed] = React.useState<boolean>(false)
+
+        return (
+            <>
+                {
+                menuDisplayed ?
+                    <CrossIcon style={{marginRight: '20px'}} />
+                    :
+                    <div onClick={() => {setMenuDisplayed(true)}} id={styles.menuIcon}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                }
+
+                <MenuPanel menuDisplayed={menuDisplayed} closeMenuCallback={() => {setMenuDisplayed(false)}} />
+            </>
+        )
     }
 
     return Result()

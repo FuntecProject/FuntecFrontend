@@ -1,5 +1,4 @@
 import React from 'react'
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import styles from "../../styles/ComponentsStyles/NavbarComponentsStyles/screenerNavbar.module.scss"
 import { errorMessageWithClick } from './../../library/alertWindows'
 import { switchToRinkeby } from './../../library/web3methods'
@@ -9,22 +8,23 @@ import AccountInfoWindow from './accountInfoWindow'
 import SelectWalletWindow from './selectWalletWindow'
 import { getAddressBalance } from './../../library/web3methods'
 import { displayAmount } from '../../library/utils'
+import { useAppSelector } from '../../src/app/hooks'
 
 const AccountButton = (): React.ReactElement => {
     const [accountInfoWindowDisplayed, setAccountInfoWindowDisplayed] = React.useState<boolean>(false)
     const [selectWalletWindowDisplayed, setSelectWalletWindowDisplayed] = React.useState<boolean>(false)
     const [balance, setBalance] = React.useState<string>("")
 
-    const rootContext: IRootContextType = React.useContext(RootContext)
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     React.useEffect(() => {
-        if (rootContext.web3ConnectionData.web3 != null) {
-            getAddressBalance(rootContext.web3ConnectionData.web3 ,rootContext.web3ConnectionData.account)
+        if (web3ConnectionData.web3 != null) {
+            getAddressBalance(web3ConnectionData.web3 ,web3ConnectionData.account)
                 .then(balance => {
                     setBalance(balance)
                 })
         }
-    }, [rootContext.web3ConnectionData])
+    }, [web3ConnectionData])
 
     const Result = () => {
         return (
@@ -45,7 +45,7 @@ const AccountButton = (): React.ReactElement => {
     }
 
     const Content = (): React.ReactElement => {
-        if (rootContext.web3ConnectionData.account != null) {
+        if (web3ConnectionData.account != null) {
             if (isCurrentChainRinkeby()) {
                 return _AccountButton()
             }
@@ -56,7 +56,7 @@ const AccountButton = (): React.ReactElement => {
         return ConnectWalletButton()
     }
 
-    const isCurrentChainRinkeby = () => rootContext.web3ConnectionData.accountsStorageInstance != null
+    const isCurrentChainRinkeby = () => web3ConnectionData.accountsStorageInstance != null
 
     const _AccountButton = () => {
         return (
@@ -73,7 +73,7 @@ const AccountButton = (): React.ReactElement => {
                 </div>
 
                 <div id={styles.addressDiv}>
-                    {`${rootContext.web3ConnectionData.account.substring(0, 6)}...${rootContext.web3ConnectionData.account.substring(rootContext.web3ConnectionData.account.length - 4, rootContext.web3ConnectionData.account.length)}`}
+                    {`${web3ConnectionData.account.substring(0, 6)}...${web3ConnectionData.account.substring(web3ConnectionData.account.length - 4, web3ConnectionData.account.length)}`}
                 </div>
             </div>
         )
@@ -88,7 +88,7 @@ const AccountButton = (): React.ReactElement => {
                 onClick={() => {
                     errorMessageWithClick(
                         <>You are using the wron network, click <a onClick={
-                            () => switchToRinkeby(rootContext.web3ConnectionData.provider)
+                            () => switchToRinkeby(web3ConnectionData.provider)
                         } 
                         style={{color: 'lightBlue', cursor: 'pointer'}}>here</a> to change it</>
                     )

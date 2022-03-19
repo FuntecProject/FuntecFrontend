@@ -1,7 +1,7 @@
 import { getCurrentTimeUnix } from "./utils"
 import { IPoll } from "./graphqlQuerys"
-import { IRootContextType } from "../components/GlobalComponents/screenerLayoutWrapper"
 import { contributorHasRequested } from "./web3methods"
+import { Contract } from "web3-eth-contract"
 
 const checkIfOracleCanClaim = async (pollData: IPoll): Promise<boolean> => {
     let _currentTimeUnix = getCurrentTimeUnix()
@@ -30,9 +30,9 @@ const checkIfOracleCanClaim = async (pollData: IPoll): Promise<boolean> => {
     return false
 }   
 
-const checkIfContributorCanClaim = async (rootContext: IRootContextType, pollData: IPoll): Promise<boolean> => {
+const checkIfContributorCanClaim = async (pollRewardsInstance: Contract, account: string, pollData: IPoll): Promise<boolean> => {
     let _currentTimeUnix = getCurrentTimeUnix()
-    let _contributorHasRequested = await contributorHasRequested(rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account, pollData.id)
+    let _contributorHasRequested = await contributorHasRequested(pollRewardsInstance, account, pollData.id)
 
     if (
         _contributorHasRequested == false &&

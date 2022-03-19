@@ -4,8 +4,8 @@ import RedirectIcon from "../../public/images/redirect.svg"
 import CopyIcon from "../../public/images/copy.svg"
 import LockIcon from "../../public/images/lockIcon.svg"
 import CrossIcon from "../../public/images/crossIcon.svg"
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
+import { useAppSelector } from "../../src/app/hooks"
 
 interface IAccountInfoWindowProps {
     windowDisplayed: boolean
@@ -23,13 +23,13 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         oracleId: null
     })
 
-    const rootContext: IRootContextType = React.useContext(RootContext)
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
 
     React.useEffect((): void => {
         const callback = async (): Promise<void> => {
-            if (rootContext.web3ConnectionData.pollRewardsInstance && rootContext.web3ConnectionData.account) {
-                let oracleIdPromise = rootContext.web3ConnectionData.accountsStorageInstance.methods.addressToOracleId(rootContext.web3ConnectionData.account).call()
-                let receiverIdPromise = rootContext.web3ConnectionData.accountsStorageInstance.methods.addressToReceiverId(rootContext.web3ConnectionData.account).call()
+            if (web3ConnectionData.pollRewardsInstance && web3ConnectionData.account) {
+                let oracleIdPromise = web3ConnectionData.accountsStorageInstance.methods.addressToOracleId(web3ConnectionData.account).call()
+                let receiverIdPromise = web3ConnectionData.accountsStorageInstance.methods.addressToReceiverId(web3ConnectionData.account).call()
 
                 let oracleId = await oracleIdPromise
                 let receiverId = await receiverIdPromise
@@ -43,7 +43,7 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         }
 
         callback()
-    }, [rootContext.web3ConnectionData])
+    }, [web3ConnectionData])
 
     const Result = () => {
         return props.windowDisplayed ?
@@ -73,7 +73,7 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
         
                     <div id={styles.accountNumberTitle}>Connected with account:</div>
         
-                    <div id={styles.account}>{`${rootContext.web3ConnectionData.account.substring(0, 12)}...${rootContext.web3ConnectionData.account.substring(rootContext.web3ConnectionData.account.length - 12, rootContext.web3ConnectionData.account.length)}`}</div>
+                    <div id={styles.account}>{`${web3ConnectionData.account.substring(0, 12)}...${web3ConnectionData.account.substring(web3ConnectionData.account.length - 12, web3ConnectionData.account.length)}`}</div>
         
                     <div id={styles.addressActions}>
                         <a id={styles.viewOnExplorer} className={styles.link} target="_blank">
@@ -122,10 +122,10 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
     }
 
     const DisconnectButton = () => {
-        return rootContext.web3ConnectionData.provider && rootContext.web3ConnectionData.provider.isWalletConnect ?
+        return web3ConnectionData.provider && web3ConnectionData.provider.isWalletConnect ?
             <div id={styles.disconnectButton} onClick={() => {
-                if (rootContext.web3ConnectionData.provider) {
-                    rootContext.web3ConnectionData.provider.disconnect()
+                if (web3ConnectionData.provider) {
+                    web3ConnectionData.provider.disconnect()
                 }
             }}>Disconnect</div> 
             :

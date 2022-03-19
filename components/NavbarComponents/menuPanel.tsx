@@ -5,21 +5,21 @@ import {
     getReceiverId
 } from '../../library/web3methods'
 import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerLayout.module.scss"
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { errorMessageWithoutClick } from "../../library/alertWindows"
 import metaData from '../../public/etc/metaData.json'
 import { useMediaQuery } from 'react-responsive'
 import AccountButton from "./accountButton"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
-
+import { useAppSelector } from "../../src/app/hooks"
 interface IMenuPanelProps {
     menuDisplayed: boolean
     closeMenuCallback: () => void
 }
 
 const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
     const isMobile = useMediaQuery({ maxWidth: 1200})
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
+    const activePage = useAppSelector(state => state.activePage.value)
 
     const Result = () => {
         return (
@@ -84,7 +84,7 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
         return (
             <Link href={`/${props.page}`}>
                 {
-                    rootContext.activePage == props.page ?
+                    activePage == props.page ?
                         <div className={styles.pageElement} style={{fontWeight: 'bold'}}>
                             {props.textContent}
                         </div>
@@ -103,7 +103,7 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
                 <div 
                     className={styles.menuElement}
                     onClick={() => {
-                        if (rootContext.web3ConnectionData.account != null) {
+                        if (web3ConnectionData.account != null) {
                             createReceiverAccountListener()
                         }
 
@@ -127,10 +127,10 @@ const MenuPanel = (props: IMenuPanelProps): React.ReactElement => {
     }
 
     const createReceiverAccountListener = async (): Promise<void> => {
-        const reciverId = await getReceiverId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)
+        const reciverId = await getReceiverId(web3ConnectionData.accountsStorageInstance, web3ConnectionData.account)
 
         if (reciverId == 0) {
-            await createReceiverAccount(rootContext.web3ConnectionData)
+            await createReceiverAccount(web3ConnectionData.accountsStorageInstance, web3ConnectionData.account)
         }
 
         else {

@@ -6,9 +6,9 @@ import {
     createOracle,
     getOracleId
 } from '../../library/web3methods'
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { errorMessageWithoutClick } from "../../library/alertWindows"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
+import { useAppSelector } from "../../src/app/hooks"
 
 interface ICreateOracleProps {
     windowDisplayed: boolean
@@ -28,7 +28,8 @@ const CreateOracleWindow = (props: ICreateOracleProps): React.ReactElement => {
         oracleFee: 0
     })
 
-    const rootContext: IRootContextType = React.useContext(RootContext)
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
+
     let oracleId = React.createRef() as any
 
     React.useEffect((): void => {
@@ -88,8 +89,8 @@ const CreateOracleWindow = (props: ICreateOracleProps): React.ReactElement => {
     }
 
     const createOracleListener = async (): Promise<void> => {        
-        if (rootContext.web3ConnectionData.account != null) {
-            let oracleId = await getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)
+        if (web3ConnectionData.account != null) {
+            let oracleId = await getOracleId(web3ConnectionData.accountsStorageInstance, web3ConnectionData.account)
 
             if (oracleId == 0) {
                 if (
@@ -99,7 +100,7 @@ const CreateOracleWindow = (props: ICreateOracleProps): React.ReactElement => {
                     let oracleFeeGWei = new BigNumber(10).pow(9).multipliedBy(state.oracleFee)
                     let responseTime = (state.responseHours + state.responseDays * 24) * 60 * 60
         
-                    await createOracle(rootContext.web3ConnectionData, responseTime, oracleFeeGWei)
+                    await createOracle(web3ConnectionData.accountsStorageInstance, web3ConnectionData.account, responseTime, oracleFeeGWei)
                 }
         
                 else {

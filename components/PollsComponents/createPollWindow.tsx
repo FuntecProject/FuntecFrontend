@@ -3,10 +3,10 @@ import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/create
 import CrossIcon from "./../../public/images/crossIcon.svg"
 import { createPoll } from "../../library/web3methods"
 import { convertDateToUnix } from "../../library/utils"
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
 import { errorMessageWithoutClick } from '../../library/alertWindows'
 import { toWei } from "web3-utils"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
+import { useAppSelector } from "../../src/app/hooks"
 
 interface ICreatePollWindowProps {
     windowDisplayed: boolean
@@ -20,7 +20,8 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
     const [dateLimit, setDateLimit] = React.useState<number>(0)
     const [requirement, setRequirement] = React.useState<string>("")
 
-    const rootContext: IRootContextType = React.useContext(RootContext)
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
+
     let receiverIdRef = React.useRef() as any
 
     React.useEffect((): void => {
@@ -84,7 +85,7 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
     }
 
     const createPollListener = async (): Promise<void> => {
-        if (rootContext.web3ConnectionData.account != null) {
+        if (web3ConnectionData.account != null) {
             if (
                 receiverId == 0 ||
                 oracleId == 0 ||
@@ -96,7 +97,15 @@ const CreatePollWindow = (props: ICreatePollWindowProps): React.ReactElement => 
             }
 
             else {
-                createPoll(rootContext, receiverId, oracleId, dateLimit, amountContributed, requirement)
+                createPoll(
+                    web3ConnectionData.pollRewardsInstance, 
+                    web3ConnectionData.account, 
+                    receiverId, 
+                    oracleId, 
+                    dateLimit, 
+                    amountContributed, 
+                    requirement
+                )
             }
         }
 

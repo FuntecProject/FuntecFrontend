@@ -1,8 +1,9 @@
 import React from 'react'
 import CreateOracleWindow from "../../components/OracleComponents/createOracleWindow"
 import OraclesList from '../../components/OracleComponents/oraclesList'
-import { IRootContextType, RootContext } from '../../components/GlobalComponents/screenerLayoutWrapper'
 import ScreenerSearchAndCreate from '../../components/GlobalComponents/screenerSearchAndCreate'
+import { useAppDispatch } from '../app/hooks'
+import { setActivePage } from '../features/activePageSlide'
 
 interface IOraclesState {
     idSearched: string
@@ -12,10 +13,10 @@ const Oracles = (): React.ReactElement => {
     const [idSearched, setIdSearched] = React.useState<string>('')
     const [createOracleWindowDisplayed, setCreateOracleWindowDisplayed] = React.useState<boolean>(false)
 
-    const rootContext: IRootContextType = React.useContext(RootContext)
+    const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        rootContext.setActivePage("oracles")
+        dispatch(setActivePage("oracles"))
     }, [])
 
     return (

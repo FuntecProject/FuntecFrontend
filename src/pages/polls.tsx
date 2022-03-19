@@ -1,8 +1,9 @@
 import React from 'react'
 import CreatePollWindow from "../../components/PollsComponents/createPollWindow"
 import PollsList from '../../components/PollsComponents/pollsList'
-import { IRootContextType, RootContext } from '../../components/GlobalComponents/screenerLayoutWrapper'
 import ScreenerSearchAndCreate from '../../components/GlobalComponents/screenerSearchAndCreate'
+import { useAppDispatch } from '../app/hooks'
+import { setActivePage } from '../features/activePageSlide'
 
 interface IPollsState {
     idSearched: string
@@ -13,10 +14,10 @@ export default function Polls(): React.ReactElement {
     const [idSearched, setIdSearched] = React.useState<string>('')
     const [createPollWindowDisplayed, setCreatePollWindowDisplayed] = React.useState<boolean>(false)
 
-    let rootContext: IRootContextType = React.useContext(RootContext)
+    const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        rootContext.setActivePage("polls")
+        dispatch(setActivePage("polls"))
     }, [])
 
     return (

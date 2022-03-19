@@ -1,6 +1,5 @@
 import React from "react"
 import CrossIcon from "../../public/images/crossIcon.svg"
-import { IRootContextType, RootContext } from '../GlobalComponents/screenerLayoutWrapper'
 import styles from "../../styles/ComponentsStyles/NavbarComponentsStyles/selectWalletWindow.module.scss"
 import Image from "next/dist/client/image"
 import { errorMessageWithClick } from "./../../library/alertWindows"
@@ -8,6 +7,7 @@ import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
 import WalletConnectProvider from "@walletconnect/web3-provider"
 import Web3 from "web3"
 import { useMediaQuery } from 'react-responsive'
+import { ScreenerLayoutWrapperContext, IScreenerLayoutWrapperContext} from "../GlobalComponents/screenerLayoutWrapper"
 
 declare let window: any
 
@@ -17,8 +17,8 @@ interface ISelectWalletWindowProps {
 }
 
 const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement | null => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
     const isMobile = useMediaQuery({ maxWidth: 1200})
+    const screenerLayoutWrapperContext = React.useContext<IScreenerLayoutWrapperContext>(ScreenerLayoutWrapperContext)
 
     const Result = () => {
         return props.windowDisplayed ?
@@ -76,7 +76,7 @@ const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement
     const connectUsingMetamask = async () => {
         if (window.ethereum) {
             await window.ethereum.request({ method: 'eth_requestAccounts' });
-            rootContext.setWeb3AndAccountsInstance(window.ethereum)
+            screenerLayoutWrapperContext.setWeb3AndAccountsInstances(window.ethereum)
         }
 
         else {
@@ -110,7 +110,7 @@ const SelectWalletWindow = (props: ISelectWalletWindowProps): React.ReactElement
             await provider.enable()
             let chainId = await web3.eth.getChainId()
             if (chainId == 4) {
-                rootContext.setWeb3AndAccountsInstance(provider)
+                screenerLayoutWrapperContext.setWeb3AndAccountsInstances(provider)
             }
             else {
                 provider.disconnect()

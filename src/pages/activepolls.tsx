@@ -1,14 +1,14 @@
 import { useLazyQuery } from '@apollo/client'
 import React from 'react'
-import { useMediaQuery } from 'react-responsive'
 import LoadingElement from '../../components/GlobalComponents/loadingElement'
 import ScreenerBox from '../../components/GlobalComponents/screenerBox'
-import { IRootContextType, RootContext } from '../../components/GlobalComponents/screenerLayoutWrapper'
 import PollScreenerLegend from '../../components/PollsComponents/pollScreenerLegend'
 import PollListElement, { PollParticipantTypes } from '../../components/PollsComponents/pollsListElement'
 import { contributionsByContributorAddressQuery, IContribution, IPoll, pollsByOracleIdQuery, pollsByReceiverIdQuery } from '../../library/graphqlQuerys'
 import { getOracleId, getReceiverId } from '../../library/web3methods'
 import styles from '../../styles/ComponentsStyles/PollsComponentsStyles/activePollsList.module.scss'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { setActivePage } from '../features/activePageSlide'
 
 enum ParticipantType {
     Receiver = "Receiver", 
@@ -17,8 +17,6 @@ enum ParticipantType {
 }
 
 const ActivePolls = (): React.ReactElement => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
-    const isMobile = useMediaQuery({ maxWidth: 1200})
     const [currentParticipantTypeSelected, setCurrentParticipantTypeSelected] 
         = React.useState<ParticipantType>(ParticipantType.Receiver)
 
@@ -27,21 +25,24 @@ const ActivePolls = (): React.ReactElement => {
     const [getContributionsAsContributor, contributionsAsContributor] 
         = useLazyQuery<{contributions: IContribution[]}>(contributionsByContributorAddressQuery)
 
+    const dispatch = useAppDispatch()
+    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
+
     React.useEffect(() => {
-        rootContext.setActivePage("activepolls")
+        dispatch(setActivePage("activepolls"))
     }, [])
 
     React.useEffect((): void => {
         const callback = async(): Promise<void> => {
-            if (rootContext.web3ConnectionData.pollRewardsInstance != null && rootContext.web3ConnectionData.account != undefined) {
-                getPollsAsOracle({variables: {oracleId: await getOracleId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)}})
-                getPollsAsReceiver({variables: {receiverId: await getReceiverId(rootContext.web3ConnectionData.accountsStorageInstance, rootContext.web3ConnectionData.account)}})
-                getContributionsAsContributor({variables: {contributorAddress: rootContext.web3ConnectionData.account}})
+            if (web3ConnectionData.pollRewardsInstance != null && web3ConnectionData.account != undefined) {
+                getPollsAsOracle({variables: {oracleId: await getOracleId(web3ConnectionData.accountsStorageInstance, web3ConnectionData.account)}})
+                getPollsAsReceiver({variables: {receiverId: await getReceiverId(web3ConnectionData.accountsStorageInstance, web3ConnectionData.account)}})
+                getContributionsAsContributor({variables: {contributorAddress: web3ConnectionData.account}})
             }
         }
 
         callback()
-    }, [rootContext.web3ConnectionData.pollRewardsInstance, rootContext.web3ConnectionData.account])
+    }, [web3ConnectionData.pollRewardsInstance, web3ConnectionData.account])
 
     const Result = () => {
         return (
@@ -84,7 +85,7 @@ const ActivePolls = (): React.ReactElement => {
     }
 
     const ShowActivePollsList = () => {
-        return rootContext.web3ConnectionData.account != null ?
+        return web3ConnectionData.account != null ?
             <SelectListByParticipantType />
             :
             <div className={styles.noElementFound}>You need to connect with your wallet to see your polls</div>

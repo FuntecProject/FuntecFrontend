@@ -7,6 +7,8 @@ import ActivePolls from "./activepolls"
 import welcome from "../pages/index"
 import { getComponentName } from '../../library/utils'
 import { AppProps } from 'next/dist/shared/lib/router/router'
+import { Provider } from 'react-redux'
+import store from "../../src/app/store"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	if (Component == welcome) {
@@ -21,9 +23,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		Component == ActivePolls 
 	) {
 		return (
-			<ScreenerLayoutWrapper title={getComponentName(Component)}>
-				<Component {...pageProps} />
-			</ScreenerLayoutWrapper>
+            <Provider store={store}>
+                <ScreenerLayoutWrapper title={getComponentName(Component)}>
+                    <Component {...pageProps} />
+                </ScreenerLayoutWrapper>
+            </Provider>
 		)
 	}	
 	

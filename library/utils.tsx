@@ -5,7 +5,7 @@ import polls from "../src/pages/polls"
 import oracles from "../src/pages/oracles"
 import activePolls from "../src/pages/activepolls"
 import welcome from "../src/pages/index"
-import { USDPrice } from "./data"
+import metaData from "../public/etc/metaData.json"
 
 const converGWeiToEth = (wei: string) => {
     return (new BigNumber(wei).div('1000000000')).toString()
@@ -162,12 +162,16 @@ let getComponentName = (component: React.FunctionComponent) => {
     }
 }
 
-const displayAmount = async(amountInUSD: boolean, amount: string) => {
+const getEthPrice = async(): Promise<number> => {
+    let response = await fetch(metaData.usdPriceUrl)
+
+    return (await response.json()).ethereum.usd
+}
+
+const displayAmount = async(amountInUSD: boolean, amount: string, usdPrice?: number) => {
     let bnEther = new BigNumber(amount).div(new BigNumber('1000000000000000000'))
 
     if(amountInUSD) {
-        let usdPrice = await USDPrice.getPrice()
-
         return `$${bnEther.multipliedBy(usdPrice.valueOf()).toString()}`
     }
 

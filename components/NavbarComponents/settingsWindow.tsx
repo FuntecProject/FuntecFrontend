@@ -1,6 +1,7 @@
 import React from 'react'
 import Switch from 'react-switch'
-import { RootContext, IRootContextType } from '../GlobalComponents/screenerLayoutWrapper'
+import { useAppDispatch, useAppSelector } from '../../src/app/hooks'
+import { changeDisplayed } from '../../src/features/usdPriceSlide'
 import ScreenMouseLock from '../GlobalComponents/screenMouseLock'
 
 interface ISettingsWindowProps {
@@ -15,7 +16,8 @@ interface ISettingsElementProps {
 }
 
 const SettingsWindow = (props: ISettingsWindowProps): React.ReactElement => {
-    const rootContext: IRootContextType = React.useContext(RootContext)
+    const usdPrice = useAppSelector(state => state.usdPrice)
+    const dispatch = useAppDispatch()
 
     const Result = () => {
         return props.displayed ?
@@ -35,18 +37,16 @@ const SettingsWindow = (props: ISettingsWindowProps): React.ReactElement => {
     const SettingsElements = () => {
         return (
             <>
-                <SettingsElement text="Show amounts in USD" checked={false} onChange={changeAmountsInUsdValue} />
+                <SettingsElement text="Show amounts in USD" checked={false} onChange={() => {dispatch(changeDisplayed())}} />
             </>
         )
     }
-
-    const changeAmountsInUsdValue = () => rootContext.setAmountsInUsd(!rootContext.amountsInUsd)
     
     const SettingsElement = (_props: ISettingsElementProps) => {
         return (
             <div style={SettingsElementStyle}>
                 <div style={TextStyle}>{_props.text}</div>
-                <Switch checked={rootContext.amountsInUsd} onChange={_props.onChange}/>
+                <Switch checked={usdPrice.displayed} onChange={_props.onChange}/>
             </div>
         )
     }
