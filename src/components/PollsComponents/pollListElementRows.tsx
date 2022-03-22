@@ -20,7 +20,7 @@ import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollsL
 import { IPoll } from '../../library/graphqlQuerys'
 import { errorMessageWithoutClick } from '../../library/alertWindows'
 import { toWei } from 'web3-utils'
-import { useAppDispatch, useAppSelector } from '../../src/app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
 interface IPollListElementRowProps {
     pollData: IPoll

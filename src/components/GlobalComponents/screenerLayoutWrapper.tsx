@@ -1,15 +1,17 @@
 import React from "react"
 import Web3 from "web3"
-import contractsMetaData from '../../public/etc/contractsMetadata.json'
+import contractsMetaData from '../../../public/etc/contractsMetadata.json'
 import Head from "next/head"
 import Navbar from "../NavbarComponents/screenerNavbar"
 import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerLayout.module.scss"
 import { AbiItem } from 'web3-utils'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import MetaData from '../../public/etc/metaData.json'
+import MetaData from '../../../public/etc/metaData.json'
 import { Contract } from "web3-eth-contract"
-import { useAppDispatch, useAppSelector } from "../../src/app/hooks"
-import { resetWeb3ConnectionData, setAccount, setWeb3ConnectionData } from "../../src/features/web3ConnectionDataSlice"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { resetWeb3ConnectionData, setAccount, setWeb3ConnectionData } from "../../features/web3ConnectionDataSlice"
+import { getUsdPrice } from "../../library/utils"
+import { setPrice } from "../../features/usdPriceSlide"
 
 declare let window: any
 
@@ -30,6 +32,9 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {  
+        getUsdPrice()
+            .then(result => dispatch(setPrice(result)))
+
         if (window.ethereum) {
             setWeb3AndAccountsInstances(window.ethereum)
         }
@@ -47,9 +52,12 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
                 accountsStorageInstance = new web3.eth.Contract(contractsMetaData.accountsStorageABI as AbiItem[], contractsMetaData.accountsStorageAddress)
             }
 
-            provider.on('chainChanged', handleChainChanged)
+            provider.on('chainChanged', reloadSite)
             provider.on('accountsChanged', handleAccountChanged)
-            provider.on('disconnect', () => handleDisconnect)
+
+            if (provider.isWalletConnect) {
+                provider.on('disconnect', handleDisconnect)
+            }
 
             dispatch(setWeb3ConnectionData({
                 provider: provider,
@@ -61,12 +69,16 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
         }
     }
 
-    const handleChainChanged = () => window.location.reload()
+    const reloadSite = () => window.location.reload()
 
-    const handleAccountChanged = async () => {
-        let accounts = await web3ConnectionData.web3.eth.getAccounts()
-        
-        dispatch(setAccount(accounts[0]))
+    const handleAccountChanged = async (accounts: Array<string>) => {
+        if (accounts.length > 0) {
+            dispatch(setAccount(accounts[0]))
+        }
+
+        else {
+            handleDisconnect()
+        }
     }
 
     const handleDisconnect = () => dispatch(resetWeb3ConnectionData())

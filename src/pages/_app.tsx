@@ -1,11 +1,11 @@
-import '../../styles/PagesStyles/globals.css'
+import '../styles/PagesStyles/globals.css'
 import React from 'react'
-import ScreenerLayoutWrapper from '../../components/GlobalComponents/screenerLayoutWrapper'
+import ScreenerLayoutWrapper from '../components/GlobalComponents/screenerLayoutWrapper'
 import Polls from "./polls"
 import Oracles from "./oracles"
 import ActivePolls from "./activepolls"
 import welcome from "../pages/index"
-import { getComponentName } from '../../library/utils'
+import { getComponentName } from '../library/utils'
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { Provider } from 'react-redux'
 import store from "../../src/app/store"

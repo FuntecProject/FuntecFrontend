@@ -1,11 +1,11 @@
 import React from "react"
 import styles from "../../styles/ComponentsStyles/NavbarComponentsStyles/accountInfoWindow.module.scss"
-import RedirectIcon from "../../public/images/redirect.svg"
-import CopyIcon from "../../public/images/copy.svg"
-import LockIcon from "../../public/images/lockIcon.svg"
-import CrossIcon from "../../public/images/crossIcon.svg"
+import RedirectIcon from "../../../public/images/redirect.svg"
+import CopyIcon from "../../../public/images/copy.svg"
+import LockIcon from "../../../public/images/lockIcon.svg"
+import CrossIcon from "../../../public/images/crossIcon.svg"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
-import { useAppSelector } from "../../src/app/hooks"
+import { useAppSelector } from "../../app/hooks"
 
 interface IAccountInfoWindowProps {
     windowDisplayed: boolean
@@ -124,9 +124,8 @@ const AccountInfoWindow = (props: IAccountInfoWindowProps): React.ReactElement =
     const DisconnectButton = () => {
         return web3ConnectionData.provider && web3ConnectionData.provider.isWalletConnect ?
             <div id={styles.disconnectButton} onClick={() => {
-                if (web3ConnectionData.provider) {
-                    web3ConnectionData.provider.disconnect()
-                }
+                web3ConnectionData.provider.disconnect()
+                props.closeWindowListener()
             }}>Disconnect</div> 
             :
             null

@@ -1,20 +1,20 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import GasIcon from "./../../public/images/gasIcon.svg"
-import BellIcon from "./../../public/images/bellIcon.svg"
-import CrossIcon from "./../../public/images/crossIcon.svg"
-import SettingsIcon from "../../public/images/settings.svg"
+import GasIcon from "../../../public/images/gasIcon.svg"
+import BellIcon from "../../../public/images/bellIcon.svg"
+import CrossIcon from "../../../public/images/crossIcon.svg"
+import SettingsIcon from "../../../public/images/settings.svg"
 import styles from "./../../styles/ComponentsStyles/NavbarComponentsStyles/screenerNavbar.module.scss"
 import { getGasPrice } from '../../library/web3methods'
 import AccountButton from './accountButton'
 import MenuPanel from './menuPanel'
 import SettingsWindow from './settingsWindow'
-import { useAppSelector } from '../../src/app/hooks'
+import { useAppSelector } from '../../app/hooks'
 
 
 const ScreenerNavbar = (): React.ReactElement => {
-    const [gasPrice, setGasPrice] = React.useState<string>('N/A')
+    const [gasPrice, setGasPrice] = React.useState<string>('-')
 
     const activePage = useAppSelector(state => state.activePage.value)
     const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
@@ -68,8 +68,6 @@ const ScreenerNavbar = (): React.ReactElement => {
                     </div> 
 
                     <div id={styles.navRigthSide}>
-                        <SettingsElements />
-
                         <div id={styles.gasPanel} title='Current gas price on the network'>
                             <GasIcon />
                             <div id={styles.gasPrice}>{gasPrice}</div>
@@ -79,7 +77,9 @@ const ScreenerNavbar = (): React.ReactElement => {
 
                         <AccountButton />    
 
-                        <BellIcon id={styles.bellIcon} />
+                        <SettingsElements />
+
+                        {/* <BellIcon id={styles.bellIcon} /> */}
 
                         <MenuButtonElement />
                     </div>
@@ -123,7 +123,7 @@ const ScreenerNavbar = (): React.ReactElement => {
             <>
                 {
                 menuDisplayed ?
-                    <CrossIcon style={{marginRight: '20px'}} />
+                    <CrossIcon width={25} id={styles.menuIcon} />
                     :
                     <div onClick={() => {setMenuDisplayed(true)}} id={styles.menuIcon}>
                         <div></div>

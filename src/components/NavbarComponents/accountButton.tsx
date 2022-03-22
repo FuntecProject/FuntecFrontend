@@ -1,14 +1,13 @@
 import React from 'react'
 import styles from "../../styles/ComponentsStyles/NavbarComponentsStyles/screenerNavbar.module.scss"
-import { errorMessageWithClick } from './../../library/alertWindows'
-import { switchToRinkeby } from './../../library/web3methods'
-import WrongNetworkIcon from "../../public/images/wrongNetwork.svg"
-import BigNumber from 'bignumber.js'
+import { errorMessageWithClick } from '../../library/alertWindows'
+import { switchToRinkeby } from '../../library/web3methods'
+import WrongNetworkIcon from "/public/images/wrongNetwork.svg"
 import AccountInfoWindow from './accountInfoWindow'
 import SelectWalletWindow from './selectWalletWindow'
-import { getAddressBalance } from './../../library/web3methods'
-import { displayAmount } from '../../library/utils'
-import { useAppSelector } from '../../src/app/hooks'
+import { getAddressBalance } from '../../library/web3methods'
+import { useAppSelector } from '../../app/hooks'
+import AmountComponent from '../GlobalComponents/amountComponent'
 
 const AccountButton = (): React.ReactElement => {
     const [accountInfoWindowDisplayed, setAccountInfoWindowDisplayed] = React.useState<boolean>(false)
@@ -68,8 +67,8 @@ const AccountButton = (): React.ReactElement => {
                 className={styles.connectWalletWhite}
             >
                 <div id={styles.balanceDiv}>
-                    {new BigNumber(balance).div(new BigNumber('1000000000000000000')).toFixed(9).toString()} ETH
-                    {/* {displayAmount(rootContext.amountsInUsd, balance)} */}
+                    {/* {new BigNumber(balance).div(new BigNumber('1000000000000000000')).toFixed(9).toString()} ETH */}
+                    <AmountComponent amount={balance} />
                 </div>
 
                 <div id={styles.addressDiv}>

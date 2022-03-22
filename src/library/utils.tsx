@@ -1,11 +1,12 @@
 import BigNumber from "bignumber.js"
 import { IPoll } from "./graphqlQuerys"
 import React from "react"
-import polls from "../src/pages/polls"
-import oracles from "../src/pages/oracles"
-import activePolls from "../src/pages/activepolls"
-import welcome from "../src/pages/index"
-import metaData from "../public/etc/metaData.json"
+import polls from "../pages/polls"
+import oracles from "../pages/oracles"
+import activePolls from "../pages/activepolls"
+import welcome from "../pages/index"
+import metaData from "../../public/etc/metaData.json"
+import { fromWei } from 'web3-utils'
 
 const converGWeiToEth = (wei: string) => {
     return (new BigNumber(wei).div('1000000000')).toString()
@@ -162,20 +163,32 @@ let getComponentName = (component: React.FunctionComponent) => {
     }
 }
 
-const getEthPrice = async(): Promise<number> => {
+const getUsdPrice = async(): Promise<number> => {
     let response = await fetch(metaData.usdPriceUrl)
 
     return (await response.json()).ethereum.usd
 }
 
-const displayAmount = async(amountInUSD: boolean, amount: string, usdPrice?: number) => {
-    let bnEther = new BigNumber(amount).div(new BigNumber('1000000000000000000'))
-
-    if(amountInUSD) {
-        return `$${bnEther.multipliedBy(usdPrice.valueOf()).toString()}`
+const getEtherFormated = (amount: BigNumber) => {
+    if (amount.decimalPlaces() > 9) {
+        return amount.toFixed(9).toString()
     }
 
-    return `${bnEther.toFixed(9).toString()} ETH`
+    return amount.toString()
+}
+
+const displayAmount = (amountInUSD: boolean, amount: string, usdPrice?: number) => {
+    let bnEther = new BigNumber(fromWei(amount))
+
+    if (amountInUSD) {
+        if (usdPrice) {
+            return `$${bnEther.multipliedBy(usdPrice.valueOf()).toFixed(2).toString()}`
+        }
+
+        return '-'
+    }
+
+    return `${getEtherFormated(bnEther)} ETH`
 }
 
 export {
@@ -189,5 +202,6 @@ export {
     IPollStatusTypes,
     splitPascalCase,
     getComponentName,
-    displayAmount
+    displayAmount,
+    getUsdPrice
 }

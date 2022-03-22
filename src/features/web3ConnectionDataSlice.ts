@@ -34,9 +34,7 @@ export const web3ConnectionDataSlice = createSlice({
             state.account = action.payload
         },
 
-        resetWeb3ConnectionData: state => {
-            setWeb3ConnectionData(initialState)
-        }
+        resetWeb3ConnectionData: () => initialState
     }
 })
 

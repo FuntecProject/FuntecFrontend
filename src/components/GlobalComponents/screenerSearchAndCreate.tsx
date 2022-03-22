@@ -1,8 +1,8 @@
 import React from "react"
 import Image from 'next/image'
 import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerSearchAndCreate.module.scss"
-import Magnifier from "../../public/images/magnifier.svg"
-import CrossIcon from "../../public/images/crossIcon.svg"
+import Magnifier from "../../../public/images/magnifier.svg"
+import CrossIcon from "../../../public/images/crossIcon.svg"
 import { useMediaQuery } from 'react-responsive'
 
 interface IScreenerSearchAndCreateProps {

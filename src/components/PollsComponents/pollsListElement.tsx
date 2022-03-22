@@ -1,6 +1,6 @@
 import React from 'react'
-import Arrow from "./../../public/images/arrow.svg"
-import PlusIcon from "./../../public/images/plusIcon.svg"
+import Arrow from "../../../public/images/arrow.svg"
+import PlusIcon from "../../../public/images/plusIcon.svg"
 import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollsListElement.module.scss"
 import {  
     getReadableDate,
@@ -18,6 +18,7 @@ import { getDescriptionFromHash } from '../../library/ipfsQuerys'
 import { useMediaQuery } from 'react-responsive'
 import { fromWei } from 'web3-utils'
 import PollAditionalInfoMobile from './pollAdditionalInfoMobile'
+import AmountComponent from '../GlobalComponents/amountComponent'
 
 interface IPollListElementProps {
     pollData: IPoll,
@@ -93,7 +94,7 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
 
                     <div className={styles.pollElementRowMobile}>
                         <div>Total contributed:</div>
-                        <div>{fromWei(props.pollData.totalAmountContributed)} ETH</div>
+                        <AmountComponent amount={fromWei(props.pollData.totalAmountContributed)} />
                     </div> 
 
                     <div className={styles.pollElementRowMobile}>
@@ -137,7 +138,7 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
                     <div>#{props.pollData.id}</div>
                     <div>{state.pollStatus != null ? state.pollStatus[0] : "-"}</div>
                     <div>{state.pollStatus != null ? state.pollStatus[1] : "-"}</div>
-                    <div>{fromWei(props.pollData.totalAmountContributed)} ETH</div>
+                    <AmountComponent amount={props.pollData.totalAmountContributed} />
                     <div>{getReadableDate(props.pollData.dateLimit)}</div>
                     <div>#{props.pollData.receiverId}</div>
                     <div>#{props.pollData.oracleId}</div>

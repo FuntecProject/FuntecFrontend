@@ -6,11 +6,11 @@ import {
 } from '../../library/web3methods'
 import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerLayout.module.scss"
 import { errorMessageWithoutClick } from "../../library/alertWindows"
-import metaData from '../../public/etc/metaData.json'
+import metaData from '../../../public/etc/metaData.json'
 import { useMediaQuery } from 'react-responsive'
 import AccountButton from "./accountButton"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
-import { useAppSelector } from "../../src/app/hooks"
+import { useAppSelector } from "../../app/hooks"
 interface IMenuPanelProps {
     menuDisplayed: boolean
     closeMenuCallback: () => void

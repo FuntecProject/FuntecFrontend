@@ -1,7 +1,7 @@
 import React from 'react'
-import CreateOracleWindow from "../../components/OracleComponents/createOracleWindow"
-import OraclesList from '../../components/OracleComponents/oraclesList'
-import ScreenerSearchAndCreate from '../../components/GlobalComponents/screenerSearchAndCreate'
+import CreateOracleWindow from "../components/OracleComponents/createOracleWindow"
+import OraclesList from '../components/OracleComponents/oraclesList'
+import ScreenerSearchAndCreate from '../components/GlobalComponents/screenerSearchAndCreate'
 import { useAppDispatch } from '../app/hooks'
 import { setActivePage } from '../features/activePageSlide'
 

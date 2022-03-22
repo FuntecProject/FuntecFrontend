@@ -1,7 +1,7 @@
 import React from 'react'
 import Switch from 'react-switch'
-import { useAppDispatch, useAppSelector } from '../../src/app/hooks'
-import { changeDisplayed } from '../../src/features/usdPriceSlide'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { changeDisplayed } from '../../features/usdPriceSlide'
 import ScreenMouseLock from '../GlobalComponents/screenMouseLock'
 
 interface ISettingsWindowProps {
@@ -22,7 +22,7 @@ const SettingsWindow = (props: ISettingsWindowProps): React.ReactElement => {
     const Result = () => {
         return props.displayed ?
             <>
-                <div style={{...WindowStyle, ...{top: '35px'}}}>
+                <div style={{...WindowStyle, ...{top: '58px'}}}>
                     <SettingsElements />
                 </div>
 

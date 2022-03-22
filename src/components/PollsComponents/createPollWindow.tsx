@@ -1,12 +1,12 @@
 import React from "react"
 import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/createPoll.module.scss"
-import CrossIcon from "./../../public/images/crossIcon.svg"
+import CrossIcon from "../../../public/images/crossIcon.svg"
 import { createPoll } from "../../library/web3methods"
 import { convertDateToUnix } from "../../library/utils"
 import { errorMessageWithoutClick } from '../../library/alertWindows'
 import { toWei } from "web3-utils"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
-import { useAppSelector } from "../../src/app/hooks"
+import { useAppSelector } from "../../app/hooks"
 
 interface ICreatePollWindowProps {
     windowDisplayed: boolean

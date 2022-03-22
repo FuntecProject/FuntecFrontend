@@ -1,12 +1,12 @@
 import { useLazyQuery } from '@apollo/client'
 import React from 'react'
-import LoadingElement from '../../components/GlobalComponents/loadingElement'
-import ScreenerBox from '../../components/GlobalComponents/screenerBox'
-import PollScreenerLegend from '../../components/PollsComponents/pollScreenerLegend'
-import PollListElement, { PollParticipantTypes } from '../../components/PollsComponents/pollsListElement'
-import { contributionsByContributorAddressQuery, IContribution, IPoll, pollsByOracleIdQuery, pollsByReceiverIdQuery } from '../../library/graphqlQuerys'
-import { getOracleId, getReceiverId } from '../../library/web3methods'
-import styles from '../../styles/ComponentsStyles/PollsComponentsStyles/activePollsList.module.scss'
+import LoadingElement from '../components/GlobalComponents/loadingElement'
+import ScreenerBox from '../components/GlobalComponents/screenerBox'
+import PollScreenerLegend from '../components/PollsComponents/pollScreenerLegend'
+import PollListElement, { PollParticipantTypes } from '../components/PollsComponents/pollsListElement'
+import { contributionsByContributorAddressQuery, IContribution, IPoll, pollsByOracleIdQuery, pollsByReceiverIdQuery } from '../library/graphqlQuerys'
+import { getOracleId, getReceiverId } from '../library/web3methods'
+import styles from '../styles/ComponentsStyles/PollsComponentsStyles/activePollsList.module.scss'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { setActivePage } from '../features/activePageSlide'
 
@@ -100,7 +100,7 @@ const ActivePolls = (): React.ReactElement => {
                 return ShowPollsAsOracle()
 
             case ParticipantType.Contributor:
-                return ShowActivePollsList()
+                return ShowPollsAsContributor()
         }
     }
 

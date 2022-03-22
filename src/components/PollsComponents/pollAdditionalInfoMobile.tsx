@@ -2,7 +2,7 @@ import React from "react"
 import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollAditionalInfoMobileWindow.module.scss"
 import { IPoll } from "../../library/graphqlQuerys"
 import { getDescriptionFromHash } from "../../library/ipfsQuerys"
-import CrossIcon from "./../../public/images/crossIcon.svg"
+import CrossIcon from "../../../public/images/crossIcon.svg"
 import ScreenMouseLock from '../GlobalComponents/screenMouseLock'
 import LoadingElement from "../GlobalComponents/loadingElement"
 import { PollParticipantTypes } from "./pollsListElement"

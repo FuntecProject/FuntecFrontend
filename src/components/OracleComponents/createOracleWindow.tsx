@@ -1,6 +1,6 @@
 import React from "react"
 import styles from "../../styles/ComponentsStyles/OracleComponentsStyles/createOracle.module.scss"
-import CrossIcon from "../../public/images/crossIcon.svg"
+import CrossIcon from "../../../public/images/crossIcon.svg"
 import BigNumber from "bignumber.js"
 import {
     createOracle,
@@ -8,7 +8,7 @@ import {
 } from '../../library/web3methods'
 import { errorMessageWithoutClick } from "../../library/alertWindows"
 import ScreenMouseLock from "../GlobalComponents/screenMouseLock"
-import { useAppSelector } from "../../src/app/hooks"
+import { useAppSelector } from "../../app/hooks"
 
 interface ICreateOracleProps {
     windowDisplayed: boolean

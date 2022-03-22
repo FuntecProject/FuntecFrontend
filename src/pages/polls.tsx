@@ -1,7 +1,7 @@
 import React from 'react'
-import CreatePollWindow from "../../components/PollsComponents/createPollWindow"
-import PollsList from '../../components/PollsComponents/pollsList'
-import ScreenerSearchAndCreate from '../../components/GlobalComponents/screenerSearchAndCreate'
+import CreatePollWindow from "../components/PollsComponents/createPollWindow"
+import PollsList from '../components/PollsComponents/pollsList'
+import ScreenerSearchAndCreate from '../components/GlobalComponents/screenerSearchAndCreate'
 import { useAppDispatch } from '../app/hooks'
 import { setActivePage } from '../features/activePageSlide'
 

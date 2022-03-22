@@ -11,7 +11,7 @@ import ScreenerBox from "../GlobalComponents/screenerBox"
 import { useQuery, useLazyQuery } from "@apollo/client"
 import { isAddress } from "web3-utils"
 import { getAddressFromENS, getOracleId } from "../../library/web3methods"
-import { useAppSelector } from "../../src/app/hooks"
+import { useAppSelector } from "../../app/hooks"
 
 interface IOraclesListProps {
     idSearched: string
