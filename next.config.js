@@ -3,6 +3,7 @@ const path = require('path')
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
 
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],

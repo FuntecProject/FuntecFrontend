@@ -6,16 +6,26 @@ interface IScreenMouseLockProps {
 }
 
 const ScreenMouseLock = (props: IScreenMouseLockProps): React.ReactElement => {
-    return props.backgroundShadowed ?
-        <div 
-            onClick={props.removeDisplayedElement} 
-            style={Object.assign({}, screenMouseLockStyle, {backdropFilter: "blur(10px)"})} 
-        />
-        :
-        <div 
-            onClick={props.removeDisplayedElement}
-            style={screenMouseLockStyle}
-        />
+    const Result = () => {
+        return props.backgroundShadowed ?
+            <ElementWithFilter />
+            :
+            <div 
+                onClick={props.removeDisplayedElement}
+                style={screenMouseLockStyle}
+            />
+    }
+
+    const ElementWithFilter = () => {
+        return (
+            <div 
+                onClick={props.removeDisplayedElement} 
+                style={Object.assign({}, screenMouseLockStyle, {backdropFilter: "blur(10px)"})} 
+            />
+        )
+    }
+
+    return Result()
 }
 
 const screenMouseLockStyle = {

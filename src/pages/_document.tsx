@@ -8,8 +8,16 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
-        <Head />
+      <Html lang="en">
+        <Head>
+            <meta name="keywords" content='Web3, ethereum, content creators, youtube, podcast, monetization, contribute'/>
+            <meta name="description" content="Here we help you get the videos, 
+                streams, books that you want 
+                by allowing you to incentivise 
+                creators to produce specific content." 
+            />
+        </Head>
+
         <body>
           <Main />
           <NextScript />

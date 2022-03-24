@@ -115,4 +115,4 @@ const AccountButton = (): React.ReactElement => {
     return Result()
 }
 
-export default React.memo(AccountButton)
+export default AccountButton
