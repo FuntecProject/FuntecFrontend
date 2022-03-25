@@ -15,8 +15,6 @@ import {
     ContributeRow
 } from './pollListElementRows'
 import { getDescriptionFromHash } from '../../library/ipfsQuerys'
-import { useMediaQuery } from 'react-responsive'
-import { fromWei } from 'web3-utils'
 import PollAditionalInfoMobile from './pollAdditionalInfoMobile'
 import AmountComponent from '../GlobalComponents/amountComponent'
 
@@ -46,8 +44,6 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
         description: null
     })
 
-    const isMobile = useMediaQuery({ maxWidth: 1200})
-
     React.useEffect(() => {
         let pollStatus = getPollStatus(props.pollData)      
             
@@ -66,17 +62,19 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
     }, [])
 
     const Result = () => {
-        return isMobile ?
-            <MobileVersion />
-            :
-            <DesktopVersion />
+        return (
+            <>
+                <MobileVersion />
+                <DesktopVersion />
+            </>
+        )
     }
 
     const MobileVersion = (): React.ReactElement => {
         const [pollAdditionalInfoDisplayed, setPollAditionalInfoDisplayed] = React.useState<boolean>(false)
 
         return (
-            <div className={styles.pollElement}>
+            <div className={`${styles.pollElement} mobileView`}>
                 <div className={styles.pollElementIdMobile}>
                     #{props.pollData.id}
                 </div>
@@ -133,7 +131,7 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
 
     const DesktopVersion = (): React.ReactElement => {
         return (
-            <div className={styles.pollElement} style={{height: state.expand ? '150px' : '50px'}}>
+            <div className={`${styles.pollElement} desktopView`} style={{height: state.expand ? '150px' : '50px'}}>
                 <div className={styles.pollElementFirstRow}>
                     <div>#{props.pollData.id}</div>
                     <div>{state.pollStatus != null ? state.pollStatus[0] : "-"}</div>

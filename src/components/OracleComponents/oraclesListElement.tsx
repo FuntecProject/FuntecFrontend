@@ -15,18 +15,18 @@ interface IOraclesListElementProps {
 }
 
 const OraclesListElement = (props: IOraclesListElementProps): React.ReactElement => {
-    const isMobile = useMediaQuery({ maxWidth: 1200})
-
     const Result = () => {
-        return isMobile ?
-            <MobileVersion />
-            :
-            <DesktopVersion />
+        return (
+            <>
+                <MobileVersion />
+                <DesktopVersion />
+            </>
+        )
     }
 
     const MobileVersion = () => {
         return (
-            <div className={styles.oracleElementMobile}>
+            <div className={`${styles.oracleElementMobile} mobileView`}>
                 <div id={styles.oracleElementIdMobile}>
                     #{props.oracleData.id}
                 </div>
@@ -66,7 +66,7 @@ const OraclesListElement = (props: IOraclesListElementProps): React.ReactElement
 
     const DesktopVersion = () => {
         return (
-            <div className={styles.oracleElement}>
+            <div className={`${styles.oracleElement} desktopView`}>
                 <div>#{props.oracleData.id}</div>
                 <div>{getDaysAndHoursFromUnix(props.oracleData.responseTime)}</div>
                 <div>{converGWeiToEth(props.oracleData.oracleFee)} ETH</div>

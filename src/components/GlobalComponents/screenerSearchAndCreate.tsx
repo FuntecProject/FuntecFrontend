@@ -3,7 +3,6 @@ import Image from 'next/image'
 import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerSearchAndCreate.module.scss"
 import Magnifier from "../../../public/images/magnifier.svg"
 import CrossIcon from "../../../public/images/crossIcon.svg"
-import { useMediaQuery } from 'react-responsive'
 
 interface IScreenerSearchAndCreateProps {
     inputPlaceholder: string
@@ -14,20 +13,21 @@ interface IScreenerSearchAndCreateProps {
 }
 
 const ScreenerSearchAndCreate = (props: IScreenerSearchAndCreateProps): React.ReactElement => {
-    const isMobile = useMediaQuery({ maxWidth: 1200})
 
     const Result = () => {
-        return isMobile ?
-            <MobileVersion />
-            :
-            <DesktopVersion />
+        return (
+            <>
+                <MobileVersion />
+                <DesktopVersion />
+            </>
+        )
     }
 
     const MobileVersion = () => {
         let searchInput = React.createRef() as any
 
         return (
-            <div id={styles.searchAndCreateMobile}>
+            <div id={styles.searchAndCreateMobile} className="mobileView">
                 <div id={styles.createButtonMobile} onClick={props.setCreateWindowDisplayed}>
                     <Image src="/images/createWindowIcon.png" alt="Open create poll or oracle window" width={45} height={45} />
                 </div>
@@ -70,7 +70,7 @@ const ScreenerSearchAndCreate = (props: IScreenerSearchAndCreateProps): React.Re
         })
 
         return (
-            <div id={styles.searchAndCreate}>
+            <div id={styles.searchAndCreate} className="desktopView">
                 <div id={styles.searchContainer}>
                     <Magnifier id={styles.magnifier} />         
                     <input
