@@ -177,18 +177,18 @@ const getEtherFormated = (amount: BigNumber) => {
     return amount.toString()
 }
 
-const displayAmount = (amountInUSD: boolean, amount: string, usdPrice?: number) => {
-    let bnEther = new BigNumber(fromWei(amount))
+const displayAmount = (amountInUSD: boolean, amountInWei: string, usdPrice?: number) => {
+    let etherAmount = new BigNumber(fromWei(amountInWei))
 
     if (amountInUSD) {
         if (usdPrice) {
-            return `$${bnEther.multipliedBy(usdPrice.valueOf()).toFixed(2).toString()}`
+            return `$${etherAmount.multipliedBy(usdPrice.valueOf()).toFixed(2).toString()}`
         }
 
         return '-'
     }
 
-    return `${getEtherFormated(bnEther)} ETH`
+    return `${getEtherFormated(etherAmount)} ETH`
 }
 
 export {

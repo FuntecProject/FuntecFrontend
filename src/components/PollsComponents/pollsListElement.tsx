@@ -94,7 +94,7 @@ const PollListElement = (props: IPollListElementProps): React.ReactElement => {
 
                     <div className={styles.pollElementRowMobile}>
                         <div>Total contributed:</div>
-                        <AmountComponent amount={fromWei(props.pollData.totalAmountContributed)} />
+                        <AmountComponent amount={props.pollData.totalAmountContributed} />
                     </div> 
 
                     <div className={styles.pollElementRowMobile}>

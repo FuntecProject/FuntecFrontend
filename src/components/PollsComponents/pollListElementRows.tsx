@@ -20,7 +20,7 @@ import styles from "./../../styles/ComponentsStyles/PollsComponentsStyles/pollsL
 import { IPoll } from '../../library/graphqlQuerys'
 import { errorMessageWithoutClick } from '../../library/alertWindows'
 import { toWei } from 'web3-utils'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useAppSelector } from '../../app/hooks'
 
 interface IPollListElementRowProps {
     pollData: IPoll
@@ -283,7 +283,7 @@ const ContributeRow = (props: IPollListElementRowProps): React.ReactElement => {
         <div className={styles.pollThirdRow}>
             <input 
                 type="number"
-                id={styles.contributeAmountSelect} 
+                className={styles.contributeAmountSelect} 
                 min="0.0001"
                 max="10000.1111"
                 step="0.0001"
