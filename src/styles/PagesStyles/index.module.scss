@@ -210,3 +210,14 @@
         // border: 1px solid grey;
     }
 }
+
+#ethNetworkMessage {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+}
+
+#ethNetworkMessage div {
+    color: white;
+    margin-right: 20px;
+}

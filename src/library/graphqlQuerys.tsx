@@ -87,7 +87,7 @@ const pollByIdQuery = gql`
 `
 const first5PollsQuery = gql`
     query Polls {
-        polls(first: 5) {
+        polls(first: 5, orderDirection: "asc") {
             ${pollResultElements}
         }
     }
