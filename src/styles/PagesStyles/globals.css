@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: 'Quicksand';
-    src: Helvetica, url("/textFonts/Quicksand-VariableFont_wght.ttf") format("truetype");
+    src: local('Helvetica'), url("/textFonts/Quicksand-VariableFont_wght.ttf") format("truetype");
     font-display: swap;
   }
 
