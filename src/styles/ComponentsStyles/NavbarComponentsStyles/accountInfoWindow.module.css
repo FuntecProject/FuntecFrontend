@@ -2,29 +2,20 @@
   border: 1px solid grey;
   background-color: white;
   border-radius: 15px;
-  position: absolute;
+  position: fixed;
   z-index: 10;
   top: 30px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   width: 400px;
-  height: 470px;
-  padding-left: 30px;
-  padding-right: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  max-width: 90%;
+  min-height: 470px;
+}
+
+#form {
+  width: 90%;
+  margin: auto;
 }
 
 #titleAndClose {
@@ -71,7 +62,7 @@
 }
 
 #account {
-  width: 340px;
+  width: 100%;
   background-color: #d3d3d4;
   padding: 10px 20px 10px;
   margin-bottom: 5px;
@@ -152,7 +143,6 @@
 }
 
 #accountId {
-  width: 340px;
   background-color: #d3d3d4;
   padding: 10px 20px 10px;
   border-radius: 5px;
@@ -222,7 +212,6 @@
 }
 
 #oracleId {
-  width: 340px;
   background-color: #d3d3d4;
   padding: 10px 20px 10px;
   border-radius: 5px;
@@ -271,5 +260,18 @@
   margin: 0 10px 0;
   -webkit-transform: scale(0.75);
           transform: scale(0.75);
+}
+
+#disconnectButton {
+  border: 2px solid #f6dde8;
+  color: #e8006f;
+  background-color: transparent;
+  font-size: 16px;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 25px;
+  cursor: pointer;
 }
 /*# sourceMappingURL=accountInfoWindow.module.css.map */

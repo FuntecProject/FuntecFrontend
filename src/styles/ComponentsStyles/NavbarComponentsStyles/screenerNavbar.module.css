@@ -3,6 +3,23 @@
   background-color: #e5e5e5;
 }
 
+#navMobile {
+  position: relative;
+  background-color: #e5e5e5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 60px;
+  min-height: 60px;
+  padding-left: 20px;
+}
+
 #navElements {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -205,11 +222,27 @@
   margin-left: 10px;
 }
 
+#settingsBox {
+  position: relative;
+  margin-right: 20px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#settingsIcon {
+  cursor: pointer;
+}
+
 #bellIcon {
   margin-right: 20px;
   width: 30px;
   min-width: 30px;
-  fill: #5a5a5a;
+  fill: black;
   cursor: pointer;
 }
 
@@ -251,6 +284,6 @@
   width: 100%;
   height: 4px;
   border-radius: 5px;
-  background-color: #5a5a5a;
+  background-color: black;
 }
 /*# sourceMappingURL=screenerNavbar.module.css.map */

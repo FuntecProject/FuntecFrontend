@@ -2,9 +2,11 @@
   border: 1px solid grey;
   background-color: white;
   border-radius: 25px;
-  position: absolute;
+  position: fixed;
+  top: 0;
   margin-top: 30px;
   width: 600px;
+  max-width: 90%;
   height: 400px;
   left: 50%;
   opacity: 1;
@@ -28,6 +30,9 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #wallets {
@@ -40,7 +45,6 @@
           flex-direction: column;
   width: 90%;
   margin: auto;
-  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -57,6 +61,7 @@
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 15px;
+  margin-top: 20px;
   cursor: pointer;
 }
 

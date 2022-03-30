@@ -2,12 +2,13 @@
   border: 1px solid grey;
   background-color: white;
   border-radius: 25px;
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 10;
   margin-top: 30px;
   left: 50%;
   width: 400px;
+  max-width: 90%;
   height: 420px;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);

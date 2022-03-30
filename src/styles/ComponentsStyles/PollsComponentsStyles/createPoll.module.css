@@ -2,17 +2,20 @@
   border: 1px solid grey;
   background-color: white;
   border-radius: 25px;
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 10;
   margin-top: 30px;
   left: 50%;
   width: 600px;
+  max-width: 90%;
   height: 620px;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   font-family: 'Quicksand', sans-serif;
   overflow-y: auto;
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 #createPoll {
