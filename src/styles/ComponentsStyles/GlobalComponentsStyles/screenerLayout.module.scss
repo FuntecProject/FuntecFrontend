@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: local('Helvetica'), url("/textFonts/Quicksand-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
+}
+
 #body {
     position: relative;
     height: 100vh;

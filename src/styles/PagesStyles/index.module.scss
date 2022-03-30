@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Oxygen';
-    src: url('/textFonts/Oxygen-Regular.ttf') format('truetype');
-    font-display: auto;
+    src: local('Helvetica'), url('/textFonts/Oxygen-Regular.ttf') format('truetype');
+    font-display: swap;
 }
 
 .main {
