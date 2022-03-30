@@ -54,6 +54,5 @@ const sucessMessageWithclick = (
 export {
     errorMessageWithoutClick,
     errorMessageWithClick,
-    successMessageWithoutClick,
     sucessMessageWithclick
 }

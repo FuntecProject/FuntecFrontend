@@ -1,5 +1,3 @@
-import * as IPFS from 'ipfs-core'
-import { text } from 'stream/consumers'
 import MetaData from "../../public/etc/metaData.json"
 
 // let options: any = {

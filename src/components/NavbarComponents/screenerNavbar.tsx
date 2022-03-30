@@ -2,7 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import GasIcon from "../../../public/images/gasIcon.svg"
-import BellIcon from "../../../public/images/bellIcon.svg"
 import CrossIcon from "../../../public/images/crossIcon.svg"
 import SettingsIcon from "../../../public/images/settings.svg"
 import styles from "./../../styles/ComponentsStyles/NavbarComponentsStyles/screenerNavbar.module.scss"

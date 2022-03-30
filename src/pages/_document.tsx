@@ -16,8 +16,8 @@ export default class MyDocument extends Document {
                         by allowing you to incentivise 
                         creators to produce specific content."
                     />
-                    <meta name='theme-color' content='#e5e5e5' />
-                    
+                    <meta name='theme-color' content='#E5E5E5' />
+
                     <link rel="icon" type="image/x-icon" href="/images/appIcon.svg"></link>
                     <link rel="apple-touch-icon" href="/images/appIcon.png"></link>
                 </Head>
