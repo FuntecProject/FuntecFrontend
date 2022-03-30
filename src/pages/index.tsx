@@ -14,7 +14,6 @@ const Welcome = (): React.ReactElement => {
             <>
                 <Head>
                     <title>Welcome to funtec!</title>
-                    <link rel="icon" type="image/x-icon" href="/images/appIcon.svg"></link>
                 </Head>
 
                 <MobileVersion />

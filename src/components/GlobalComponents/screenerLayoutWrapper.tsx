@@ -88,7 +88,6 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
             <ApolloProvider client={client}>
                 <Head>
                     <title>{props.title}</title>
-                    <link rel="icon" type="image/x-icon" href="/images/appIcon.svg"></link>
                 </Head> 
                 
                 <main id={styles.body}>
