@@ -1,10 +1,5 @@
 import BigNumber from "bignumber.js"
 import { IPoll } from "./graphqlQuerys"
-import React from "react"
-import polls from "../pages/polls"
-import oracles from "../pages/oracles"
-import activePolls from "../pages/activepolls"
-import welcome from "../pages/index"
 import metaData from "../../public/etc/metaData.json"
 import { fromWei } from 'web3-utils'
 
@@ -119,50 +114,6 @@ const getPollStatus = (pollData: IPoll): [IPollStatusTypes, string] => {
     }
 }
 
-let removeElementWhenClickOutside = (
-    targetElement: HTMLElement, 
-    elementToCheck: HTMLElement, 
-    actionToPerformWhenClickOutside: () => void
-): void => {
-
-    while (elementToCheck) {
-        if (targetElement == elementToCheck) {
-            document.querySelector('html').addEventListener('click', ev => {
-                if (ev.target instanceof HTMLElement) {
-                    removeElementWhenClickOutside(targetElement, ev.target, actionToPerformWhenClickOutside)
-                }
-            }, {once: true})
-
-            return 
-        }
-
-        elementToCheck = elementToCheck.parentElement
-    }
-
-    actionToPerformWhenClickOutside()
-}
-
-let splitPascalCase = (str: string) => {
-    let arraySeparatedWords = str.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2').replace(/([a-z])([A-Z])/g, '$1 $2').split(' ')
-
-    return arraySeparatedWords.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-}
-
-let getComponentName = (component: React.FunctionComponent) => {
-    switch (component) {
-        case polls:
-            return 'Polls'
-        case oracles:
-            return 'Oracles'
-        case activePolls:
-            return 'Active polls'
-        case welcome:
-            return 'Futec'
-        default:
-            return 'N/A'
-    }
-}
-
 const getUsdPrice = async(): Promise<number> => {
     let response = await fetch(metaData.usdPriceUrl)
 
@@ -200,8 +151,6 @@ export {
     getTwoDecimalPercent,
     getPollStatus,
     IPollStatusTypes,
-    splitPascalCase,
-    getComponentName,
     displayAmount,
     getUsdPrice
 }

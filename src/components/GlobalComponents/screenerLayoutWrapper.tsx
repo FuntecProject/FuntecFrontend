@@ -1,7 +1,6 @@
 import React from "react"
 import Web3 from "web3"
 import contractsMetaData from '../../../public/etc/contractsMetadata.json'
-import Head from "next/head"
 import Navbar from "../NavbarComponents/screenerNavbar"
 import styles from "../../styles/ComponentsStyles/GlobalComponentsStyles/screenerLayout.module.scss"
 import { AbiItem } from 'web3-utils'
@@ -16,7 +15,6 @@ import { setPrice } from "../../features/usdPriceSlide"
 declare let window: any
 
 interface IScreenerLayoutWrapperProps {
-    title: string
     children: React.ReactElement
 }
 
@@ -28,7 +26,6 @@ let client = new ApolloClient({uri: MetaData.subgraphUrl, cache: new InMemoryCac
 let ScreenerLayoutWrapperContext = React.createContext<IScreenerLayoutWrapperContext>({} as IScreenerLayoutWrapperContext)
 
 const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactElement => {
-    const web3ConnectionData = useAppSelector(state => state.web3ConnectionData)
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {  
@@ -85,11 +82,7 @@ const ScreenerLayoutWrapper = (props: IScreenerLayoutWrapperProps): React.ReactE
 
     return (
         <ScreenerLayoutWrapperContext.Provider value={{setWeb3AndAccountsInstances: setWeb3AndAccountsInstances}}>
-            <ApolloProvider client={client}>
-                <Head>
-                    <title>{props.title}</title>
-                </Head> 
-                
+            <ApolloProvider client={client}>                
                 <main id={styles.body}>
                     <Navbar />    
                     

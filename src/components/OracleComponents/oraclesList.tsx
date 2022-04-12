@@ -57,30 +57,38 @@ const OraclesList = (props: IOraclesListProps): React.ReactElement => {
                 </div>
 
                 <ScreenerBox>
-                    <SearchedOracle />
+                    <Content />
                 </ScreenerBox>
             </>
         )
     }
 
-    const SearchedOracle = (): React.ReactElement => {
+    const Content = (): React.ReactElement => {
         if (props.idSearched != '') {
-            if (oracle.loading == false && oracle.data != undefined) {
-                if (oracle.data.oracle != null) {
-                    return (
-                        <>
-                            <div className={styles.oracleTitle}>The oracle searched:</div>
-                            <OraclesListElement oracleData={oracle.data.oracle} />
-                        </>
-                    )
-                }
-                
-                return <div className={styles.noElementFound}>The oracle searched doesn't exist</div>
-            }
-
-            return <LoadingElement className={styles.oracleElementLoading} />
+            return <OracleSearched />
         }
 
+        return <OraclesList />
+    }
+
+    const OracleSearched = () => {
+        if (oracle.loading == false && oracle.data != undefined) {
+            if (oracle.data.oracle != null) {
+                return (
+                    <>
+                        <div className={styles.oracleTitle}>The oracle searched:</div>
+                        <OraclesListElement oracleData={oracle.data.oracle} />
+                    </>
+                )
+            }
+            
+            return <div className={styles.noElementFound}>The oracle searched doesn't exist</div>
+        }
+
+        return <LoadingElement className={styles.oracleElementLoading} />
+    }
+
+    const OraclesList = () => {
         if (oracles.data) {
             const allOracles = oracles.data.oracles.map(oracle => {
                 return <OraclesListElement key={oracle.id} oracleData={oracle} /> 

@@ -4,14 +4,13 @@ import ScreenerLayoutWrapper from '../components/GlobalComponents/screenerLayout
 import Polls from "./polls"
 import Oracles from "./oracles"
 import ActivePolls from "./activepolls"
-import welcome from "../pages/index"
-import { getComponentName } from '../library/utils'
+import Welcome from "../pages/index"
 import { AppProps } from 'next/dist/shared/lib/router/router'
 import { Provider } from 'react-redux'
 import store from "../../src/app/store"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-	if (Component == welcome) {
+	if (Component == Welcome) {
 		return (
 			<Component {...pageProps} />
 		)
@@ -24,7 +23,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	) {
 		return (
             <Provider store={store}>
-                <ScreenerLayoutWrapper title={getComponentName(Component)}>
+                <ScreenerLayoutWrapper>
                     <Component {...pageProps} />
                 </ScreenerLayoutWrapper>
             </Provider>

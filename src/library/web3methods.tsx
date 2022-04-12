@@ -221,8 +221,6 @@ export {
     solvePoll,
     contributorHasRequested,
     switchToRinkeby,
-    switchToArbitrumTesnetNetwork,
-    addArbitrumTesnetNetwork,
     getGasPrice,
     getAddressBalance,
     getAddressFromENS

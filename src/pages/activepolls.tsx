@@ -9,6 +9,7 @@ import { getOracleId, getReceiverId } from '../library/web3methods'
 import styles from '../styles/ComponentsStyles/PollsComponentsStyles/activePollsList.module.scss'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { setActivePage } from '../features/activePageSlide'
+import Head from 'next/head'
 
 enum ParticipantType {
     Receiver = "Receiver", 
@@ -47,6 +48,10 @@ const ActivePolls = (): React.ReactElement => {
     const Result = () => {
         return (
             <>
+                <Head>
+                    <title>Active polls</title>
+                </Head>
+
                 <div id={styles.pollType} className="mobileView">
                     <ParticipantTypeElementMobile participantType={ParticipantType.Receiver} />
                     <ParticipantTypeElementMobile participantType={ParticipantType.Oracle} />

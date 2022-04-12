@@ -41,7 +41,7 @@ const ScreenerNavbar = (): React.ReactElement => {
             <div id={styles.navMobile} className="mobileView">
                 <Link href="/">
                     <a id={styles.home}>
-                        <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
+                        <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} priority={true} />
                     </a>
                 </Link>
 

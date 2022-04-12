@@ -1,1 +1,971 @@
-{"accountsStorageAddress":"0xc10c1e21f03C0a7ED921F8b053811d80ae6c1d40","accountsStorageTxHash":"0xa36a8cbc4d6de495cbe651543e0fee0d48da4fccb57995d9b03db5fa3d3bc1af","accountsStorageABI":[{"inputs":[],"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"oracleId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"oracleFee","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"oracleResponseTime","type":"uint256"}],"name":"newOracle","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"oracleId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"previousOracleId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"oracleFee","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"oracleResponseTime","type":"uint256"}],"name":"oracleDataChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"oracleId","type":"uint256"},{"indexed":false,"internalType":"bool","name":"disabledOracle","type":"bool"}],"name":"oracleStatusChanged","type":"event"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"addressToOracleId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"addressToReceiverId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_oracleId","type":"uint256"},{"internalType":"uint256","name":"_oracleFee","type":"uint256"},{"internalType":"uint256","name":"_oracleResponseTime","type":"uint256"}],"name":"changeOracleResponseTimeAndFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_newAccountAddress","type":"address"}],"name":"changeReceiverAccountAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_responseTime","type":"uint256"},{"internalType":"uint256","name":"_oracleFee","type":"uint256"}],"name":"createNewOracle","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"createReceiverAccount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_oracleId","type":"uint256"},{"internalType":"bool","name":"_status","type":"bool"}],"name":"disableOracle","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_oracleId","type":"uint256"}],"name":"getOracleAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_oracleId","type":"uint256"}],"name":"getOracleFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_oracleId","type":"uint256"}],"name":"getOracleResponseTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOraclesLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getReceiversLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_oracleId","type":"uint256"}],"name":"isOracleEnabled","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"oracles","outputs":[{"internalType":"address","name":"oracleAddress","type":"address"},{"internalType":"uint32","name":"previousOracleId","type":"uint32"},{"internalType":"uint32","name":"oracleFee","type":"uint32"},{"internalType":"uint24","name":"responseTime","type":"uint24"},{"internalType":"bool","name":"enabledOracle","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"receivers","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}],"accountsStorageBlockDeployed":9894447,"pollRewardsAddress":"0x5f77Bb5EE11AD041929EC2538406ABd430d70989","pollRewardsTxHash":"0x34ec703c347b12d60e70d651a66309dda6f89b12d87bd503e6e955bc3008c146","pollRewardsABI":[{"inputs":[{"internalType":"address","name":"_accountsStorageAddress","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"contributor","type":"address"},{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amountContributed","type":"uint256"}],"name":"contribution","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"contributor","type":"address"},{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"}],"name":"contributionRequested","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"},{"indexed":false,"internalType":"bool","name":"disputeResult","type":"bool"}],"name":"disputeClosed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"}],"name":"oracleRewardRequested","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"receiverId","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"oracleId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"dateLimit","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amountContributed","type":"uint256"},{"indexed":false,"internalType":"address","name":"contributor","type":"address"},{"indexed":false,"internalType":"string","name":"_hash","type":"string"}],"name":"pollCreation","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"}],"name":"pollDisputed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"}],"name":"pollNotResolvedOrDisputed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"oracleId","type":"uint256"},{"indexed":false,"internalType":"bool","name":"oracleResult","type":"bool"}],"name":"pollResolved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"pollId","type":"uint256"}],"name":"receiverRewardRequested","type":"event"},{"inputs":[{"internalType":"address","name":"_platformOwnerAddress","type":"address"}],"name":"changePlatformOwnerAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pollId","type":"uint256"}],"name":"claimContribution","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pollId","type":"uint256"}],"name":"claimOracleReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pollId","type":"uint256"}],"name":"claimReceiverReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pollId","type":"uint256"},{"internalType":"bool","name":"_result","type":"bool"}],"name":"closeDispute","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pollId","type":"uint256"}],"name":"contribute","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_receiverId","type":"uint256"},{"internalType":"uint32","name":"_dateLimit","type":"uint32"},{"internalType":"uint256","name":"_oracleId","type":"uint256"},{"internalType":"string","name":"_hash","type":"string"}],"name":"createPoll","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_pollId","type":"uint256"}],"name":"generateDispute","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"getPollsLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"polls","outputs":[{"internalType":"uint128","name":"totalAmountContributed","type":"uint128"},{"internalType":"uint32","name":"oracleId","type":"uint32"},{"internalType":"uint32","name":"dateLimit","type":"uint32"},{"internalType":"uint32","name":"receiverId","type":"uint32"},{"internalType":"bool","name":"oracleResolved","type":"bool"},{"internalType":"bool","name":"oracleResult","type":"bool"},{"internalType":"bool","name":"disputed","type":"bool"},{"internalType":"bool","name":"ultimateOracleResolved","type":"bool"},{"internalType":"bool","name":"ultimateOracleResult","type":"bool"},{"internalType":"bool","name":"receiverRewardRequested","type":"bool"},{"internalType":"bool","name":"oracleRewardRequested","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"pollsRequirementsIPFSHashes","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"pollsUsersContributions","outputs":[{"internalType":"uint128","name":"amountContributed","type":"uint128"},{"internalType":"bool","name":"hasRequested","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"_result","type":"bool"},{"internalType":"uint256","name":"_pollId","type":"uint256"}],"name":"resolvePoll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_ultimateOracleAddress","type":"address"}],"name":"setUltimateOracleAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_ultimateOracleFee","type":"uint256"}],"name":"setUltimateOracleFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}],"pollRewardsBlockDeployed":9894447}
+{
+    "accountsStorageAddress": "0xc10c1e21f03C0a7ED921F8b053811d80ae6c1d40",
+    "accountsStorageTxHash": "0xa36a8cbc4d6de495cbe651543e0fee0d48da4fccb57995d9b03db5fa3d3bc1af",
+    "accountsStorageABI": [
+        {
+            "inputs": [],
+            "stateMutability": "payable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "previousOwner",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "OwnershipTransferred",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleFee",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleResponseTime",
+                    "type": "uint256"
+                }
+            ],
+            "name": "newOracle",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "previousOracleId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleFee",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleResponseTime",
+                    "type": "uint256"
+                }
+            ],
+            "name": "oracleDataChanged",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "bool",
+                    "name": "disabledOracle",
+                    "type": "bool"
+                }
+            ],
+            "name": "oracleStatusChanged",
+            "type": "event"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "name": "addressToOracleId",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "name": "addressToReceiverId",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleFee",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleResponseTime",
+                    "type": "uint256"
+                }
+            ],
+            "name": "changeOracleResponseTimeAndFee",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_newAccountAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "changeReceiverAccountAddress",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_responseTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleFee",
+                    "type": "uint256"
+                }
+            ],
+            "name": "createNewOracle",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "createReceiverAccount",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "_status",
+                    "type": "bool"
+                }
+            ],
+            "name": "disableOracle",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getOracleAddress",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getOracleFee",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getOracleResponseTime",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getOraclesLength",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getReceiversLength",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "isOracleEnabled",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "oracles",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "oracleAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "previousOracleId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "oracleFee",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint24",
+                    "name": "responseTime",
+                    "type": "uint24"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "enabledOracle",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "receivers",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "renounceOwnership",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "transferOwnership",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ],
+    "accountsStorageBlockDeployed": 9894447,
+    "pollRewardsAddress": "0x5f77Bb5EE11AD041929EC2538406ABd430d70989",
+    "pollRewardsTxHash": "0x34ec703c347b12d60e70d651a66309dda6f89b12d87bd503e6e955bc3008c146",
+    "pollRewardsABI": [
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_accountsStorageAddress",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "previousOwner",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "OwnershipTransferred",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "address",
+                    "name": "contributor",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "amountContributed",
+                    "type": "uint256"
+                }
+            ],
+            "name": "contribution",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "address",
+                    "name": "contributor",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "contributionRequested",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "bool",
+                    "name": "disputeResult",
+                    "type": "bool"
+                }
+            ],
+            "name": "disputeClosed",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "oracleRewardRequested",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "receiverId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "uint256",
+                    "name": "oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "dateLimit",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "amountContributed",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "address",
+                    "name": "contributor",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "_hash",
+                    "type": "string"
+                }
+            ],
+            "name": "pollCreation",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "pollDisputed",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "pollNotResolvedOrDisputed",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "bool",
+                    "name": "oracleResult",
+                    "type": "bool"
+                }
+            ],
+            "name": "pollResolved",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "receiverRewardRequested",
+            "type": "event"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_platformOwnerAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "changePlatformOwnerAddress",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "claimContribution",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "claimOracleReward",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "claimReceiverReward",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_pollId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "_result",
+                    "type": "bool"
+                }
+            ],
+            "name": "closeDispute",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "contribute",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_receiverId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "_dateLimit",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_oracleId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_hash",
+                    "type": "string"
+                }
+            ],
+            "name": "createPoll",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "generateDispute",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getPollsLength",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "polls",
+            "outputs": [
+                {
+                    "internalType": "uint128",
+                    "name": "totalAmountContributed",
+                    "type": "uint128"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "oracleId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "dateLimit",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "receiverId",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "oracleResolved",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "oracleResult",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "disputed",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "ultimateOracleResolved",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "ultimateOracleResult",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "receiverRewardRequested",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "oracleRewardRequested",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "pollsRequirementsIPFSHashes",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "name": "pollsUsersContributions",
+            "outputs": [
+                {
+                    "internalType": "uint128",
+                    "name": "amountContributed",
+                    "type": "uint128"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "hasRequested",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "renounceOwnership",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bool",
+                    "name": "_result",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_pollId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "resolvePoll",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_ultimateOracleAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "setUltimateOracleAddress",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_ultimateOracleFee",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setUltimateOracleFee",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "transferOwnership",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ],
+    "pollRewardsBlockDeployed": 9894447
+}

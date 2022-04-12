@@ -16,9 +16,10 @@ const Welcome = (): React.ReactElement => {
                     <title>Welcome to funtec!</title>
                 </Head>
 
-                <MobileVersion />
-
-                <DesktopVersion />
+                <main>
+                    <MobileVersion />
+                    <DesktopVersion />
+                </main>
             </>
         )
     }
