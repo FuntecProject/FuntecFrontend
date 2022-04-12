@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/dist/client/image'
 import styles from '../styles/PagesStyles/index.module.scss'
 import metaData from '../../public/etc/metaData.json'
 import React from 'react'
@@ -31,7 +30,7 @@ const Welcome = (): React.ReactElement => {
                     <div id={styles.navLeftSide}>
                         <Link href={"/"}>
                             <div id={styles.home} className={styles.navElement}>
-                                <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30}></Image>
+                                <img src="/images/appIcon.svg" alt="App icon" width={30} height={30}></img>
                             </div>
                         </Link>
                         

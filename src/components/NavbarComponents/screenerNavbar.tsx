@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import GasIcon from "../../../public/images/gasIcon.svg"
 import CrossIcon from "../../../public/images/crossIcon.svg"
 import SettingsIcon from "../../../public/images/settings.svg"
@@ -41,7 +40,7 @@ const ScreenerNavbar = (): React.ReactElement => {
             <div id={styles.navMobile} className="mobileView">
                 <Link href="/">
                     <a id={styles.home}>
-                        <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} priority={true} />
+                        <img src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
                     </a>
                 </Link>
 
@@ -57,7 +56,7 @@ const ScreenerNavbar = (): React.ReactElement => {
                     <div id={styles.navLeftSide}>
                         <Link href="/">
                             <a id={styles.home} className={styles.navElement}>
-                                <Image src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
+                                <img src="/images/appIcon.svg" alt="App icon" width={30} height={30} />
                             </a>
                         </Link>
 
